@@ -1,0 +1,12 @@
+[user]
+	email = fede.camposeco@gmail.com
+	name = FedeCamposeco
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[alias]
+	wdiff = diff --color-words
+	lol = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	showtool = !sh -c '~/bin/git-diffall $1~ $1' -
+	diffcool = !sh -c '~/bin/git-diffall $@' -

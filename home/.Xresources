@@ -1,0 +1,127 @@
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+
+Xft.dpi:                    96
+! Xft.antialias:              true
+! Xft.rgba:                   rgb
+! Xft.hinting:                true
+! Xft.hintstyle:              hintslight
+
+!
+! XTERM ========================
+xterm*termName:             xterm-256color
+xterm*renderFont:           true
+xterm*faceName:             Meslo LG M for Powerline
+! xterm*faceName:            Inconsolata for Powerline
+! xterm*faceName:            Droid Sans Mono for Powerline
+! xterm*faceName:            Source Code Pro for Powerline
+! xterm*faceName:            Anonymous Pro for Powerline
+xterm*faceSize:             9
+xterm*utf8:                 2
+xterm*utf8Title:            1
+xterm*saveLines:            65535
+xterm*scrollBar:            false
+xterm*multiScroll:          true
+xterm*toolBar:              false
+xterm*selectToClipboard:    true
+xterm*metaSendsEscape:      true
+XTerm*vt100.translations: #override \
+        Shift <KeyPress> Insert:  string(0x1b) string(0x5b) string(2;2~) \n\
+        Ctrl Shift <KeyPress> C:  select-end(PRIMARY,CLIPBOARD,CUT_BUFFER0) \n\
+        Ctrl Shift <KeyPress> V:  insert-selection(CLIPBOARD, CUT_BUFFER0, PRIMARY)
+xterm*VT100.colorMode:      on
+xterm*dynamicColors:        on
+xterm*xftAntialias:         1
+xterm*cjkWidth:             0
+
+! Tomorrow-Night Palette
+#define t_background #1D1F21
+#define t_current_line #282A2E
+#define t_selection #373B41
+#define t_foreground #C5C8C6
+#define t_comment #707880
+#define t_red #CC6666
+#define t_orange #DE935F
+#define t_yellow #F0C674
+#define t_green #B5BD68
+#define t_aqua #8ABEB7
+#define t_blue #81A2BE
+#define t_purple #B294BB
+
+! base16-default Palette (slightly darker)
+#define b_background #151515
+#define b_current_line #202020
+#define b_selection #303030
+#define b_foreground #C5C8C6
+#define b_comment #505050
+#define b_red #AC4142
+#define b_orange #D28445
+#define b_yellow #F4BF75
+#define b_green #90A959
+#define b_aqua #75B5AA
+#define b_blue #6A9FB5
+#define b_purple #AA759F
+
+! Codeacademy Palette (dark blue background)
+#define c_background #232C31
+#define c_current_line #2D3C46
+#define c_selection #425059
+#define c_comment #6C7A80
+
+
+! Global color definitions
+*background: t_background
+*foreground: t_foreground
+! black
+*color0: t_current_line
+*color8: t_selection
+! red
+*color1: #A54242
+*color9: t_red
+! green
+*color2: #8C9440
+*color10: t_green
+! yellow
+*color3: t_orange
+*color11: t_yellow
+! blue
+*color4: #5F819D
+*color12: t_blue
+! magenta
+*color5: #85678F
+*color13: t_purple
+! cyan
+*color6: #5E8D87
+*color14: t_aqua
+! white
+*color7: t_comment
+*color15: t_foreground
+
+! ----------------------------------------------------------------
+! Keep URxvt with solarized
+! Solarized color scheme for the X Window System
+!
+! http://ethanschoonover.com/solarized
+! Common
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+! Dark
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+
+URxvt*font:                    xft:Meslo LG M for Powerline:size=9
+URxvt*utf8:                    2
+URxvt*scrollBar:               false
