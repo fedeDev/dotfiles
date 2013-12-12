@@ -1,7 +1,0 @@
-set font "inconsolata normal 11"
-set default-bg "#002B36"
-set statusbar-bg "#073642"
-set statusbar-fg "#839496"
-set page-padding 3
-set pages-per-row 1
-set zoom-step 5
