@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+# Author: Fede Camposeco
+
+# First parameter is page to remove, second is the file
+# 		Usage: pdfrmpg <pg_num> <input.pdf>
+# Output is written to <input>_<pg_num>_rm.pdf
+if test $# -ne 2
+then
+	echo "Usage: pdfrmpg <pg_num> <input.pdf>"
+fi
+
+pgN=$(gs -q -dNODISPLAY -c "($2) (r) file runpdfbegin pdfpagecount = quit" 2> /dev/null )
+if test $? -ne 0
+then
+	echo $2" is not a valid pdf file"
+	exit
+fi
+
+lp=$(($1-1))
+fp=$(($1+1))
+name=$(echo "$2" | cut -d'.' --complement -f2-)"_pg_"$1"_rm.pdf"
+
+echo "Removing page "$1" / "$pgN"..."
+
+if test $lp -ge 1
+then
+	if test $fp -gt $pgN
+	then
+		gs -q -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dFirstPage=1 -dLastPage=$lp -sOutputFile=$name ${2}
+	else
+		gs -q -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dFirstPage=1 -dLastPage=$lp -sOutputFile=output.pdf ${2}
+		gs -q -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dFirstPage=$fp -sOutputFile=output2.pdf ${2}
+		gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$name output.pdf output2.pdf
+		rm output.pdf output2.pdf
+	fi
+else
+	gs -q -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dFirstPage=2 -sOutputFile=$name ${2}
+fi
+
+echo "Done! Written to "$name

@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+terminal_emulator_parents=`pstree -As $$ 2> /dev/null`
+if test -z $terminal_emulator_parents; then
+  exit
+fi
+tep_list=`echo $terminal_emulator_parents | tr -s "-" | tr "-" " " | tac -s' ' | tr '\n' ' '`
+
+#List of known shells:
+terms_list=( urxvt  xterm  rxvt  gnome-terminal  konsole  st  uxterm  xfce4-terminal  Terminator  Yakuake )
+
+found="false"
+for process in `echo $tep_list`; do
+  if [[ ${terms_list[(r)$process]} == $process ]]
+    then
+        found="true"
+        break
+    fi
+done
+
+if [[ $found == "true" ]]; then
+    echo "$process"
+else
+    echo "unknown terminal"
+fi
