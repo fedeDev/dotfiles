@@ -2,4 +2,6 @@ vim/tmp/*
 !vim/tmp/.gitignore
 vim/bundle/*
 !vim/bundle/vundle
+config/google*
+config/pulse*
 *~

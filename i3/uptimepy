@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+from datetime import timedelta
+
+def days_hours_minutes(td):
+    return td.days, td.seconds//3600, (td.seconds//60)%60
+
+with open('/proc/uptime', 'r') as f:
+    uptime_seconds = float(f.readline().split()[0])
+    td = timedelta(seconds = uptime_seconds)
+
+d, h, m = days_hours_minutes(td)
+if d > 0:
+	if d > 1:
+		print('{0} days, {1}h {2}m'.format(d, h, m))
+	else:
+
+		print('{0} day, {1}h {2}m'.format(d, h, m))
+else:
+	print('{0}h {1}m'.format(h, m))

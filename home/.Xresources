@@ -23,6 +23,7 @@ xterm*utf8Title:            1
 xterm*saveLines:            65535
 xterm*scrollBar:            false
 xterm*multiScroll:          true
+xterm*locale:          true
 xterm*toolBar:              false
 xterm*selectToClipboard:    true
 xterm*metaSendsEscape:      true

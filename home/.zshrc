@@ -37,20 +37,24 @@ source $ZSH/oh-my-zsh.sh
 [[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" history-beginning-search-forward
 
 # Bind ctrl-del and ctrl-backspace -- xterm specific TODO
-bindkey "[3;5~" kill-word
-bindkey "" backward-kill-word
+# bindkey "[3;5~" kill-word
+# bindkey "" backward-kill-word
 # Bind ctrl-j and ctr-k for up and down
 bindkey "^J" down-line-or-search
 bindkey "" up-line-or-search
 
 # have ranger cd to the pwd when exit
-source /usr/share/doc/ranger/examples/bash_automatic_cd.sh
-alias ranger="ranger-cd"
-cd "$AUTOCD"
+if hash ranger 2>/dev/null; then
+  #source /usr/share/doc/ranger/examples/bash_automatic_cd.sh
+  #alias ranger="ranger-cd"
+  cd "$AUTOCD"
+fi
 
 # Uses ls++ for fancier ls
-alias l="ls++ -a"
-alias ll="ls++"
+if hash ls++ 2>/dev/null; then
+  alias l="ls++ -a"
+  alias ll="ls++"
+fi
 
 # Uses vimpager for fancier less
 export PAGER=vimpager
@@ -72,6 +76,8 @@ fi
 if [[ -f $HOME/'.profile' ]]; then
   source $HOME/'.profile'
 fi
+
+export LANG=en_US.UTF-8
 
 # Load the repo managment software
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
