@@ -123,6 +123,11 @@ bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
 
+# Bind MPD keys
+bindsym Mod1+Control+Up exec mpc toggle
+bindsym Mod1+Control+Left exec mpc prev
+bindsym Mod1+Control+Right exec mpc next
+
 # reload the configuration file
 bindsym $mod+Shift+e reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -175,15 +180,18 @@ bar {
 exec /usr/bin/nm-applet
 exec sh $bindir/fehbg
 exec redshift
+exec mpd
 exec --no-startup-id sh ~/.xinitrc
 exec --no-startup-id uxterm -name scratchpad -e /usr/bin/vim
 
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
+assign [class="Eclipse"] 3
 
 # custom window settings
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
 for_window [class="Google-chrome"] border none
+for_window [class="Eclipse"] border none
 for_window [class="I3-exit"] floating enable
 
 # Make the currently focused window a scratchpad

@@ -58,7 +58,7 @@ Temp ()
 	TEMP=$(acpi -t | awk '{print $4}' | cut -d '.' -f 1 )
 		if [[ ${TEMP} -gt 76 ]] ; then
 			echo -n "^fg($CRIT_COLOR)^i($ICONPATH/temp1.xbm)^fg($CRIT_COLOR) ${TEMP}°C"
-		else 
+		else
 			echo -n "^fg($COLOR_ICON)^i($ICONPATH/temp1.xbm)^fg() ${TEMP}°C"
 		fi
 	return
@@ -88,12 +88,12 @@ MPD ()
 	MPDINFO=$(mpc | grep -v 'volume:' | head -n1)
 	MPDTIME=$(mpc | awk '/\%/ {print $4}' | tr -d "()%")
 	if [ $MPDPLAYING -eq 1 ] ; then
-		echo -n "^fg($COLOR_ICON)^i($ICONPATH/play4.xbm)^fg() $(echo $MPDTIME | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
+		echo -n "^fg($COLOR_ICON)^i($ICONPATH/play4.xbm)^fg() $MPDINFO $(echo $MPDTIME | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
 	else
 		if [ $MPDPAUSED -eq 1 ] ; then
-			echo -n "^fg($COLOR_ICON)^i($ICONPATH/pause4.xbm)^fg() $(echo $MPDTIME | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
+			echo -n "^fg($COLOR_ICON)^i($ICONPATH/pause4.xbm)^fg() $MPDINFO  $(echo $MPDTIME | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
 		else
-			echo -n "^fg($COLOR_ICON)^i($ICONPATH/stop4.xbm)^fg() $(echo $MPDTIME | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
+			echo -n "^fg($COLOR_ICON)^i($ICONPATH/stop4.xbm)^fg()"
 		fi
 	fi
 
@@ -150,12 +150,12 @@ Battery ()
 		if [[ $BATT_PERC -gt 85 ]] ; then
 			echo -n "^fg($COLOR_ICON)^i($ICONPATH/batt5full.xbm)^fg() $BATT_PERC%" #$(echo $BATT_PERC | dzen2-gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -sw 2 -ss 1 -nonl)"
 		fi
-	
+
 	fi
 }
 
 # -----
-# Print 
+# Print
 # -----
 Print () {
 	#OSLogo
@@ -180,6 +180,6 @@ Print () {
     return
 }
 
-echo "$(Print)" 
+echo "$(Print)"
 done | $DZEN &
 

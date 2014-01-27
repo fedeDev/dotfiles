@@ -45,8 +45,8 @@ bindkey "" up-line-or-search
 
 # have ranger cd to the pwd when exit
 if hash ranger 2>/dev/null; then
-  #source /usr/share/doc/ranger/examples/bash_automatic_cd.sh
-  #alias ranger="ranger-cd"
+  source /usr/local/share/doc/ranger/examples/bash_automatic_cd.sh
+  alias ranger="ranger-cd"
   cd "$AUTOCD"
 fi
 
@@ -83,3 +83,4 @@ export LANG=en_US.UTF-8
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+
