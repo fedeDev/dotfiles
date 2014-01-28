@@ -180,8 +180,7 @@ exec /usr/bin/nm-applet
 exec sh $bindir/fehbg
 exec redshift
 exec mpd
-exec --no-startup-id sh ~/.xinitrc
-exec --no-startup-id uxterm -name scratchpad -e /usr/bin/vim
+exec setxkbmap -option caps:escape
 
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
@@ -195,6 +194,5 @@ for_window [class="I3-exit"] floating enable
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
-
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
