@@ -177,7 +177,7 @@ bar {
 
 # execs, unclutter is started automatically in ubuntu >.>
 exec /usr/bin/nm-applet
-exec sh $bindir/fehbg
+exec sh ~/.fehbg
 exec redshift
 exec mpd
 exec setxkbmap -option caps:escape
