@@ -200,21 +200,21 @@ input {
 #
 # An example of an ALSA output:
 #
-# audio_output {
-#         type		"alsa"
-#         name		"Fede ALSA Device"
-#         #device		"hw:0,0"	# optional
-#         #format		"44100:16:2"	# optional
-#         mixer_type      "hardware"	# optional
-#         mixer_device	"default"	# optional
-#         mixer_control	"PCM"		# optional
-#         #mixer_index	"0"		# optional
-# }
 audio_output {
-        type		"pulse"
-        name		"Fede pulse device"
-        server  "localhost"
+        type		"alsa"
+        name		"Fede ALSA Device"
+        #device		"hw:0,0"	# optional
+        #format		"44100:16:2"	# optional
+# mixer_type      "hardware"	# optional
+# mixer_device	"default"	# optional
+# mixer_control	"PCM"		# optional
+        #mixer_index	"0"		# optional
 }
+# audio_output {
+#         type		"pulse"
+#         name		"Fede pulse device"
+#         server  "localhost"
+# }
 
 # An example of an OSS output:
 #
@@ -447,7 +447,7 @@ audio_output {
 # If file or directory names do not display correctly for your locale then you
 # may need to modify this setting.
 #
-#filesystem_charset		"UTF-8"
+filesystem_charset		"UTF-8"
 #
 # This setting controls the encoding that ID3v1 tags should be converted from.
 #

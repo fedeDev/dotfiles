@@ -81,6 +81,7 @@ export LANG=en_US.UTF-8
 
 # Load the repo managment software
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
+# NCurses 'du'
+alias ncdu="ncdu -x"

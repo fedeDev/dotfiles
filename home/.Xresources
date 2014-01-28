@@ -12,10 +12,10 @@ Xft.dpi:                    96
 ! XTERM ========================
 xterm*termName:             xterm-256color
 xterm*renderFont:           true
-xterm*faceName:             Meslo LG M for Powerline
+! xterm*faceName:             Meslo LG M for Powerline
 ! xterm*faceName:            Inconsolata for Powerline
 ! xterm*faceName:            Droid Sans Mono for Powerline
-! xterm*faceName:            Source Code Pro for Powerline
+xterm*faceName:            Source Code Pro for Powerline
 ! xterm*faceName:            Anonymous Pro for Powerline
 xterm*faceSize:             9
 xterm*utf8:                 2
