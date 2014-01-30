@@ -28,7 +28,8 @@ COMPLETION_WAITING_DOTS="true"
 # cp:         adds the 'cpv' alias which provides a progess bar for big transfers
 # gitignore:  access from the zshell a bunch of gitignores from github
 # extract:    adds the 'extract' command to untar, unzip, unrar, etc. files
-plugins=(cmake fasd git-extras web-search cp gitignore extract)
+# pass:       bash completions for password manager
+plugins=(cmake fasd git-extras web-search cp gitignore extract pass)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -85,3 +86,6 @@ fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
 # NCurses 'du'
 alias ncdu="ncdu -x"
+
+# GPG Agent
+export GPG_TTY=$(tty)

@@ -1,0 +1,110 @@
+[general]
+
+accounts = ETH
+
+# Offlineimap can synchronize more than one account at a time.  If you
+# want to enable this feature, set the below value to something
+# greater than 1.  To force it to synchronize only one account at a
+# time, set it to 1.
+#
+# Note: if you are using autorefresh and have more than one account,
+# you must set this number to be >= to the number of accounts you have;
+# since any given sync run never "finishes" due to a timer, you will never
+# sync your additional accounts if this is 1.
+
+#maxsyncaccounts = 1
+
+ui = TTYUI
+pythonfile = ~/bin/offlineimap.py
+socktimeout = 60
+fsync = false
+
+[Account ETH]
+
+localrepository = LocalETH
+remoterepository = RemoteETH
+
+########## Advanced settings
+
+# You can have offlineimap continue running indefinitely, automatically
+# syncing your mail periodically.  If you want that, specify how
+# frequently to do that (in minutes) here.  You can also specify
+# fractional minutes (ie, 3.25).
+
+autorefresh = 3
+
+# OfflineImap can replace a number of full updates by quick
+# synchronizations.  It only synchronizes a folder if 1) a Maildir
+# folder has changed, or 2) if an IMAP folder has received new messages
+# or had messages deleted, ie it does not update if only IMAP flags have
+# changed.  Full updates need to fetch ALL flags for all messages, so
+# this makes quite a performance difference (especially if syncing
+# between two IMAP servers).
+# Specify 0 for never, -1 for always (works even in non-autorefresh
+# mode), or a positive integer <n> to do <n> quick updates before doing
+# another full synchronization (requires autorefresh).  Updates are
+# always performed after <autorefresh> minutes, be they quick or full.
+
+quick = 12
+
+# You can specify a pre and post sync hook to execute a external command.
+# In this case a call to imapfilter to filter mail before the sync process
+# starts and a custom shell script after the sync completes.
+# The pre sync script has to complete before a sync to the account will
+# start.
+
+# presynchook = imapfilter
+# postsynchook = notifysync.sh
+
+# You can also specify parameters to the commands
+# presynchook = imapfilter -c someotherconfig.lua
+
+# OfflineImap caches the state of the synchronisation to e.g. be able to
+# determine if a mail has been deleted on one side or added on the
+# other.
+status_backend = sqlite
+maxage = 40
+
+[Repository LocalETH]
+type = Maildir
+localfolders = ~/Mail/ETH
+sep = /
+
+[Repository RemoteETH]
+type = IMAP
+remotehost = mail.ethz.ch
+ssl = yes
+cert_fingerprint = 1c671ac670b1fbbfddeddd3541dbcc06148061e2
+remoteport = 993
+remoteuser = fcampose
+remotepasseval = mailpasswd('ETH')
+
+# In between synchronisations, OfflineIMAP can monitor mailboxes for new
+# messages using the IDLE command. If you want to enable this, specify here
+# the folders you wish to monitor. Note that the IMAP protocol requires a
+# separate connection for each folder monitored in this way, so setting
+# this option will force settings for:
+#     maxconnections - to be at least the number of folders you give
+#     holdconnectionopen - to be true
+#     keepalive - to be 29 minutes unless you specify otherwise
+#
+# This feature isn't complete and may well have problems. See the manual
+# for more details.
+#
+# This option should return a Python list. For example
+#
+idlefolders = ['INBOX']
+maxconnections = 2
+holdconnectionopen = yes
+keepalive = 60
+#
+# Normally, OfflineIMAP will expunge deleted messages from the server.
+# You can disable that if you wish.  This means that OfflineIMAP will
+# mark them deleted on the server, but not actually delete them.
+# You must use some other IMAP client to delete them if you use this
+# setting; otherwise, the messgaes will just pile up there forever.
+# Therefore, this setting is definitely NOT recommended.
+#
+#expunge = no
+
+folderfilter = lambda foldername: foldername not in ['Contacts', 'Calendar', 'Journal', 'Notes', 'Tasks', 'Outbox', 'Junk E-Mail']
