@@ -185,6 +185,7 @@ exec setxkbmap -option caps:escape
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
 assign [class="Eclipse"] 3
+assign [title="mutt"] 9
 
 # custom window settings
 for_window [class="XTerm" instance="scratchpad"] move scratchpad

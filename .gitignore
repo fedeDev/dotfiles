@@ -5,3 +5,10 @@ vim/bundle/*
 config/google*
 config/pulse*
 *~
+*.pyo
+*.pyc
+config/ranger/bookmarks
+config/ranger/history
+config/ranger/tagged
+config/ipython/*
+config/gtk-2.0/*

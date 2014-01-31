@@ -89,3 +89,17 @@ alias ncdu="ncdu -x"
 
 # GPG Agent
 export GPG_TTY=$(tty)
+
+# Mutt
+alias mutt 'cd ~ && mutt-patched'
+
+# Check for gpg-agent key, prompt if not present ... so very unsafe
+GPG_AGENT_PID=$(echo $GPG_AGENT_INFO | cut -d : -f2)
+if [[ `cat $HOME/'.gnupg/lock'` != "$GPG_AGENT_PID" ]]; then
+  pass show ETH/email > /dev/null
+  # Activate key-dependent cron jobs
+  crontab -l > /tmp/crontab.a
+  sed -e 's=^#\(.*/bin/imap-cron.sh$\)=\1=g' /tmp/crontab.a | crontab
+  rm /tmp/crontab.a
+  echo $GPG_AGENT_PID > $HOME/'.gnupg/lock'
+fi

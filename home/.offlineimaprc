@@ -31,7 +31,7 @@ remoterepository = RemoteETH
 # frequently to do that (in minutes) here.  You can also specify
 # fractional minutes (ie, 3.25).
 
-autorefresh = 3
+autorefresh = 5
 
 # OfflineImap can replace a number of full updates by quick
 # synchronizations.  It only synchronizes a folder if 1) a Maildir
@@ -45,7 +45,7 @@ autorefresh = 3
 # another full synchronization (requires autorefresh).  Updates are
 # always performed after <autorefresh> minutes, be they quick or full.
 
-quick = 12
+quick = 10
 
 # You can specify a pre and post sync hook to execute a external command.
 # In this case a call to imapfilter to filter mail before the sync process
@@ -108,3 +108,11 @@ keepalive = 60
 #expunge = no
 
 folderfilter = lambda foldername: foldername not in ['Contacts', 'Calendar', 'Journal', 'Notes', 'Tasks', 'Outbox', 'Junk E-Mail']
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
