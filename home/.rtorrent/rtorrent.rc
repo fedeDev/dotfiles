@@ -1,0 +1,78 @@
+### rtorrent settings #######################################################
+# general
+upload_rate = 18000
+download_rate = 24000
+max_uploads = 20
+max_uploads_global = 250
+tracker_numwant = 80
+encryption = allow_incoming,try_outgoing,enable_retry
+key_layout = qwerty
+check_hash = yes
+
+# range for listening port
+port_range = 49164-49164
+port_random = no
+
+# tracker-less torrent support
+dht = auto
+dht_port = 6881
+peer_exchange = yes
+use_udp_trackers = yes
+
+# peer settings
+min_peers = 30
+max_peers = 100
+min_peers_seed = 30
+max_peers_seed = 30
+
+# resource usage
+max_memory_usage = 1800M
+xmlrpc_size_limit = 2M
+
+
+# CORE settings (keep these)
+http_capath = /etc/ssl/certs
+encoding_list = utf8
+
+directory = /home/fede/Downloads/torrents/rtorrent
+session = /home/fede/.rtorrent/.session
+scgi_local = /home/fede/.rtorrent/.scgi_local
+log.execute = /home/fede/.rtorrent/log/execute.log
+
+schedule = scgi_permission,0,0,"execute_nothrow=chmod,g+w,/home/fede/.rtorrent/.scgi_local"
+
+schedule = watch_start_directory,10,10,load_start=/home/fede/.rtorrent/watch/start/*.torrent
+schedule = watch_load_directory,15,20,load=/home/fede/.rtorrent/watch/load/*.torrent
+
+schedule = low_diskspace,15,60,close_low_diskspace=1000M
+
+# EVENTS: Logging (don't log "opened", or you get swamped at startup)
+system.method.set_key = event.download.inserted_new,log,"print=\"LOADED \",$d.get_name=,\" [\",$to_date=$system.time=,\"]\""
+system.method.set_key = event.download.finished,log,"print=\"COMPLETED \",$d.get_name=,\" [R=\",$d.get_ratio=,\", \",$to_date=$system.time=,\"]\""
+system.method.set_key = event.download.closed,log,"print=\"CLOSED \",$d.get_name=,\" [R=\",$d.get_ratio=,\", \",$to_date=$system.time=,\"]\""
+
+# Collapsed view, default on main
+view.collapsed.toggle=main
+schedule = bind_collapse,0,0,"ui.bind_key=download_list,*,view.collapsed.toggle="
+
+## Colors!
+
+ui.color.info.set = "white"
+ui.color.label.set = "white"
+
+ui.color.complete.set=41
+ui.color.stopped.set=33
+
+ui.color.footer.set="255 on 32"
+ui.color.title.set="255 on 32"
+
+ui.color.even.set="on 234"
+ui.color.odd.set="on 232"
+
+ui.color.progress0.set=196
+ui.color.progress20.set=202
+ui.color.progress40.set=213
+ui.color.progress60.set=214
+ui.color.progress80.set=226
+ui.color.progress100.set=41
+ui.color.progress120.set="40"

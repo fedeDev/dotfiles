@@ -90,6 +90,9 @@ alias ncdu="ncdu -x"
 # GPG Agent
 export GPG_TTY=$(tty)
 
+# rtorren
+alias rtorrent="uxterm -fa 'Everson Mono' -T 'rtorrent' -e $HOME/.rtorrent/start &"
+
 # Mutt
 alias mutt 'cd ~ && mutt-patched'
 

@@ -116,9 +116,10 @@ bindsym $mod+Control+l  resize grow right 2 px
 bindsym $mod+Tab workspace back_and_forth
 
 # Bind media keys
+# alsa + amixer needed
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
-bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle
+bindsym XF86AudioMute exec amixer -q set Master toggle
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
 
@@ -185,13 +186,14 @@ exec setxkbmap -option caps:escape
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
 assign [class="Eclipse"] 3
-assign [title="mutt"] 9
+assign [title="rtorrent"] 9
 
 # custom window settings
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
 for_window [class="Google-chrome"] border none
 for_window [class="Eclipse"] border none
 for_window [class="I3-exit"] floating enable
+for_window [class="mpv"] floating enable
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
