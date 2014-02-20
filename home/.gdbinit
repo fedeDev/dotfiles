@@ -13,3 +13,4 @@ set print sevenbit-strings off
 set print thread-events on
 set print type methods on
 set print type typedefs on
+set print null-stop on

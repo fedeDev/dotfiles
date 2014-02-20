@@ -10,31 +10,31 @@ Xft.dpi:                    96
 
 !
 ! XTERM ========================
-xterm*termName:             xterm-256color
-xterm*renderFont:           true
+XTerm*termName:             xterm-256color
+XTerm*renderFont:           true
 ! xterm*faceName:             Meslo LG M for Powerline
 ! xterm*faceName:            Inconsolata for Powerline
 ! xterm*faceName:            Droid Sans Mono for Powerline
-xterm*faceName:            Source Code Pro for Powerline
+XTerm*faceName:            Source Code Pro for Powerline
 ! xterm*faceName:            Anonymous Pro for Powerline
-xterm*faceSize:             9
-xterm*utf8:                 2
-xterm*utf8Title:            1
-xterm*saveLines:            65535
-xterm*scrollBar:            false
-xterm*multiScroll:          true
-xterm*locale:          true
-xterm*toolBar:              false
-xterm*selectToClipboard:    true
-xterm*metaSendsEscape:      true
+XTerm*faceSize:             9
+XTerm*utf8:                 2
+XTerm*utf8Title:            1
+XTerm*saveLines:            65535
+XTerm*scrollBar:            false
+XTerm*multiScroll:          true
+XTerm*locale:          true
+XTerm*toolBar:              false
+XTerm*selectToClipboard:    true
+XTerm*metaSendsEscape:      true
 XTerm*vt100.translations: #override \
         Shift <KeyPress> Insert:  string(0x1b) string(0x5b) string(2;2~) \n\
         Ctrl Shift <KeyPress> C:  select-end(PRIMARY,CLIPBOARD,CUT_BUFFER0) \n\
         Ctrl Shift <KeyPress> V:  insert-selection(CLIPBOARD, CUT_BUFFER0, PRIMARY)
-xterm*VT100.colorMode:      on
-xterm*dynamicColors:        on
-xterm*xftAntialias:         1
-xterm*cjkWidth:             0
+XTerm*VT100.colorMode:      on
+XTerm*dynamicColors:        on
+XTerm*xftAntialias:         1
+XTerm*cjkWidth:             0
 
 ! Tomorrow-Night Palette
 #define t_background #1D1F21

@@ -19,7 +19,7 @@ font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec uxterm
+bindsym $mod+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+c kill
@@ -136,6 +136,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exec $bindir/i3-exit
 bindsym XF86PowerOff exec $bindir/i3-exit
 
+# open email
+bindsym $mod+m exec xterm -name mail -e mutt
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -187,6 +190,7 @@ exec setxkbmap -option caps:escape
 assign [class="Google-chrome"] 2
 assign [class="Eclipse"] 3
 assign [title="rtorrent"] 9
+assign [instance="mail"] 8
 
 # custom window settings
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
@@ -194,6 +198,9 @@ for_window [class="Google-chrome"] border none
 for_window [class="Eclipse"] border none
 for_window [class="I3-exit"] floating enable
 for_window [class="mpv"] floating enable
+# specifics for a project
+for_window [class="Video stream"] floating enable
+for_window [title="noshow"] border none
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
