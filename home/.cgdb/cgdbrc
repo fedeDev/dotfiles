@@ -1,0 +1,6 @@
+set arrowstyle=long
+set ignorecase
+set winsplit=top_big
+set tabstop=3
+highlight SelectedLineNr cterm=normal ctermfg=15 ctermbg=8
+map ; :
