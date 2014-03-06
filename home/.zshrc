@@ -29,7 +29,8 @@ COMPLETION_WAITING_DOTS="true"
 # gitignore:  access from the zshell a bunch of gitignores from github
 # extract:    adds the 'extract' command to untar, unzip, unrar, etc. files
 # pass:       bash completions for password manager
-plugins=(cmake fasd git-extras web-search cp gitignore extract pass)
+# go:         completion for the go compiler/runner
+plugins=(cmake fasd git-extras web-search cp gitignore extract pass go)
 
 source $ZSH/oh-my-zsh.sh
 

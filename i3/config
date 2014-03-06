@@ -19,18 +19,14 @@ font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec $bindir/xtermcd
+bindsym $mod+mod1+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+c kill
 
-# start dmenu (a program launcher)
-bindsym Mod1+space exec dmenu_run
-
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# start dmenu
+bindsym Mod1+space exec "dmenu_run -fn -misc-fixed-medium-r-normal--12-100-75-75-C-60-*-1 -i -p run: -nb \#1f1f1f -nf \#A0A0A0 -sb \#285577 -sf white"
 
 # change focus
 bindsym $mod+h focus left
@@ -38,23 +34,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-# bindsym $mod+Left focus left
-# bindsym $mod+Down focus down
-# bindsym $mod+Up focus up
-# bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-# bindsym $mod+Shift+Left move left
-# bindsym $mod+Shift+Down move down
-# bindsym $mod+Shift+Up move up
-# bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -63,7 +47,7 @@ bindsym $mod+b split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
+bindsym $mod+f exec $bindir/fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -94,6 +78,13 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+# Switch workspaces with meta-tab
+bindsym $mod+Tab workspace back_and_forth
+
+# Cycle through used workspaces
+bindsym $mod+mod1+h workspace prev
+bindsym $mod+mod1+l workspace next
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -106,14 +97,10 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# testing
-bindsym $mod+Control+h  resize grow left  2 px
-bindsym $mod+Control+j  resize grow down  2 px
-bindsym $mod+Control+k  resize grow up    2 px
-bindsym $mod+Control+l  resize grow right 2 px
+# Move clients to contiguous workspaces
+bindsym $mod+Shift+mod1+h move container to workspace prev
+bindsym $mod+Shift+mod1+l move container to workspace next
 
-# Switch workspaces with meta-tab
-bindsym $mod+Tab workspace back_and_forth
 
 # Bind media keys
 # alsa + amixer needed
@@ -139,6 +126,9 @@ bindsym XF86PowerOff exec $bindir/i3-exit
 # open email
 bindsym $mod+m exec xterm -name mail -e mutt
 
+# open sublime
+bindsym $mod+p exec subl
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -163,28 +153,34 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         #status_command i3status
-	status_command ~/.i3/status.sh
+	# status_command ~/.i3/status.sh
 	tray_output none
 	position top
 	colors {
                 background #1f1f1f
                 statusline #605c5a
                 # item                        border   bg   fg
+                # for multi monitor:
                 #focused_workspace #101010 #101010 #51df1d
                 active_workspace #3300FF #101010 #101010
-                inactive_workspace #222222 #222222 #A0A0A0
-                urgent_workspace #2e3436 #9a878f
+                inactive_workspace #363636 #282828 #A0A0A0
+                urgent_workspace #2e3436 #9a878f #000000
         }
 #	mode hide
 #    	hidden_state hide
 }
 
-# execs, unclutter is started automatically in ubuntu >.>
-exec /usr/bin/nm-applet
-exec sh ~/.fehbg
+exec compton
+exec unclutter
+# exec /usr/bin/nm-applet
 exec redshift
+exec sh ~/.fehbg
 exec mpd
 exec setxkbmap -option caps:escape
+exec xterm
+exec $bindir/status.sh
+
+
 
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
@@ -196,8 +192,10 @@ assign [instance="mail"] 8
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
 for_window [class="Google-chrome"] border none
 for_window [class="Eclipse"] border none
-for_window [class="I3-exit"] floating enable
+for_window [class="I3-exit"] floating enable, border 1pixel
 for_window [class="mpv"] floating enable
+for_window [class="Sublime_text"] border 1pixel
+
 # specifics for a project
 for_window [class="Video stream"] floating enable
 for_window [title="noshow"] border none
