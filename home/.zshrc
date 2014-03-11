@@ -91,11 +91,8 @@ alias ncdu="ncdu -x"
 # GPG Agent
 export GPG_TTY=$(tty)
 
-# rtorren
-alias rtorrent="uxterm -fa 'Everson Mono' -T 'rtorrent' -e $HOME/.rtorrent/start &"
-
-# Mutt
-alias mutt 'cd ~ && mutt-patched'
+# torrents
+alias trcli='transmission-remote-cli'
 
 # Check for gpg-agent key, prompt if not present ... so very unsafe
 GPG_AGENT_PID=$(echo $GPG_AGENT_INFO | cut -d : -f2)
@@ -107,3 +104,6 @@ if [[ `cat $HOME/'.gnupg/lock'` != "$GPG_AGENT_PID" ]]; then
   rm /tmp/crontab.a
   echo $GPG_AGENT_PID > $HOME/'.gnupg/lock'
 fi
+
+# Go
+export GOPATH=$HOME/gopath:$GOPATH

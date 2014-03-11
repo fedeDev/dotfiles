@@ -1,0 +1,23 @@
+#!/bin/bash
+# ------------------------------------------------------
+# Dzen settings & Variables
+# -------------------------
+DZEN_FG="#A0A0A0"
+DZEN_BG="#1f1f1f"
+HEIGHT=12
+WIDTH=1300
+X=450
+Y=2
+FONT="-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*"
+EVENTS="-e ''"
+DZEN_TITLE="dzen_topbar"
+DZEN="dzen2 $EVENTS -x $X -y $Y -w $WIDTH -h $HEIGHT -fn $FONT -ta right -bg $DZEN_BG -fg $DZEN_FG -title-name $DZEN_TITLE -slave-name $DZEN_TITLE -p"
+
+# BAR_FG="#285577"
+# BAR_MUTE="#505050"
+# BAR_BG="#808080"
+# BAR_H=7
+# BAR_W=40
+# DZEN_GDBAR="gdbar"
+
+conky -c ~/.i3/conky_scripts/conkyrc_top | $DZEN & echo $! > /tmp/dzenbar-pid

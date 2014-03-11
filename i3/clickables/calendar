@@ -1,0 +1,48 @@
+#!/bin/bash
+
+DZEN_FG="#909090"
+DZEN_BG="#1F1F1F"
+WIDTH=410
+PARENTPOS=0
+X=`expr $(xwininfo -root | sed -n 's|Width: \([0-9]*$\)|\1|p') - $WIDTH - $PARENTPOS`
+Y=18
+FONT="-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*"
+DZEN="dzen2 -l 11  -x $X -y $Y -w $WIDTH -fn $FONT -sa l -bg $DZEN_BG -fg $DZEN_FG -p"
+EVENTS='onstart=uncollapse'
+
+TIMZ=`date +%Z%:z`
+zone() {
+  echo -n "^p(7)^fg(#E0E0E0)$TIMZ^fg()"
+}
+
+TODAY=$(expr `date +'%d'` + 0)
+calendar() {
+  cal -3 -h | sed -re "s/(^.{21,}[ ])($TODAY)(.{21,}$)/\1^bg()^fg(#F0F0FF)\2^fg()^bg()\3/;
+  s/(.*)/^p(15)\1/"
+}
+
+DAYEAR=`date +%j`
+WEEKYEAR=`date +%g`
+DATEMEX=`TZ='America/Mexico_City' date '+%A %I:%M %p'`
+extras() {
+  echo ""
+  echo "^p(15)Day of the year: ^fg(#E0E0E0)$DAYEAR^fg()"
+  echo "^p(15)Week of the year: ^fg(#E0E0E0)$WEEKYEAR^fg()"
+  echo -n "^p(15)Mexico City: ^fg(#E0E0E0)$DATEMEX^fg()"
+}
+
+pid=`cat /tmp/dzenbar-time-pid`
+if [[ -z $pid ]]; then
+  (echo "$(zone)"; echo "$(calendar)"; echo "$(extras)") | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-time-pid
+  exit 0
+else
+  kill -0 $pid 2>/dev/null
+  if [[ $? == 1 ]]; then
+    (echo "$(zone)"; echo "$(calendar)"; echo "$(extras)"; sleep 3) | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-time-pid
+    exit 0
+  fi
+fi
+
+kill -9 $pid
+
+

@@ -1,0 +1,16 @@
+#!/bin/bash
+# get public IP using the curl utility and save in tmp file
+#
+IP_FILE='/tmp/dzenbar-publicIP'
+if [[ ! -f $IP_FILE ]]; then
+  echo "Network down"
+  exit 1
+fi
+
+IP=`cat /tmp/dzenbar-publicIP 2>/dev/null`
+if [[ -z $IP ]]; then
+  echo "Network down"
+  exit 1
+fi
+
+echo `cat /tmp/dzenbar-publicIP 2>/dev/null`

@@ -15,6 +15,7 @@ set $bindir ~/.i3
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -47,7 +48,13 @@ bindsym $mod+b split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f exec $bindir/fullscreen
+bindsym $mod+f exec $bindir/i3fullscreen
+
+# toggle dzen2 bar
+bindsym $mod+n exec $bindir/toggle-dzen
+
+# check emails on inbox
+bindsym $mod+o exec $bindir/checkmail
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -133,10 +140,6 @@ bindsym $mod+p exec subl
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 5 px or 5 ppt
         bindsym j resize grow height 5 px or 5 ppt
         bindsym k resize shrink height 5 px or 5 ppt
@@ -152,11 +155,10 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command i3status
-	# status_command ~/.i3/status.sh
-	tray_output none
-	position top
-	colors {
+      status_command fail
+      tray_output none
+      position top
+      colors {
                 background #1f1f1f
                 statusline #605c5a
                 # item                        border   bg   fg
@@ -166,21 +168,10 @@ bar {
                 inactive_workspace #363636 #282828 #A0A0A0
                 urgent_workspace #2e3436 #9a878f #000000
         }
-#	mode hide
-#    	hidden_state hide
 }
 
-exec compton
-exec unclutter
-# exec /usr/bin/nm-applet
-exec redshift
-exec sh ~/.fehbg
-exec mpd
-exec setxkbmap -option caps:escape
-exec xterm
-exec $bindir/status.sh
-
-
+# Start all the custom goodness
+exec --no-startup-id $bindir/autostart
 
 # Autoset some apps with specific configuration workspace assignment (use "xprop")
 assign [class="Google-chrome"] 2
@@ -196,11 +187,16 @@ for_window [class="I3-exit"] floating enable, border 1pixel
 for_window [class="mpv"] floating enable
 for_window [class="Sublime_text"] border 1pixel
 
-# specifics for a project
+# specifics for a projects
+# {{{
 for_window [class="Video stream"] floating enable
 for_window [title="noshow"] border none
+for_window [title="GL 3.0 Window"] floating enable, border 1pixel
+for_window [title="Main"] floating enable, border 1pixel
+# }}}
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
+
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show

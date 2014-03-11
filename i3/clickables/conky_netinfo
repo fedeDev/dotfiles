@@ -1,0 +1,34 @@
+# General Settings
+background no
+cpu_avg_samples 2
+net_avg_samples 2
+out_to_x no
+update_interval 2
+out_to_console yes
+no_buffers yes
+lua_load ~/.i3/clickables/conky_top.lua
+total_run_times 1
+
+# DZEN_BG="#1F1F1F"
+# Kernel name
+# Uptime
+# Temperature
+# Fan state
+# HDD utilization
+# Top cpu
+TEXT
+^fg(\#D0D0D0)Network^fg()
+^fg(\#1F1F1F)dum^fg()
+[Info]
+^pa(10)Local  IP: ^fg(\#D0D0D0)${addrs wlan0}^fg()
+^pa(10)Public IP: ^fg(\#D0D0D0)${exec ~/.i3/clickables/public_ip}^fg()
+^fg(\#1F1F1F)dum^fg()
+[Totals]
+^pa(10)Total Download: ^fg(\#D0D0D0)${totaldown wlan0}^fg()
+^pa(10)Total   Upload: ^fg(\#D0D0D0)${totalup wlan0}^fg()
+^fg(\#1F1F1F)dum^fg()
+${if_match ${exec transmission-remote -l | wc -l} > 2}\
+[Torrents]
+^fg(\#D0D0D0)\
+${exec transmission-remote -l | head -n -1 | tail -n +2 | awk 'BEGIN{printf "  Stat\tDone\tETA\tUp\tDown\tName^fg()\n"} { printf "  %4.4s\t%4.4s\t%s\t%3.0f\t%4.0f\t%1.42s\n", $9,$2,$5,$6,$7,substr($0, index($0, $10)) }' | expand --tabs=6}
+$endif

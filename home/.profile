@@ -10,3 +10,6 @@ export PATH=$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$ANDROID_NDK
 
 # Sanity check for system wide UTF-8
 export LC_ALL=en_US.UTF-8
+
+# Timezone
+export TZ=America/Mexico_City

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+DZEN_FG="#909090"
+DZEN_BG="#1F1F1F"
+LINES=`expr 10 + $(transmission-remote -l | wc -l)`
+# check if there are any torrents to show
+if [[ $LINES -gt 12 ]]; then
+  WIDTH=490
+  PARENTPOS=50
+else
+  WIDTH=170
+  PARENTPOS=210
+  LINES=8
+fi
+X=`expr $(xwininfo -root | sed -n 's|Width: \([0-9]*$\)|\1|p') - $WIDTH - $PARENTPOS`
+Y=18
+FONT="-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*"
+DZEN="dzen2 -l $LINES  -x $X -y $Y -w $WIDTH -fn $FONT -sa l -bg $DZEN_BG -fg $DZEN_FG -p"
+EVENTS='onstart=uncollapse'
+
+pid=`cat /tmp/dzenbar-netinfo-pid`
+if [[ -z $pid ]]; then
+  conky -c ~/.i3/clickables/conky_netinfo | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
+  exit 0
+else
+  kill -0 $pid 2>/dev/null
+  if [[ $? == 1 ]]; then
+    conky -c ~/.i3/clickables/conky_netinfo | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
+    exit 0
+  fi
+fi
+
+kill -9 $pid
+
+
