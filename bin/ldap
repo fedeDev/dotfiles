@@ -1,8 +1,0 @@
-#!/usr/bin/zsh
-# Try to do an autocomplete script for ZSH
-function names() { 
-local nameArray=$(asdf)
-	#$(ldapvi --ldapsearch "(&(mail=*)(cn=*$1*))" | grep "cn=" | sed 's/dn: cn=//' | sed 's/+.*//' | sed 's/mail: //')
-	echo ${nameArray}
-}
-names $1

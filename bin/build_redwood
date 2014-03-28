@@ -1,4 +1,0 @@
-#!/bin/bash
-cd ~/redwood_ws
-source RedwoodInternal/Redwood/setup.sh
-redwood_make --platform $1 $2
