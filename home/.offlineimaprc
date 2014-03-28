@@ -54,7 +54,7 @@ quick = 5
 # start.
 
 # presynchook = imapfilter
-# postsynchook = notifysync.sh
+postsynchook = /home/fede/bin/cron-lbdb-fetchaddr
 
 # You can also specify parameters to the commands
 # presynchook = imapfilter -c someotherconfig.lua
@@ -63,7 +63,7 @@ quick = 5
 # determine if a mail has been deleted on one side or added on the
 # other.
 status_backend = sqlite
-maxage = 40
+maxage = 10
 
 [Repository LocalETH]
 type = Maildir
@@ -95,7 +95,7 @@ remotepasseval = mailpasswd('ETH')
 # This option should return a Python list. For example
 #
 idlefolders = ['INBOX']
-maxconnections = 2
+maxconnections = 3
 holdconnectionopen = yes
 keepalive = 60
 #

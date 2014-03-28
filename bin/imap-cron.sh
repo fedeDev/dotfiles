@@ -11,7 +11,7 @@ ps -ef | grep -v grep | grep -v sh | grep -v SCREEN | grep /usr/bin/$SERVICE > /
 if [ $? -eq 1 ]
 then
   echo "`date` $SERVICE will be started." >> ${LOGFILE}
-  /usr/bin/offlineimap -c ${HOME}/.offlineimaprc >> ${LOGFILE} 2>&1
+  /usr/bin/offlineimap -c ${HOME}/.offlineimaprc >> ${LOGFILE} 2>&1 &
   echo "`date` $SERVICE started" >> ${LOGFILE}
 else
   echo "`date` $SERVICE is up and running." >> ${LOGFILE}

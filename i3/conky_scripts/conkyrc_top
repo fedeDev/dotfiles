@@ -16,41 +16,48 @@ TEXT
 $if_mpd_playing\
  ${if_match "${mpd_status}" =="Playing"}\
  ^fg(\#505070)^fg(\#404040)$mpd_elapsed/$mpd_length^fg()\
-^fg(\#5E6A6B)^i(stlarch_icons/play4.xbm)^fg()\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/play4.xbm)^fg()\
  $else\
- ^fg(\#5E6A6B)^i(stlarch_icons/pause4.xbm)^fg()\
+ ^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/pause4.xbm)^fg()\
  $endif\
 ${mpd_smart 45}\
  | \
 $endif\
 ${exec ~/.i3/conky_scripts/volumelevel.sh}% \
+${if_up eth0}\
 | \
-${if_up wlan0}\
-${execi 3600 ~/.i3/conky_scripts/get_public_ip}\
-^ca(1,clickables/netinfo)\
-^fg(\#5E6A6B)^i(stlarch_icons/uparrow3.xbm)^fg() \
-${lua netspeed ${upspeedf wlan0}}\
- ^fg(\#5E6A6B)^i(stlarch_icons/downarrow3.xbm)^fg() \
-${lua netspeed ${downspeedf wlan0}}\
+${exec /home/fede/.i3/conky_scripts/get_public_ip}\
+^ca(1,~/.i3/clickables/netinfo eth0)\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/uparrow3.xbm)^fg() \
+${lua netspeed ${upspeedf eth0}}\
+ ^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/downarrow3.xbm)^fg() \
+${lua netspeed ${downspeedf eth0}}\
 ^ca()\
-$endif\
  | \
-^ca(1,clickables/sysinfo)\
-^fg(\#5E6A6B)^i(stlarch_icons/mem1.xbm)^fg()\
+$endif\
+${if_up eth1}\
+${exec ~/.i3/conky_scripts/get_public_ip}\
+^ca(1,~/.i3/clickables/netinfo eth1)\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/uparrow3.xbm)^fg() \
+${lua netspeed ${upspeedf eth1}}\
+ ^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/downarrow3.xbm)^fg() \
+${lua netspeed ${downspeedf eth1}}\
+^ca()\
+ | \
+$endif\
+^ca(1,~/.i3/clickables/sysinfo)\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/mem1.xbm)^fg()\
 ${lua format %3s $memperc}% · \
-^fg(\#5E6A6B)^i(stlarch_icons/cpu13.xbm)^fg()\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/cpu13.xbm)^fg()\
 ${lua format %3s $cpu}%\
 ^ca()\
  |\
 ${if_match $new_mails > 0}\
- ^fg(\#5E6A6B)^i(stlarch_icons/mail8.xbm)^fg() \
+ ^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/mail8.xbm)^fg() \
 $new_mails\
  |\
 $endif \
-^ca(1,clickables/batteryinfo)\
-${exec ~/.i3/conky_scripts/battery.sh} \
-^ca()\
-^fg(\#5E6A6B)^i(stlarch_icons/clock2.xbm)^fg() \
-^ca(1,clickables/calendar)\
+^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/clock2.xbm)^fg() \
+^ca(1,~/.i3/clickables/calendar)\
 ${time %a %e %R} \
 ^ca()

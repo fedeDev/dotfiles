@@ -25,7 +25,7 @@ wait_for_program () {
 xrdb ~/.Xresources &
 
 # Customize peripherals
-xinput --set-prop 'Razer  Razer Abyssus' 'Device Accel Constant Deceleration' 2 &
+# xinput --set-prop 'Razer  Razer Abyssus' 'Device Accel Constant Deceleration' 2 &
 setxkbmap -option caps:escape &
 
 # Start compositor
@@ -47,17 +47,14 @@ redshift &
 # Start music player daemon
 mpd &
 
-# Draw status bar
-~/.i3/dzen_conky &
-wait_for_program
-
-
 # Fire up a terminal
-xterm &
-wait_for_program
+# xterm &
+# wait_for_program
 
 # Refresh X
-xrefresh &
+# xrefresh &
+# Draw status bar
+~/.i3/dzen_conky
 
 # Have fun :)
 exit 0

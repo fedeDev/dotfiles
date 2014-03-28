@@ -21,9 +21,8 @@ TEXT
 ^fg(\#1F1F1F)dum^fg()
 [HDD]
 ^pa(10)^fg(\#D0D0D0)Name       Free      Used / Size      %Free^fg()
-^pa(10)Root:    ${fs_free /}  ${fs_used /} / ${fs_size /} -  ${fs_free_perc /}%
-^pa(10)Slave:    ${fs_free /home/fede/data}   ${fs_used /home/fede/data} / ${fs_size /home/fede/data}  -  ${fs_free_perc /home/fede/data}%
-^pa(10)Windows: ${fs_free /home/fede/windows}  ${fs_used /home/fede/windows} / ${fs_size /home/fede/windows} -  ${fs_free_perc /home/fede/windows}%
+^pa(10)Root:     ${fs_free /}  ${fs_used /} / ${fs_size /}   -  ${fs_free_perc /}%
+^pa(10)Slave:  ${fs_free /home/fede/data}   ${fs_used /home/fede/data} / ${fs_size /home/fede/data}  -  ${fs_free_perc /home/fede/data}%
 ${if_match ${top cpu 1} > 25 } ' $endif
 ^fg(\#1F1F1F)dum^fg()
 [TOP]

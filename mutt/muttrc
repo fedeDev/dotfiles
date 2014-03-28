@@ -9,18 +9,21 @@ set tmpdir           = ~/.mutt/temp          # where to keep temp files
 set signature        = ~/.mutt/sig           # my signature file
 
 # Basic Options --------------------------------------
-set wait_key = no        # shut up, mutt
-set mbox_type = Maildir  # mailbox type
-set timeout = 3          # idle time before scanning
-set mail_check = 0       # minimum time between scans
-#unset move               # gmail does that
-set delete               # don't ask, just do
-unset confirmappend      # don't ask, just do!
-set quit                 # don't ask, just do!!
-unset mark_old           # read/new is good enough for me
-set beep_new             # bell on new mails
-set pipe_decode          # strip headers and eval mimes when piping
-set thorough_search      # strip headers and eval mimes before searching
+set wait_key = no                # shut up, mutt
+set mbox_type = Maildir          # mailbox type
+set timeout = 3                  # idle time before scanning
+set mail_check = 0               # minimum time between scans
+set delete                       # don't ask, just do
+unset confirmappend              # don't ask, just do!
+set quit                         # don't ask, just do!!
+unset mark_old                   # read/new is good enough for me
+set beep_new                     # bell on new mails
+set pipe_decode                  # strip headers and eval mimes when piping
+set thorough_search              # strip headers and eval mimes before searching
+auto_view text/html              # embeded view of html with w3m
+set query_command="lbdbq '%s'"   # use lbdb to manage ldap and fetchmail contacts, see offlineimap posthook
+set sort_alias = alias           # sort alias by their key
+source $alias_file               # for alias autocompletion!
 
 # Sidebar Patch --------------------------------------
 set sidebar_delim   = '  │'
@@ -95,7 +98,6 @@ bind pager G  bottom
 bind pager h  previous-undeleted
 bind pager l  next-undeleted
 bind pager H  display-toggle-weed
-
 bind pager R  group-reply
 
 # View attachments properly.
@@ -135,6 +137,9 @@ bind index p recall-message
 # Searching
 bind index N search-opposite
 bind pager N search-opposite
+
+# Query complete
+bind editor <tab> complete-query
 
 # theme
 source ~/.mutt/zenburn.theme

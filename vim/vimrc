@@ -118,6 +118,9 @@ Bundle 'w0ng/vim-hybrid'
 "
 Bundle 'xterm-color-table.vim'
 
+" Mail attachment for mutt
+Bundle 'chrisbra/CheckAttach'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           reset vimrc augroup                           "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -274,7 +277,7 @@ set textwidth=100
 set colorcolumn=+1
 
 " options for formatting text; see :h formatoptions
-set formatoptions=tcroqnj
+" set formatoptions=tcroqnj
 
 if v:version >= 704
   " The new Vim regex engine is currently slooooow as hell which makes syntax
@@ -390,7 +393,7 @@ au Filetype tex call SetupTextFile()
 au Filetype text call SetupTextFile()
 function! SetupTextFile()
   setlocal spell
-  let &l:showbreak='↳ '
+  let &l:showbreak='¤ '
   setlocal wrap
   setlocal linebreak
   setlocal nonumber
@@ -444,7 +447,7 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Fast saving
-nnoremap <leader>w :w!<cr>
+nnoremap <leader>w :w<cr>
 
 " <leader>v brings up .vimrc
 " <leader>V reloads it and makes all changes active (file has to be saved first)
@@ -550,6 +553,11 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 nnoremap <tab> :bn <CR>
 nnoremap <S-tab> :bp <CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               CheckAttach                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:checkattach_filebrowser = 'ranger'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Command-T                                 "
@@ -721,11 +729,13 @@ let g:notes_directories = ['~/notes']
 "                                syntastic                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 " let g:syntastic_check_on_open = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_error_symbol = '▶'
+let g:syntastic_style_error_symbol = '▷'
+let g:syntastic_warning_symbol = '▶'
+let g:syntastic_style_warning_symbol = '▷'
+let g:syntastic_enable_ballons = 1
 highlight SyntasticErrorSign ctermfg=red
 highlight SyntasticWarningSign ctermfg=yellow
 let g:syntastic_always_populate_loc_list = 1

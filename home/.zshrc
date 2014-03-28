@@ -4,7 +4,6 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="fede"
 
-alias pumount="pumount -D"
 alias open="xdg-open"
 alias cal="cal -3"
 # TODO!
@@ -47,21 +46,29 @@ bindkey "" up-line-or-search
 
 # have ranger cd to the pwd when exit
 if hash ranger 2>/dev/null; then
-  source /usr/local/share/doc/ranger/examples/bash_automatic_cd.sh
+  source $HOME/.config/ranger/plugins/bash_automatic_cd.sh
   alias ranger="ranger-cd"
   cd "$AUTOCD"
 fi
 
 # Uses ls++ for fancier ls
 if hash ls++ 2>/dev/null; then
-  alias l="ls++ -a"
-  alias ll="ls++"
+  alias ll="ls++ -A"
+  alias l="ls++"
+  alias lo="ls++ --potsf"
 fi
 
-# Uses vimpager for fancier less
-export PAGER=vimpager
-alias less=$PAGER
-alias zless=$PAGER
+
+# Have 'cap' to pretty print code, use instead of cat
+if hash pygmentize 2>/dev/null; then
+  alias cap='pygmentize'
+fi
+
+# sxiv should place image on the center of current screen
+alias sxiv='sxiv -g +0+0'
+
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS=' -R '
 
 # This turns off zsh's "helpful" autocorrect feature
 unsetopt correct_all
@@ -107,3 +114,17 @@ fi
 
 # Go
 export GOPATH=$HOME/gopath:$GOPATH
+
+# Pablo's incremental autocomplete
+function load_incrauto() {
+  source $HOME/.incrzsh
+
+  # MENU
+  setopt noautoremoveslash
+  zmodload zsh/complist
+  bindkey -M menuselect '^M' .accept-line
+  zstyle ':completion:*' completer _expand _complete #_approximate
+  zstyle ':completion:*:*:default' force-list always
+  autoload -U colors
+  zstyle -e ':completion:*' list-colors 'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[cyan]" )'
+}

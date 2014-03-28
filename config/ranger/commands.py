@@ -421,9 +421,7 @@ class terminal(Command):
         from ranger.ext.get_executables import get_executables
         command = os.environ.get('TERMCMD', os.environ.get('TERM'))
         if command not in get_executables():
-            command = 'x-terminal-emulator'
-        if command not in get_executables():
-            command = 'xterm'
+            command = 'xterm-256color'
         self.fm.run(command, flags='f')
 
 

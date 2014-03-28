@@ -1,10 +1,10 @@
 #!/bin/zsh
 #
-# check only the inbox folder using quick-mode
+# Sync IMAP
 #
 
-notify-send --expire-time=100 "Offlineimap" "Checking email"
-out_imap=`{ offlineimap -o -f INBOX > /dev/null } 2>&1`
-to_notif=$(echo $out_imap| tail -n +7 | sed 's/ \*\*\* //' | sed 's/ Sync/Sync/')
+notify-send --expire-time=200 "Offlineimap: Syncing ALL mail ..."
+out_imap=$(/usr/bin/offlineimap -o INBOX 2> /dev/null)
+to_notif=$(echo $out_imap| tail -n 1 | sed 's/ \** //' | sed 's/ Sync/Sync/')
 echo $to_notif
-notify-send "Offlineimap" $to_notif
+notify-send --expire-time=100 $to_notif

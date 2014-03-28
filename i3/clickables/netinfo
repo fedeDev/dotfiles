@@ -2,7 +2,7 @@
 
 DZEN_FG="#909090"
 DZEN_BG="#1F1F1F"
-LINES=`expr 10 + $(transmission-remote -l | wc -l)`
+LINES=`expr 10 + $(transmission-remote -l 2>/dev/null | wc -l)`
 # check if there are any torrents to show
 if [[ $LINES -gt 12 ]]; then
   WIDTH=490
@@ -20,12 +20,12 @@ EVENTS='onstart=uncollapse'
 
 pid=`cat /tmp/dzenbar-netinfo-pid`
 if [[ -z $pid ]]; then
-  conky -c ~/.i3/clickables/conky_netinfo | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
+  conky -c ~/.i3/clickables/conky_netinfo_$1 | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
   exit 0
 else
   kill -0 $pid 2>/dev/null
   if [[ $? == 1 ]]; then
-    conky -c ~/.i3/clickables/conky_netinfo | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
+    conky -c ~/.i3/clickables/conky_netinfo_$1 | $DZEN -e $EVENTS & echo $! > /tmp/dzenbar-netinfo-pid
     exit 0
   fi
 fi
