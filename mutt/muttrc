@@ -24,6 +24,7 @@ auto_view text/html              # embeded view of html with w3m
 set query_command="lbdbq '%s'"   # use lbdb to manage ldap and fetchmail contacts, see offlineimap posthook
 set sort_alias = alias           # sort alias by their key
 source $alias_file               # for alias autocompletion!
+set editor="vim -c ':Fip'"       # set our editor!
 
 # Sidebar Patch --------------------------------------
 set sidebar_delim   = '  │'
@@ -106,14 +107,17 @@ bind attach <return> view-mailcap
 # Open URLs
 macro pager \Cu "|urlview<enter>" "call urlview to open links"
 
+# Send later
+bind compose p postpone-message
 
 # Compose View Options -------------------------------
 set realname = "Federico Camposeco"          # who am i?
 set envelope_from                    # which from?
-set sig_dashes                       # dashes before sig
+unset sig_dashes                     # no auto dashes before sig
+# set signature = "~/.mutt/signature"  # signature file
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
-set askcc                            # ask for CC:
+unset askcc                          # don't ask for CC:
 set fcc_attach                       # save attachments with the body
 unset mime_forward                   # forward attachments as part of body
 set forward_format = "Fwd: %s"       # format of subject when forwarding

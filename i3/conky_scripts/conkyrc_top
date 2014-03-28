@@ -53,7 +53,7 @@ ${lua format %3s $cpu}%\
 ^ca()\
  |\
 ${if_match $new_mails > 0}\
- ^fg(\#5E6A6B)^i(/home/fede/.i3/stlarch_icons/mail8.xbm)^fg() \
+ ^fg(\#9E6A6B)^i(/home/fede/.i3/stlarch_icons/mail8.xbm)^fg() \
 $new_mails\
  |\
 $endif \

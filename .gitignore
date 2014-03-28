@@ -1,3 +1,4 @@
+mutt/cache/headers
 vim/tmp/*
 !vim/tmp/.gitignore
 vim/bundle/*

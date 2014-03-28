@@ -1,7 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Preamble                                 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Needed for vundle, will be turned on after vundle inits
 filetype off
@@ -317,11 +317,11 @@ if has("multi_byte")
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
-augroup vimrc
-  " Automatically delete trailing DOS-returns and whitespace on file open and
-  " write.
-  autocmd BufRead,BufWritePre,FileWritePre * silent! %s/[\r \t]\+$//
-augroup END
+" augroup vimrc
+"   " Automatically delete trailing DOS-returns and whitespace on file open and
+"   " write.
+"   autocmd BufRead,BufWritePre,FileWritePre * silent! %s/[\r \t]\+$//
+" augroup END
 
 " Highlight Class and Function names, classes/namespaces for now
 function! s:HighlightFunctionsAndClasses()
@@ -391,6 +391,14 @@ endif
 " Wrap text only at break locations for text and .tex files
 au Filetype tex call SetupTextFile()
 au Filetype text call SetupTextFile()
+au Filetype mail call SetupMail()
+
+" Set up our plugins to play nice with mutt
+function! SetupMail()
+  setlocal nonumber
+  setlocal norelativenumber
+endfunction!
+
 function! SetupTextFile()
   setlocal spell
   let &l:showbreak='¤ '

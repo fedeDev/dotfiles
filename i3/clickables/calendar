@@ -3,7 +3,7 @@
 DZEN_FG="#909090"
 DZEN_BG="#1F1F1F"
 WIDTH=410
-PARENTPOS=0
+PARENTPOS=3
 X=`expr $(xwininfo -root | sed -n 's|Width: \([0-9]*$\)|\1|p') - $WIDTH - $PARENTPOS`
 Y=18
 FONT="-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*"

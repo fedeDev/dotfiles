@@ -56,7 +56,7 @@ function! s:AreaOptions()
         echo 'Patch'
         setlocal fo-=a fo-=w fo-=t sts=0 sw=8 noet
     elseif <SID>CheckArea('^-- $','^$')
-        "echo 'Signature'
+        echo 'Signature'
         setlocal fo-=a fo-=w fo-=t sts=0 sw=8 noet
     else
         echo 'My text'

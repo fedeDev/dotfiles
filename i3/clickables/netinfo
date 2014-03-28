@@ -9,8 +9,12 @@ if [[ $LINES -gt 12 ]]; then
   PARENTPOS=50
 else
   WIDTH=170
-  PARENTPOS=210
+  PARENTPOS=200
   LINES=8
+fi
+if [[ "$1" == "eth0" ]]
+then
+  (( PARENTPOS = PARENTPOS + 105 ))
 fi
 X=`expr $(xwininfo -root | sed -n 's|Width: \([0-9]*$\)|\1|p') - $WIDTH - $PARENTPOS`
 Y=18
