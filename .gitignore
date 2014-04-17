@@ -3,6 +3,7 @@ vim/tmp/*
 !vim/tmp/.gitignore
 vim/bundle/*
 !vim/bundle/vundle
+!vim/bundle/vim-airline
 config/google*
 config/pulse*
 *~
@@ -18,6 +19,7 @@ config/xfce4*
 config/dconf*
 config/compiz*
 config/VCG*
+config/ros.org*
 config/Trolltech*
 mutt/temp/*
 mutt/alias

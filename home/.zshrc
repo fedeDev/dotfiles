@@ -6,8 +6,7 @@ ZSH_THEME="fede"
 
 alias open="xdg-open"
 alias cal="cal -3"
-# TODO!
-alias ldap="noglob ldap"
+alias gits="git status"
 
 gitcd() {
 	git rev-parse --show-cdup > /dev/null 2>&1
@@ -29,7 +28,7 @@ COMPLETION_WAITING_DOTS="true"
 # extract:    adds the 'extract' command to untar, unzip, unrar, etc. files
 # pass:       bash completions for password manager
 # go:         completion for the go compiler/runner
-plugins=(cmake fasd git-extras web-search cp gitignore extract pass go)
+plugins=(cmake fasd git-extras web-search cp gitignore extract pass go colored-man)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -128,3 +127,4 @@ function load_incrauto() {
   autoload -U colors
   zstyle -e ':completion:*' list-colors 'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[cyan]" )'
 }
+

@@ -106,7 +106,7 @@ keepalive = 60
 # setting; otherwise, the messgaes will just pile up there forever.
 # Therefore, this setting is definitely NOT recommended.
 #
-#expunge = no
+expunge = yes
 
 folderfilter = lambda foldername: foldername not in ['Contacts', 'Calendar', 'Journal', 'Notes', 'Tasks', 'Outbox', 'Junk E-Mail']
 

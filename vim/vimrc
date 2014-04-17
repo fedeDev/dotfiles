@@ -1,7 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Preamble                                 "
 set nocompatible
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Needed for vundle, will be turned on after vundle inits
 filetype off
@@ -20,11 +17,6 @@ call vundle#rc()
 " Easily switch between header and source file
 Bundle 'FSwitch'
 
-" Automagically implement the prototypes in a header file
-" Bundle 'FuzzyFinder'
-
-" Bundle 'L9'
-
 " User <leader><leader> to get enhances vim-motions
 Bundle 'Lokaltog/vim-easymotion'
 
@@ -38,15 +30,13 @@ Bundle 'bling/vim-bufferline'
 Bundle 'Raimondi/delimitMate'
 
 " Add the :Rename command to change the name of the buffer
-Bundle 'Rename'
+" Bundle 'Rename'
 
 " Ultimate snippets!
-Bundle 'SirVer/ultisnips'
+" Bundle 'SirVer/ultisnips'
 
 " Easily show the quickfix and list windows
 Bundle 'Valloric/ListToggle'
-
-" Bundle 'Valloric/python-indent' ---- TODO
 
 " Highlight math operators (+, -, *, ...)
 Bundle 'Valloric/vim-operator-highlight'
@@ -54,32 +44,14 @@ Bundle 'Valloric/vim-operator-highlight'
 " Intelli-awesome completer for python/c(++)
 " Bundle 'Valloric/YouCompleteMe'
 
-" Keep the contents of all changed, yanked and deleted characters
-Bundle 'YankRing.vim'
-
-" Add :BN BD BP .. etc to enhance the behaviour of buffer navigation and deletion
-Bundle 'bufkill.vim'
-
-" Jump between files inside a project magically
-Bundle 'wincent/Command-T'
-
 " This awesome plugin manager!
 Bundle 'gmarik/vundle'
 
-" Aling all sorts of stuff
+" Align all sorts of stuff
 Bundle 'godlygeek/tabular'
 
 " Adds a window pane that shows the classes and methods on buffer (req: Exh-CTags)
 Bundle 'majutsushi/tagbar'
-
-" Adds a text object based on indentation level. ii gets current level, ai gets current level plus one line above
-Bundle 'michaeljsmith/vim-indent-object'
-
-" Wrapper for ack: search any text recursively inside a folder
-Bundle 'mileszs/ack.vim'
-
-" Better python and python3 syntax highlighting
-Bundle 'python.vim'
 
 " Parse the language and show if there are any syntax errors in the gutter
 Bundle 'scrooloose/syntastic'
@@ -87,62 +59,58 @@ Bundle 'scrooloose/syntastic'
 " Use a key to show the undo tree of VIM. Amazing.
 Bundle 'sjl/gundo.vim'
 
-" Comment using sane mappings ---- TODO check block comments
+" Comment using sane mappings
 Bundle 'tomtom/tcomment_vim'
 
 " Amazing plugin to use git inside vim, also add git commit types etc.
 Bundle 'tpope/vim-fugitive'
+
+" Official syntax, indent, and filetypes plugin for git
 Bundle 'tpope/vim-git'
 
-" This might be useless??
+" Extend repeat '.' for plugins, support for vim-surround comes built-in
 Bundle 'tpope/vim-repeat'
+
+" All about surroundings, quotes, brackets, parens, etc
+Bundle 'tpope/vim-surround'
 
 " Mighty cholorscheme!
 Bundle 'w0ng/vim-hybrid'
 
-" Comment all this for now ... too much to handle as it is TODO
-" Xolox's awesome VIML library
-" Bundle 'xolox/vim-misc'
-
-" Xolox's awesome note taking app
-" Bundle 'xolox/vim-notes'
-
-" Xolox's awesome python reference lookup
-" Bundle 'xolox/vim-pyref'
-
-" Xolox's awesome session manager
-" Bundle 'xolox/vim-session'
-
-" Use a smart start screen instead of default's useless one
-" Bundle 'mhinz/vim-startify'
-"
-Bundle 'xterm-color-table.vim'
+" See all colors available
+" Bundle 'xterm-color-table.vim'
 
 " Mail attachment for mutt
 Bundle 'chrisbra/CheckAttach'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                           reset vimrc augroup                           "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Better cpp syntax highlighting
+Bundle 'octol/vim-cpp-enhanced-highlight'
 
-" We reset the vimrc augroup. Autocommands are added to this group throughout
-" the file
+" Show git status info on gutter
+Bundle 'airblade/vim-gitgutter'
+
+" Fuzzy finder along files and buffers
+Bundle 'kien/ctrlp.vim'
+" Add c-compiled component to make it (much) faster
+Bundle 'JazzCore/ctrlp-cmatcher'
+
+" Arguments of functions as text objects (ia, aa)
+Bundle 'Parameter-Text-Objects'
+
+" Google style for c++
+Bundle 'google.vim'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                         End of Vundle Packages                          "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup vimrc
   autocmd!
 augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                        turn on filetype plugins                         "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" enable detection, plugins and indenting in one step
-" this needs to come after the bundle commands!
 filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            General settings                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " DISPLAY SETTINGS
 let g:hybrid_use_Xresources = 1 " tell hybrid colorscheme to match terminal colors
 colorscheme hybrid              " sets the colorscheme
@@ -158,8 +126,8 @@ set undofile                    " stores undo state even when files are closed (
 set undodir^=~/.vim/tmp/undo
 set cursorline                  " highlights the current line
 set winaltkeys=no               " turns of the Alt key bindings to the gui menu
-set timeoutlen=1500             " Wait for 1.5 secs on key-mappings
-set ttimeoutlen=50              " Wait for 50mS for key-codes
+set timeoutlen=500             " Wait for 1.5 secs on key-mappings
+set ttimeoutlen=40              " Wait for 50mS for key-codes
 let g:is_bash = 1               " Force .sh to be treated as bash
 " set foldmethod=syntax
 
@@ -169,7 +137,7 @@ let g:is_bash = 1               " Force .sh to be treated as bash
 set wildmode=longest,list,full
 set wildmenu            " completion with menu
 " This changes the default display of tab and CR chars in list mode
-" set listchars=tab:›\ ,eol:¬
+set listchars=tab:›\ ,eol:¬
 
 " The "longest" option makes completion insert the longest prefix of all
 " the possible matches; see :h completeopt
@@ -193,7 +161,6 @@ set noswapfile               " don't use old useless swaps
 set nowb                     " No backup when overwriting
 
 set number                   " Show line numbers
-set relativenumber           " Show relaitve numbers
 
 set tabstop=2                " number of spaces a tab counts for
 set shiftwidth=2             " spaces for autoindents
@@ -211,7 +178,7 @@ set viminfo='20,\"700       " remember copy registers after quitting in the .vim
 
 set hidden                   " allows making buffers hidden even with unsaved changes
 set history=2000             " remember more commands and search history
-set undolevels=3000          " use many levels of undo
+set undolevels=3500          " use many levels of undo
 set autoread                 " auto read when a file is changed from the outside
 set mouse=a                  " enables the mouse in all modes
 
@@ -256,9 +223,6 @@ if &t_Co > 2 || has("gui_running")
   syntax on
 endif
 
-" none of these should be word dividers, so make them not be
-set iskeyword+=_,$,@,%,#
-
 " Number of screen lines to use for the command-line
 set cmdheight=2
 
@@ -271,7 +235,7 @@ set gdefault            " this makes search/replace global by default
 " enforces a specified line-length and auto inserts hard line breaks when we
 " reach the limit; in Normal mode, you can reformat the current paragraph with
 " gqap.
-set textwidth=100
+set textwidth=80
 
 " this makes the color after the textwidth column highlighted
 set colorcolumn=+1
@@ -317,50 +281,6 @@ if has("multi_byte")
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
-" augroup vimrc
-"   " Automatically delete trailing DOS-returns and whitespace on file open and
-"   " write.
-"   autocmd BufRead,BufWritePre,FileWritePre * silent! %s/[\r \t]\+$//
-" augroup END
-
-" Highlight Class and Function names, classes/namespaces for now
-function! s:HighlightFunctionsAndClasses()
-  " syn match cCustomFunc      "\w\+\s*\((\)\@="
-  syn match cCustomClass     "\w\+\s*\(::\)\@="
-
-  " hi def link cCustomFunc      Function
-  hi def link cCustomClass     Function
-endfunction
-
-" TODO: this should:
-" a) not be called for every filetype
-" b) be in a separate plugin
-au vimrc Syntax * call s:HighlightFunctionsAndClasses()
-
-function! VisualSearch(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        execute "Ack " . l:pattern
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
-"Basically you press * or # to search for the current selection
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-vnoremap <silent> ff :call VisualSearch('gv')<CR>
-
 " cindent is a bit too smart for its own good and triggers in text files when
 " you're typing inside parens and then hit enter; it aligns the text with the
 " opening paren and we do NOT want this in text files!
@@ -368,7 +288,7 @@ autocmd vimrc FileType text,markdown,gitcommit set nocindent
 
 " Change cursor to a bar when in insert mode for console VIM
 " some terminals (e.g. Konsole) will report $TERM as xterm, so
-" without a smarter script to determine the emulator (ie. termname)
+" without a smarter script to determine the emulator (i.e. termname)
 " this might fail
 if !has('gui_running')
   if !executable('termname')
@@ -407,7 +327,8 @@ function! SetupTextFile()
   setlocal nonumber
 endfunction!
 
-" Return to last edit position when opening files (You want this!)
+
+" Return to last edit position when opening files
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
@@ -439,7 +360,7 @@ function! <SID>BufcloseCloseIt()
    if buflisted(l:currentBufNum)
      execute("bdelete! ".l:currentBufNum)
    endif
-endfunction
+endfunction!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            custom mappings                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -449,33 +370,16 @@ let mapleader=","
 " our <localleader> will be the '\' key
 let maplocalleader="\\"
 
-" this makes vim's regex engine "not stupid"
-" see :h magic
+" this makes vim's regex engine 'not stupid' see :h magic
 nnoremap / /\v
 vnoremap / /\v
-
-" Fast saving
-nnoremap <leader>w :w<cr>
-
-" <leader>v brings up .vimrc
-" <leader>V reloads it and makes all changes active (file has to be saved first)
-let $MYVIMRC=$HOME . '/.vim/vimrc'
-noremap <leader>v :e! $MYVIMRC<CR>
-noremap <silent> <leader>V :source $MYVIMRC<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " Type jj quickly to exit insert mode
 inoremap jj <Esc>
 
-" Control D deletes current buffer
-nnoremap <C-D> :Bclose<CR>
-
 " This command will allow us to save a file we don't have permission to save
 " *after* we have already opened it. Super useful.
 cnoremap w!! w !sudo tee % >/dev/null
-
-" g<c-]> is jump to tag if there's only one matching tag, but show list of
-" options when there is more than one definition
-nnoremap <leader>g g<c-]>
 
 " These create newlines like o and O but stay in normal mode
 nnoremap <silent> zj o<Esc>k
@@ -487,13 +391,12 @@ nnoremap <silent> zk O<Esc>j
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 
-" Keep search matches in the middle of the window.
-" zz centers the screen on the cursor, zv unfolds any fold if the cursor
+" zv unfolds any fold if the cursor
 " suddenly appears inside a fold.
-nnoremap * *zzzv
-nnoremap # #zzzv
-nnoremap n nzzzv
-nnoremap N Nzzzv
+nnoremap * *zv
+nnoremap # #zv
+nnoremap n nzv
+nnoremap N Nzv
 
 " Also center the screen when jumping through the changelist
 nnoremap g; g;zz
@@ -519,8 +422,22 @@ nnoremap k gk
 vnoremap Q gq
 nnoremap Q gqap
 
-" This is quit all
-noremap <Leader>q :qa<cr>
+" Close window
+noremap <Leader>q :call <SID>SmartClose()<cr>
+" Smart close
+function! <SID>SmartClose()
+  if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
+    call <SID>BufcloseCloseIt()
+  else
+    execute("quit")
+  endif
+endfunction!
+
+" Fast saving
+nnoremap <leader>w :w<cr>
+
+" Control D deletes current buffer
+nnoremap <leader>d :Bclose<CR>
 
 " key bindings for quickly moving between windows
 " h left, l right, k up, j down
@@ -532,9 +449,6 @@ noremap <leader>j <c-w>j
 " Switch to the directory of the open buffer
 noremap <leader>cd :cd %:p:h<cr>
 
-" Toggle and untoggle spell checking
-noremap <leader>ss :setlocal spell! spelllang=en_us<cr>
-
 " spelling shortcuts using <leader>
 " ]s next misspelled word
 " [s previous misspelled word
@@ -544,6 +458,9 @@ noremap <leader>sn ]s
 noremap <leader>sp [s
 noremap <leader>sa zg
 noremap <leader>s<leader> z=
+" Toggle and untoggle spell checking
+noremap <leader>ss :setlocal spell! spelllang=en_us<cr>
+au vimrc FileType gitcommit setlocal spell! spelllang=en_us
 
 " Using '<' and '>' in visual mode to shift code by a tab-width left/right by
 " default exits visual mode. With this mapping we remain in visual mode after
@@ -561,146 +478,51 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 nnoremap <tab> :bn <CR>
 nnoremap <S-tab> :bp <CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               CheckAttach                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" -- CheckAttach
 let g:checkattach_filebrowser = 'ranger'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Command-T                                 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:CommandTMaxHeight          = 30
-let g:CommandTMatchWindowReverse = 1 " shows results in reverse order
-let g:CommandTSelectNextMap  = [ '<down>' ]
-let g:CommandTSelectPrevMap  = [ '<up>' ]
-
-set wildignore+=*.o,*.obj,.git,*.pyc,*.so,*.a,blaze*,READONLY,llvm,Library*,CMakeFiles
-nnoremap <leader>t :CommandT<cr>
-nnoremap <leader>' :CommandTFlush<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Gundo                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" f5 toggles the Gundo plugin window
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_width=60
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                yankring                                 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:yankring_history_dir = '$HOME/.vim/tmp/'
-" this is so that single char deletes don't end up in the yankring
-let g:yankring_min_element_length = 2
-let g:yankring_window_height = 14
-nnoremap <silent> <leader>y :YRShow<CR>
-
-" this makes Y yank from the cursor to the end of the line, which makes more
-" sense than the default of yanking the whole current line (we can use yy for
-" that)
-function! YRRunAfterMaps()
-    nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                session                                  "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" you also need to run :SacurrentveSession once to create the default.vim session that
-" will then be autoloaded/saved from then on
-
-let g:session_autoload        = 'no'
-let g:session_autosave        = 'yes'
-let g:session_default_to_last = 'yes'
-let g:session_directory       = '~/.vim/tmp/sessions'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                tabular                                  "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " looks at the current line and the lines above and below it and aligns all the
 " equals signs; useful for when we have several lines of declarations
 nnoremap <Leader>a= :Tabularize /=<CR>
 vnoremap <Leader>a= :Tabularize /=<CR>
-" nnoremap <Leader>a/ :Tabularize /\/\//l2c1l0<CR>
-" vnoremap <Leader>a/ :Tabularize /\/\//l2c1l0<CR>
+nnoremap <Leader>a/ :Tabularize /\/\//l2c1l0<CR>
+vnoremap <Leader>a/ :Tabularize /\/\//l2c1l0<CR>
 nnoremap <Leader>a, :Tabularize /,/l0r1<CR>
 vnoremap <Leader>a, :Tabularize /,/l0r1<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                UltiSnips                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " we can't use <tab> as our snippet key since we use that with YouCompleteMe
 " let g:UltiSnipsSnippetsDir         = $HOME . '/dotfiles/vim/UltiSnips'
-let g:UltiSnipsExpandTrigger       = "<c-s>"
-let g:UltiSnipsListSnippets        = "<c-m-s>"
+" let g:UltiSnipsExpandTrigger       = "<c-s>"
+" let g:UltiSnipsListSnippets        = "<c-m-s>"
 " let g:UltiSnipsJumpForwardTrigger  = "<right>"
 " let g:UltiSnipsJumpBackwardTrigger = "<left>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                ack.vim                                  "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if executable('ag')
-  let g:ackprg = "ag --nocolor --nogroup --column"
-elseif executable('ack-grep')
-  let g:ackprg = "ack-grep --nocolor --nogroup --column"
-elseif executable('ack')
-  let g:ackprg = "ack --nocolor --nogroup --column"
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               ListToggle                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:lt_location_list_toggle_map = '<leader>i'
-let g:lt_quickfix_list_toggle_map = '<leader>u'
-let g:lt_height = 25
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                bufkill                                  "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Use the arrows for something useful
-" :BB switches to the previous buffer shown in the current window, :BF switches
-" to the next one; it's like a buffer history for every window
-noremap <right> :BF<cr>
-noremap <left> :BB<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              fuzzyfinder                                "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" " This turns on the mrufile and mrucmd modes
-" let g:fuf_modesDisable    = []
-" let g:fuf_mrufile_maxItem = 1000
-" let g:fuf_mrucmd_maxItem  = 400
-" let g:fuf_file_exclude    = '\v\~$|\.(o|exe|dll|bak|class|meta|lock|orig|jar|swp)$|/test/data\.|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-"
-" nnoremap <Leader>fm :FufMruFile<CR>
-" nnoremap <Leader>fc :FufMruCmd<CR>
+" Toggle list
+let g:lt_location_list_toggle_map = 'tl'
+" Toggle quickfix
+let g:lt_quickfix_list_toggle_map = 'tq'
+let g:lt_height = 15
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                fswitch                                  "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" A "companion" file is a .cpp file to an .h file and vice versa
-
 " Opens the companion file in the current window
 nnoremap <Leader>sh :FSHere<cr>
-
-" Opens the companion file in the window to the left (window needs to exist)
-" This is actually a duplicate of the :FSLeft command which for some reason
-" doesn't work.
-nnoremap <Leader>sl :call FSwitch('%', 'wincmd l')<cr>
-
-" Same as above, only opens it in window to the right
-nnoremap <Leader>sr :call FSwitch('%', 'wincmd r')<cr>
-
-" Creates a new window on the left and opens the companion file in it
-nnoremap <Leader>sv :FSSplitLeft<cr>
 
 au BufEnter *.cc,*.cpp let b:fswitchdst  = 'h,hxx'
 au BufEnter *.cc,*.cpp let b:fswitchlocs = './,reg:/src/include/,reg:|src|include/**|,../include'
@@ -708,42 +530,35 @@ au BufEnter *.h,*.cpp  let b:fswitchdst  = 'cpp,cc,c'
 au BufEnter *.h,*.hpp  let b:fswitchlocs = './,reg:/include/src/,reg:/include.*/src/,../src'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                vim-git                                  "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Turn on spell checking by default for git commit messages
-au vimrc FileType gitcommit setlocal spell! spelllang=en_us
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                tagbar                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:tagbar_left = 1
-let g:tagbar_sort = 0
+" " let g:tagbar_left = 1
+" let g:tagbar_sort = 0
+"
+" " A bit wider on workspace monitor
+let g:tagbar_width = 56
+"
+" " Put cursor on tagbar when we first open
+let g:tagbar_autofocus = 1
+"
+" " Show line number of tag. Use = 2 to show relative numbers
+" let g:tagbar_show_linenumbers = 1
+"
+" " Unfold tags to show current scope
+" let g:tagbar_autoshowtag = 1
 nnoremap <F4> :TagbarToggle<cr><c-w>=
-" CTags Update
-nnoremap <F8> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+liaS --extra=+q .
+" " CTags Update
+" nnoremap <F8> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+liaS --extra=+q .
 
 " TODO: here add a function to add stdlib from android and gles from android etc"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                vim-notes                                "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:notes_directories = ['~/notes']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                syntastic                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" let g:syntastic_check_on_open = 1
 let g:syntastic_error_symbol = '▶'
 let g:syntastic_style_error_symbol = '▷'
 let g:syntastic_warning_symbol = '▶'
 let g:syntastic_style_warning_symbol = '▷'
-let g:syntastic_enable_ballons = 1
 highlight SyntasticErrorSign ctermfg=red
 highlight SyntasticWarningSign ctermfg=yellow
 let g:syntastic_always_populate_loc_list = 1
@@ -756,22 +571,27 @@ if exists('g:loaded_youcompleteme')
 elseif executable('oclint')
   let g:syntastic_cpp_checkers = ['oclint']
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              YouCompleteMe                              "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 0
-" let g:ycm_collect_identifiers_from_tags_files = 1
-" " let g:ycm_add_preview_to_completeopt = 1
-" let g:ycm_min_num_identifier_candidate_chars = 4
-" let g:ycm_extra_conf_globlist = ['~/Research/inervis_sfm/*']
-"
-" nnoremap <leader>cc :YcmForceCompileAndDiagnostics<cr>
-" nnoremap <leader>cg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" nnoremap <leader>cf :YcmCompleter GoToDefinition<CR>
-" nnoremap <leader>cd :YcmCompleter GoToDeclaration<CR>
+" Use cpplint for google projects
+au Filetype cpp call SetupCPPFile()
+function! SetupCPPFile()
+  if stridx(expand('%:p'), 'RedwoodInternal') != -1 
+    let b:syntastic_checkers = ['gcc', 'cpplint'] 
+    let g:syntastic_aggregate_errors = 1
+    " let g:syntastic_check_on_open = 1
+    let g:syntastic_cpp_check_header = 1
+    let g:syntastic_cpp_no_include_search = 1
+    let g:syntastic_cpp_no_default_include_dirs = 1
+    let g:syntastic_cpp_auto_refresh_includes = 1
+    let g:syntastic_cpp_config_file = 'redwood_includes'
+    let g:syntastic_cpp_compiler = 'clang++'
+    let g:syntastic_cpp_compiler_options = '-std=c++11'
+    let g:syntastic_cpp_cpplint_exec =
+    \ '/home/fede/code/redwood_ws/RedwoodInternal/Redwood/tools/lint/cpplint.py'
+    let g:syntastic_cpp_cpplint_args = '--verbose=1'
+    let g:syntastic_cpp_cpplint_thres = 99
+    let g:syntastic_stl_format = '%E{E: %fe}%B{, }%W{W: %fw}'
+  endif
+endfunction!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Airline                                  "
@@ -782,29 +602,56 @@ endif
 let g:airline_symbols.paste = 'Þ'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
-let g:airline#extensions#whitespace#enabled = 0 " No whitespace warning, thanks
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_enable_hunks = 0
 let g:airline_mode_map = {
       \ '__' : '-',
-      \ 'n'  : 'NORMAL',
-      \ 'i'  : 'INSERT',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
       \ 'R'  : 'R',
-      \ 'c'  : 'COMMAND',
-      \ 'v'  : 'V char',
-      \ 'V'  : 'V line',
-      \ '' : 'V block',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V ch',
+      \ 'V'  : 'V li',
+      \ '' : 'V bl',
       \ 's'  : 'S',
       \ 'S'  : 'S',
       \ '' : 'S',
       \ }
-" Replace type and encoding with the file's working directory
-" let g:airline_section_x = "%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}"
-let g:airline_section_x = "%{airline#extensions#tagbar#currenttag()}"
+let g:airline_section_x = " "
 let g:airline_section_y = "%{airline#util#wrap(airline#parts#filetype(),0)}"
 
-" let g:airline_section_y = "%{GetSmallPWD()}"
-" function! GetSmallPWD()
-"   let s:pwds = substitute(expand("%:p:h"), $HOME, "~", "")
-"   return s:pwds
-" endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                BufferLine                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:bufferline_show_bufnr = 0
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  CtrlP                                  "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_user_command = 'find %s -type f'
+" let g:ctrlp_user_command = {
+"   \ 'types': {
+"     \ 1: ['.git', 'cd %s && git ls-files'],
+"     \ },
+"   \ 'fallback': 'find %s -type f'
+"   \ }
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_map = 'tt'
+let g:ctrlp_working_path_mode = 'ra'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               GitGutter                                 "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:gitgutter_map_keys = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                         Parameter-Text-Object                           "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:no_parameter_object_maps = 1
+vmap <silent> ia <Plug>ParameterObjectI
+omap <silent> ia <Plug>ParameterObjectI
+vmap <silent> aa <Plug>ParameterObjectA
+omap <silent> aa <Plug>ParameterObjectA
+
+" Redraw our screen to avoid garbage from showing up
+autocmd VimEnter * redraw!

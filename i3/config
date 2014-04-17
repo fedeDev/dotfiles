@@ -105,9 +105,9 @@ bindsym $mod+Shift+8 move workspace 8
 bindsym $mod+Shift+9 move workspace 9
 bindsym $mod+Shift+0 move workspace 10
 
-# Move clients to contiguous workspaces
-bindsym $mod+Shift+mod1+h move container to workspace prev
-bindsym $mod+Shift+mod1+l move container to workspace next
+# Move workspaces, not working in 4.1.2
+# bindsym $mod+Shift+mod1+h move output left
+# bindsym $mod+Shift+mod1+l move output right
 
 
 # Bind media keys
@@ -190,12 +190,13 @@ assign [instance="mail"] 8
 assign [class="Mendeleydesktop"] 6
 
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
-for_window [class="Google-chrome"] border none
-for_window [class="Eclipse"] border none
+for_window [class="Google-chrome"] border 1pixel
+for_window [class="Eclipse"] border 1pixel
 for_window [class="I3-exit"] floating enable, border 1pixel
 for_window [class="com-mathworks-util-PostVMInit"] floating enable
 for_window [class="Android SDK Manager"] floating enable
 for_window [class="mpv"] floating enable
+for_window [class="Xdot"] floating enable
 for_window [class="sxiv"] floating enable
 for_window [class="Meshlab"] floating enable; resize shrink right 100px or 100ppt; resize shrink left 100px or 100ppt; resize shrink up 100px or 100ppt; resize shrink down 100px or 100ppt
 for_window [class="Sublime_text"] border 1pixel
@@ -204,7 +205,7 @@ for_window [class="Mendeleydesktop"] border 1pixel
 # specifics for a projects
 # {{{
 for_window [class="Video stream"] floating enable
-for_window [title="noshow"] border none
+for_window [title="noshow"] border 1pixel
 for_window [title="GL 3.0 Window"] floating enable, border 1pixel
 for_window [title="Main"] floating enable, border 1pixel
 for_window [class="Lines"] floating enable, border 1pixel

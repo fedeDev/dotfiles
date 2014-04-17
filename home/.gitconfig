@@ -1,8 +1,8 @@
 [user]
 	email = f.slashdev@gmail.com
-	name = fedeDev
+	name = Federico Camposeco
 [diff]
-	tool = meld
+	tool = vimdiff
 [difftool]
 	prompt = false
 [alias]
