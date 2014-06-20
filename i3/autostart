@@ -30,9 +30,6 @@ setxkbmap -option caps:escape &
 
 # Start compositor
 compton &
-
-# Set background image
-feh  --bg-scale '/home/fede/.i3/wall.jpg' &
 #exec sh ~/.fehbg
 
 # Start notification daemon
@@ -54,7 +51,13 @@ mpd &
 # Refresh X
 # xrefresh &
 # Draw status bar
-~/.i3/dzen_conky
+# ~/.i3/dzen_conky
+
+# Setup vmware nicities
+vmware-user &
+
+# Set background image
+feh  --bg-scale '/home/fede/.i3/wall.jpg' &
 
 # Have fun :)
 exit 0

@@ -17,7 +17,7 @@ XTerm*renderFont:           true
 ! xterm*faceName:            Droid Sans Mono for Powerline
 XTerm*faceName:            Source Code Pro for Powerline
 ! xterm*faceName:            Anonymous Pro for Powerline
-XTerm*faceSize:             10
+XTerm*faceSize:             9
 XTerm*utf8:                 2
 XTerm*utf8Title:            1
 XTerm*saveLines:            65535
