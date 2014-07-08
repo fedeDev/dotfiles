@@ -1,1 +1,1 @@
-feh  --bg-fill '/home/fede/.i3/wall.jpg' 
+feh  --bg-scale '/home/fede/.i3/wall.jpg' 

@@ -24,7 +24,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
 
 " Bufferline to show current open buffers
-Bundle 'bling/vim-bufferline'
+" Bundle 'bling/vim-bufferline'
 
 " Improve the behaviour of parenthesis, quotations, etc.
 Bundle 'Raimondi/delimitMate'
@@ -377,6 +377,9 @@ vnoremap / /\v
 " Type jj quickly to exit insert mode
 inoremap jj <Esc>
 
+" Type j; to quickly exit insert mode and insert a ';' at the en of the line
+inoremap j; <Esc>A;<Esc>
+
 " This command will allow us to save a file we don't have permission to save
 " *after* we have already opened it. Super useful.
 cnoremap w!! w !sudo tee % >/dev/null
@@ -536,7 +539,7 @@ au BufEnter *.h,*.hpp  let b:fswitchlocs = './,reg:/include/src/,reg:/include.*/
 " let g:tagbar_sort = 0
 "
 " " A bit wider on workspace monitor
-let g:tagbar_width = 56
+let g:tagbar_width = 46
 "
 " " Put cursor on tagbar when we first open
 let g:tagbar_autofocus = 1
@@ -603,7 +606,7 @@ let g:airline_symbols.paste = 'Þ'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline_enable_hunks = 0
+let g:airline_enable_hunks = 1
 let g:airline_mode_map = {
       \ '__' : '-',
       \ 'n'  : 'N',
@@ -617,13 +620,33 @@ let g:airline_mode_map = {
       \ 'S'  : 'S',
       \ '' : 'S',
       \ }
-let g:airline_section_x = " "
-let g:airline_section_y = "%{airline#util#wrap(airline#parts#filetype(),0)}"
-
+" No filename no bufferline
+let g:airline_section_c = '%#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+let g:airline_section_x = '%{airline#util#wrap(airline#extensions#tagbar#currenttag(),0)}'
+let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}'
+" Use tabline so that buffers show at the top where there is more space.
+let g:airline#extensions#tabline#enabled = 1
+" Don't show whether we are displaying tabs or buffers, I never use tabs.
+let g:airline#extensions#tabline#show_tab_type = 0
+" Min number of buffers to display them at the top
+let g:airline#extensions#tabline#buffer_min_count = 2
+" Format of the filename for the buffer.
+let g:airline#extensions#tabline#fnamemod = ':t'
+" Display parent directory if buffer is duplicated.
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" Straight separators for buffers.
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" For git hunks, just show them if they are non-zero
+let g:airline#extensions#hunks#non_zero_only = 1
+" Display the current function in the status line
+let g:airline#extensions#tagbar#enabled = 1
+" Display the name of the function only
+let g:airline#extensions#tagbar#flags = ''
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                BufferLine                               "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:bufferline_show_bufnr = 0
+" let g:bufferline_show_bufnr = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  CtrlP                                  "
@@ -654,4 +677,5 @@ vmap <silent> aa <Plug>ParameterObjectA
 omap <silent> aa <Plug>ParameterObjectA
 
 " Redraw our screen to avoid garbage from showing up
+autocmd VimEnter * redraw!
 autocmd VimEnter * redraw!
