@@ -328,16 +328,6 @@ nnoremap <F5> :GundoToggle<CR>
 let g:gundo_width=60
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                        TODO!!  UltiSnips                                     "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" we can't use <tab> as our snippet key since we use that with YouCompleteMe
-" let g:UltiSnipsSnippetsDir         = $HOME . '/dotfiles/vim/UltiSnips'
-" let g:UltiSnipsExpandTrigger       = "<c-s>"
-" let g:UltiSnipsListSnippets        = "<c-m-s>"
-" let g:UltiSnipsJumpForwardTrigger  = "<right>"
-" let g:UltiSnipsJumpBackwardTrigger = "<left>"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                     TODO!!  Neocomplete                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use neocomplete.
@@ -365,6 +355,9 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-k>     neocomplete#complete_common_string()
 
+" Toggle the plugin.
+nnoremap <F10> :NeoCompleteToggle<cr>
+
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -386,13 +379,6 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
 
-" Enable omni completion.
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
@@ -407,8 +393,6 @@ let g:neocomplete#sources#omni#input_patterns.cpp =
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin key-mappings.
 imap <C-k>  <Plug>(neosnippet_expand_or_jump)
-smap <C-k>  <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>  <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -453,8 +437,6 @@ let g:tagbar_width = 46
 " Put cursor on tagbar when we first open
 let g:tagbar_autofocus = 1
 nnoremap <F4> :TagbarToggle<cr><c-w>=
-" " CTags Update
-" nnoremap <F8> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+liaS --extra=+q .
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Syntastic                                    "
@@ -550,7 +532,9 @@ let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 " Search files of project.
 let g:ctrlp_map = 'tt'
 " Search tags of current buffer.
-nnoremap ta :CtrlPBufTag<cr>
+nnoremap tf :CtrlPBufTag<cr>
+" Search current open buffers.
+nnoremap tb :CtrlPBuffer<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Parameter-Text-Object                             "
