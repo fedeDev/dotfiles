@@ -135,7 +135,7 @@ bindsym $mod+Shift+q exec $bindir/i3-exit
 bindsym XF86PowerOff exec $bindir/i3-exit
 
 # open email
-bindsym $mod+m exec xterm -name mail -e mutt
+bindsym $mod+m exec xterm -name mail -e mutt; scratchpad show
 
 # open sublime
 bindsym $mod+p exec subl
@@ -186,14 +186,12 @@ exec --no-startup-id $bindir/autostart
 # custom window settings
 assign [class="Google-chrome"] 2
 assign [class="Eclipse"] 3
-assign [instance="mail"] 8
 assign [class="Mendeleydesktop"] 6
 
 for_window [class="XTerm" instance="scratchpad"] move scratchpad
 for_window [class="Google-chrome"] border 1pixel
 for_window [class="Eclipse"] border 1pixel
 for_window [class="I3-exit"] floating enable, border 1pixel
-for_window [class="com-mathworks-util-PostVMInit"] floating enable
 for_window [class="Android SDK Manager"] floating enable
 for_window [class="mpv"] floating enable
 for_window [class="Xdot"] floating enable
@@ -201,6 +199,7 @@ for_window [class="sxiv"] floating enable
 for_window [class="Meshlab"] floating enable; resize shrink right 100px or 100ppt; resize shrink left 100px or 100ppt; resize shrink up 100px or 100ppt; resize shrink down 100px or 100ppt
 for_window [class="Sublime_text"] border 1pixel
 for_window [class="Mendeleydesktop"] border 1pixel
+for_window [instance="mail"] border 1pixel; move scratchpad
 
 # specifics for a projects
 # {{{
@@ -221,3 +220,9 @@ workspace 2 output DVI-I-0
 workspace 4 output DVI-I-0
 workspace 6 output DVI-I-0
 workspace 8 output DVI-I-0
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show

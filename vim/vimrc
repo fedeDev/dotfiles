@@ -361,6 +361,17 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction!
+
+" Printer options, optimized for A4, 80-char sized textwidth
+set popt=left:0pc,right:1pc,paper:A4,header:2,number:y
+set printheader=%<\ \ \ %f%h%m%=%N\ of\ %{(line('$')+72)/73}
+set printfont=courier:h11
+set printexpr=PrintFile(v:fname_in)
+function PrintFile(fname)
+  call system("lpr -o page-bottom=15 -o page-top=15 -o page-left=40 -o page-right=40  -o page-border=single -o number-up=2 -o sides=two-sided-long-edge -o media=A4 " . a:fname)
+  call delete(a:fname)
+  return v:shell_error
+endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            custom mappings                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -411,6 +422,12 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
+
+" In normal mode, use arrow keys to scroll and go to next curly bracket.
+nnoremap <Up> 3<C-y>M
+nnoremap <Down> 3<C-e>M
+nnoremap <Left> ?{<cr>zz
+nnoremap <Right> /}<cr>zz
 
 " This makes j and k work on "screen lines" instead of on "file lines"; now, when
 " we have a long line that wraps to multiple screen lines, j and k behave as we
@@ -478,7 +495,9 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 nnoremap <tab> :bn <CR>
 nnoremap <S-tab> :bp <CR>
 
-" -- CheckAttach
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              CheckAttach                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:checkattach_filebrowser = 'ranger'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -566,14 +585,9 @@ if executable('flake8')
   let g:syntastic_python_checkers = ['flake8']
   let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 endif
-if exists('g:loaded_youcompleteme')
-  let g:syntastic_cpp_checkers = ['ycm']
-elseif executable('oclint')
-  let g:syntastic_cpp_checkers = ['oclint']
-endif
 " Use cpplint for google projects
-au Filetype cpp call SetupCPPFile()
-function! SetupCPPFile()
+au Filetype cpp call SetupCPPFileSyntastic()
+function! SetupCPPFileSyntastic()
   if stridx(expand('%:p'), 'RedwoodInternal') != -1 
     let b:syntastic_checkers = ['gcc', 'cpplint'] 
     let g:syntastic_aggregate_errors = 1
@@ -590,6 +604,8 @@ function! SetupCPPFile()
     let g:syntastic_cpp_cpplint_args = '--verbose=1'
     let g:syntastic_cpp_cpplint_thres = 99
     let g:syntastic_stl_format = '%E{E: %fe}%B{, }%W{W: %fw}'
+    let g:syntastic_mode_map = { 'mode': 'passive' }
+    nnoremap <leader>c :SyntasticCheck<cr>
   endif
 endfunction!
 
@@ -628,13 +644,7 @@ let g:bufferline_show_bufnr = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  CtrlP                                  "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_user_command = 'find %s -type f'
-" let g:ctrlp_user_command = {
-"   \ 'types': {
-"     \ 1: ['.git', 'cd %s && git ls-files'],
-"     \ },
-"   \ 'fallback': 'find %s -type f'
-"   \ }
+let g:ctrlp_user_command = 'find %s -type f -not \( -path "*/prebuilt/*" -or -prune -path "*/.git/*" -prune \)'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 let g:ctrlp_map = 'tt'
 let g:ctrlp_working_path_mode = 'ra'
