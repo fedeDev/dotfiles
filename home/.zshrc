@@ -1,4 +1,3 @@
-
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -28,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # extract:    adds the 'extract' command to untar, unzip, unrar, etc. files
 # pass:       bash completions for password manager
 # go:         completion for the go compiler/runner
-plugins=(cmake fasd git-extras web-search cp gitignore extract pass go colored-man)
+plugins=(cmake fasd gitfast web-search cp gitignore extract pass go colored-man)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -66,8 +65,8 @@ fi
 # sxiv should place image on the center of current screen
 alias sxiv='sxiv -g +0+0'
 
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
+# export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS=' -RiMX'
 
 # This turns off zsh's "helpful" autocorrect feature
 unsetopt correct_all
@@ -101,15 +100,15 @@ export GPG_TTY=$(tty)
 alias trcli='transmission-remote-cli'
 
 # Check for gpg-agent key, prompt if not present ... so very unsafe
-GPG_AGENT_PID=$(echo $GPG_AGENT_INFO | cut -d : -f2)
-if [[ `cat $HOME/'.gnupg/lock'` != "$GPG_AGENT_PID" ]]; then
-  pass show ETH/email > /dev/null
-  # Activate key-dependent cron jobs
-  crontab -l > /tmp/crontab.a
-  sed -e 's=^#\(.*/bin/imap-cron.sh$\)=\1=g' /tmp/crontab.a | crontab
-  rm /tmp/crontab.a
-  echo $GPG_AGENT_PID > $HOME/'.gnupg/lock'
-fi
+# GPG_AGENT_PID=$(echo $GPG_AGENT_INFO | cut -d : -f2)
+# if [[ `cat $HOME/'.gnupg/lock'` != "$GPG_AGENT_PID" ]]; then
+#   pass show ETH/email > /dev/null
+#   # Activate key-dependent cron jobs
+#   crontab -l > /tmp/crontab.a
+#   sed -e 's=^#\(.*/bin/imap-cron.sh$\)=\1=g' /tmp/crontab.a | crontab
+#   rm /tmp/crontab.a
+#   echo $GPG_AGENT_PID > $HOME/'.gnupg/lock'
+# fi
 
 # Go
 export GOPATH=$HOME/gopath:$GOPATH

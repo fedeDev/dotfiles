@@ -220,8 +220,10 @@ function! s:get_buffers()
   endfor
 
   call b.add_section('airline_tabfill', '')
-  call b.split()
-  call b.add_section('airline_tabtype', ' buffers ')
+  if s:show_tab_type
+    call b.split()
+    call b.add_section('airline_tabtype', ' buffers ')
+  endif
 
   let s:current_bufnr = cur
   let s:current_tabline = b.build()

@@ -27,12 +27,10 @@ xrdb ~/.Xresources &
 # Customize peripherals
 # xinput --set-prop 'Razer  Razer Abyssus' 'Device Accel Constant Deceleration' 2 &
 setxkbmap -option caps:escape &
+setxkbmap -option escape:caps &
 
 # Start compositor
 compton &
-
-# Set background image
-feh  --bg-scale '/home/fede/.i3/wall.jpg' &
 #exec sh ~/.fehbg
 
 # Start notification daemon
@@ -54,7 +52,13 @@ mpd &
 # Refresh X
 # xrefresh &
 # Draw status bar
-~/.i3/dzen_conky
+# ~/.i3/dzen_conky
+
+# Setup vmware nicities
+vmware-user &
+
+# Set background image
+feh  --bg-scale '/home/fede/.i3/wall.jpg' &
 
 # Have fun :)
 exit 0
