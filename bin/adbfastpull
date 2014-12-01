@@ -197,6 +197,7 @@ sub populateInAndOutLists {
   my $note = shift;
 
   $ls_output = `adb shell ls -l $cur_dir`;
+  print("ls output $ls_output");
 
   my @lines = split("\n", $ls_output);
 

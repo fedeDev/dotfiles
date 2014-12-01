@@ -30,7 +30,7 @@ setxkbmap -option caps:escape &
 setxkbmap -option escape:caps &
 
 # Start compositor
-compton &
+# compton &
 #exec sh ~/.fehbg
 
 # Start notification daemon
@@ -50,12 +50,9 @@ mpd &
 # wait_for_program
 
 # Refresh X
-# xrefresh &
+xrefresh &
 # Draw status bar
-# ~/.i3/dzen_conky
-
-# Setup vmware nicities
-vmware-user &
+/home/fede/.i3/dzen_conky
 
 # Set background image
 feh  --bg-scale '/home/fede/.i3/wall.jpg' &

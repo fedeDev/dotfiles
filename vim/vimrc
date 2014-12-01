@@ -20,10 +20,10 @@ Bundle 'Valloric/ListToggle'
 Bundle 'Valloric/vim-operator-highlight'
 " Intelli-awesome completer for python/c(++).
 " Bundle 'Valloric/YouCompleteMe'
-
+" Enhanced python highlighting
+Bundle 'hdima/python-syntax'
 " Autocomplete engine plus snippets from Shougo.
 Bundle 'Shougo/neocomplete'
-
 " This awesome plugin manager!
 Bundle 'gmarik/vundle'
 " Align all sorts of stuff.
@@ -60,6 +60,10 @@ Bundle 'JazzCore/ctrlp-cmatcher'
 Bundle 'Parameter-Text-Objects'
 " Google style for c++.
 Bundle 'google.vim'
+" Set tmuxline theme from airline's.
+Bundle 'edkolev/tmuxline.vim'
+" Navigate vim and tmux windows coherently.
+Bundle 'christoomey/vim-tmux-navigator'
 " Vundle packages ended, restore usual configuration:
 augroup vimrc
   autocmd!
@@ -138,7 +142,7 @@ set mousemodel=extend   " Right mouse click extends selection.
 set shortmess=a         " Avoid the 'hit enter to continue' messages.
 set nohlsearch          " Do not highlight searched-for phrases.
 set incsearch           " But do highlight-as-I-type the search string.
-set guioptions-=T       " Remove clutter from gVim.
+set guioptions-=T       " Remove clutter from gVim, if on gVim.
 set guioptions-=l
 set guioptions-=L
 set guioptions-=r
@@ -308,10 +312,10 @@ au vimrc FileType gitcommit setlocal spell! spelllang=en_us
 vnoremap < <gv
 vnoremap > >gv
 " Mappings to move lines.
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+nnoremap <silent><C-S-j> :m .+1<CR>==
+nnoremap <silent><C-S-k> :m .-2<CR>==
+vnoremap <silent><C-S-j> :m '>+1<CR>gv=gv
+vnoremap <silent><C-S-k> :m '<-2<CR>gv=gv
 " Go to next buffer easily.
 nnoremap <tab> :bn <CR>
 nnoremap <S-tab> :bp <CR>
@@ -435,6 +439,9 @@ let g:syntastic_style_warning_symbol = '▷'
 highlight SyntasticErrorSign ctermfg=red
 highlight SyntasticWarningSign ctermfg=yellow
 let g:syntastic_always_populate_loc_list = 1
+let b:syntastic_checkers = ['pylint']
+" Make pylint work with 2-space indentation and allow uppercase variables.
+let g:syntastic_python_pylint_args = "--indent-string='  ' --disable=C0103"
 " TODO
 " if exists('g:loaded_youcompleteme')
 "   let g:syntastic_cpp_checkers = ['ycm']
@@ -536,3 +543,22 @@ omap <silent> aa <Plug>ParameterObjectA
 " Redraw our screen to avoid garbage from showing up
 autocmd VimEnter * redraw!
 autocmd VimEnter * redraw!
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                           Python Enhanced Syntax                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let python_version_2 = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 Tmuxline                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#(whoami)',
+      \'c'    : '↑#(uptime | cut -d " " -f 1,2)',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W#F'],
+      \'x'    : ["#(date +'%a, %b %d')"],
+      \'y'    : '%R',
+      \'z'    : '⌂ #H'}

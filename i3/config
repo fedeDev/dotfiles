@@ -51,7 +51,7 @@ bindsym $mod+v split v
 bindsym $mod+f exec $bindir/i3fullscreen
 
 # toggle dzen2 bar
-# bindsym $mod+n exec $bindir/toggle-dzen
+bindsym $mod+n exec $bindir/toggle-dzen
 
 # check emails on inbox
 bindsym $mod+o exec $bindir/checkmailfast
@@ -117,9 +117,9 @@ bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 # bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
-# bindsym $mod+F12 exec amixer -q set Master 2dB+ unmute
-# bindsym $mod+F11 exec amixer -q set Master 2dB- unmute
-# bindsym $mod+F10 exec amixer -q -D pulse set Master toggle
+bindsym $mod+F12 exec amixer -q -D pulse sset Master 5%+
+bindsym $mod+F11 exec amixer -q -D pulse sset Master 5%-
+bindsym $mod+F10 exec amixer -q -D pulse set Master toggle
 
 # Bind MPD keys
 bindsym Mod1+Control+Up exec mpc toggle
@@ -163,7 +163,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-      status_command i3status
+      # status_command i3status
       tray_output none
       position top
       colors {
@@ -200,6 +200,12 @@ for_window [class="Meshlab"] floating enable; resize shrink right 100px or 100pp
 for_window [class="Sublime_text"] border 1pixel
 for_window [class="Mendeleydesktop"] border 1pixel
 for_window [instance="mail"] border 1pixel; move scratchpad
+# Matlab
+for_window [class="com-mathworks-util-PostVMInit" title="^MATLAB"] border 1pixel
+for_window [class="com-mathworks-util-PostVMInit" title="^Tab"] border 1pixel
+for_window [class="com-mathworks-util-PostVMInit" title="^Fi"] floating enable
+for_window [class="com-mathworks-util-PostVMInit" title="^Fi"] floating enable
+assign [class="com-mathworks-util-PostVMInit" title="^Fi"] 2
 
 # specifics for a projects
 # {{{

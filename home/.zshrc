@@ -114,16 +114,18 @@ alias trcli='transmission-remote-cli'
 export GOPATH=$HOME/gopath:$GOPATH
 
 # Pablo's incremental autocomplete
-function load_incrauto() {
-  source $HOME/.incrzsh
+# function load_incrauto() {
+#   source $HOME/.incrzsh
+#
+#   # MENU
+#   setopt noautoremoveslash
+#   zmodload zsh/complist
+#   bindkey -M menuselect '^M' .accept-line
+#   zstyle ':completion:*' completer _expand _complete #_approximate
+#   zstyle ':completion:*:*:default' force-list always
+#   autoload -U colors
+#   zstyle -e ':completion:*' list-colors 'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[cyan]" )'
+# }
 
-  # MENU
-  setopt noautoremoveslash
-  zmodload zsh/complist
-  bindkey -M menuselect '^M' .accept-line
-  zstyle ':completion:*' completer _expand _complete #_approximate
-  zstyle ':completion:*:*:default' force-list always
-  autoload -U colors
-  zstyle -e ':completion:*' list-colors 'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[cyan]" )'
-}
-
+export PATH=$HOME/.local/bin:$PATH
+export POWERLINE_CONFIG_COMMAND=$HOME/.local/bin/powerline-config

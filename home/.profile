@@ -11,5 +11,5 @@ export LC_ALL=en_US.UTF-8
 
 # Timezone(s)
 # export TZ=America/Mexico_City
-# export TZ=Europe/Zurich
-export TZ=US/Pacific
+export TZ=Europe/Zurich
+# export TZ=US/Pacific
