@@ -1,9 +1,9 @@
 mutt/cache/headers
 vim/tmp/*
+vim/.netrwhist
 !vim/tmp/.gitignore
 vim/bundle/*
 !vim/bundle/vundle
-!vim/bundle/vim-airline
 config/google*
 config/pulse*
 *~

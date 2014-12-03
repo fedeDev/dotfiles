@@ -11,7 +11,7 @@ Bundle 'FSwitch'
 " User <leader><leader> to get enhances vim-motions
 Bundle 'Lokaltog/vim-easymotion'
 " Beautiful status line
-Bundle 'bling/vim-airline'
+Bundle 'fedeDev/vim-airline'
 " Improve the behaviour of parenthesis, quotations, etc.
 Bundle 'Raimondi/delimitMate'
 " Easily show the quickfix and list windows
@@ -471,8 +471,9 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.paste = 'Þ'
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'lucius'
 let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#symbol = ''
 " Enable summary of changeset of the current working tree.
 let g:airline_enable_hunks = 1
 let g:airline_mode_map = {
@@ -488,26 +489,70 @@ let g:airline_mode_map = {
       \ 'S'  : 'S',
       \ '' : 'S',
       \ }
-" No filename no bufferline. Place just the non-modifiable icon on this section.
-let g:airline_section_c =
-\ '%#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+" Custom function that truncates the git branch to show.
+function! BranchName()
+  let branch = fnamemodify(airline#extensions#branch#get_head(), ':t')
+  return branch
+endfunction
+call airline#parts#define_function('gitbranch', 'BranchName')
+
+" Set a red lock glyph on readonly files.
+call airline#parts#define_function('redlock', 'airline#parts#readonly')
+call airline#parts#define_accent('redlock', 'red')
+" Current relative folder
+function! RelativeFolder()
+  let relfolder = expand("%:p:~:h:s?code?c?:s?RedwoodInternal?rwi?:s?Redwood?rw?")
+  return relfolder
+endfunction
+
+" The relfolder section should be not distracting, as it can be quite large.
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+function! AirlineThemePatch(palette)
+  if g:airline_theme == 'lucius'
+    let a:palette.accents.purple = airline#themes#get_highlight('Folded')
+  endif
+endfunction
+call airline#parts#define_function('relfolder', 'RelativeFolder')
+call airline#parts#define_accent('relfolder', 'purple')
+" We need a pretty wide window in order to show the path.
+call airline#parts#define_minwidth('relfolder', 140)
+
 " Current function we are located at (extracted from tagbar).
-let g:airline_section_x =
-      \ '%{airline#util#wrap(airline#extensions#tagbar#currenttag(),0)}'
-let g:airline_section_y = airline#section#create(['filetype'])
+call airline#parts#define_function('functioname', 'airline#extensions#tagbar#currenttag')
+call airline#parts#define_minwidth('functioname', 80)
+
+let g:airline_section_b = airline#section#create([
+      \'%{airline#extensions#hunks#get_hunks()}', 'gitbranch'])
+let g:airline_section_c = airline#section#create(['relfolder', ' ', 'redlock'])
+let g:airline_section_x = airline#section#create(['functioname'])
+let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}'
+
 " Use tabline so that buffers show at the top where there is more space.
 let g:airline#extensions#tabline#enabled = 1
 " Don't show whether we are displaying tabs or buffers, I never use tabs.
 let g:airline#extensions#tabline#show_tab_type = 0
+" Display numbers for buffers and quick jump using <leader>1, <leader>2, etc.
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 " Min number of buffers to display them at the top.
 let g:airline#extensions#tabline#buffer_min_count = 2
 " Format of the filename for the buffer.
 let g:airline#extensions#tabline#fnamemod = ':t'
-" Display parent directory if buffer is duplicated.
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-" Straight separators for buffers.
+" No separators for buffers.
 let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+" No close button.
+let g:airline#extensions#tabline#show_close_button = 0
 " For git hunks, just show them if they are non-zero.
 let g:airline#extensions#hunks#non_zero_only = 1
 " Display the current function in the status line.
