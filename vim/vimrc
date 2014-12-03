@@ -64,6 +64,8 @@ Bundle 'google.vim'
 Bundle 'edkolev/tmuxline.vim'
 " Navigate vim and tmux windows coherently.
 Bundle 'christoomey/vim-tmux-navigator'
+" Copy paste between tmux panes.
+Bundle 'kana/vim-fakeclip'
 " Vundle packages ended, restore usual configuration:
 augroup vimrc
   autocmd!
@@ -312,10 +314,10 @@ au vimrc FileType gitcommit setlocal spell! spelllang=en_us
 vnoremap < <gv
 vnoremap > >gv
 " Mappings to move lines.
-nnoremap <silent><C-S-j> :m .+1<CR>==
-nnoremap <silent><C-S-k> :m .-2<CR>==
-vnoremap <silent><C-S-j> :m '>+1<CR>gv=gv
-vnoremap <silent><C-S-k> :m '<-2<CR>gv=gv
+nnoremap <silent><C-j> :m .+1<CR>==
+nnoremap <silent><C-k> :m .-2<CR>==
+vnoremap <silent><C-j> :m '>+1<CR>gv=gv
+vnoremap <silent><C-k> :m '<-2<CR>gv=gv
 " Go to next buffer easily.
 nnoremap <tab> :bn <CR>
 nnoremap <S-tab> :bp <CR>
@@ -562,3 +564,12 @@ let g:tmuxline_preset = {
       \'x'    : ["#(date +'%a, %b %d')"],
       \'y'    : '%R',
       \'z'    : '⌂ #H'}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Tmux Navigator                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
