@@ -27,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # extract:    adds the 'extract' command to untar, unzip, unrar, etc. files
 # pass:       bash completions for password manager
 # go:         completion for the go compiler/runner
-plugins=(cmake fasd gitfast web-search cp gitignore extract pass go colored-man)
+plugins=(cmake fasd gitfast cp gitignore extract pass go colored-man)
 
 source $ZSH/oh-my-zsh.sh
 
