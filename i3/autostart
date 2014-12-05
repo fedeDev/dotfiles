@@ -1,25 +1,6 @@
 #!/bin/sh
-#
-# Wait for program coming up, depends on xdotool and notify-send
-#
-wait_for_program () {
-  n=0
-  while true
-  do
-    # PID of last background command
-    if xdotool search --onlyvisible --pid $! 2>/dev/null; then
-      break
-    else
-      if [ $n -eq 90 ]; then
-        notify-send -u critical "Error during start"
-        break
-      else
-        n=`expr $n + 1`
-        sleep 0.5
-      fi
-    fi
-  done
-}
+# Start email client on the background
+offlineimap -l ~/.offlineimap/log &
 
 # Set color, xterm and other resources
 xrdb ~/.Xresources &
@@ -30,8 +11,7 @@ setxkbmap -option caps:escape &
 setxkbmap -option escape:caps &
 
 # Start compositor
-# compton &
-#exec sh ~/.fehbg
+compton &
 
 # Start notification daemon
 dunst &
@@ -45,12 +25,9 @@ redshift &
 # Start music player daemon
 mpd &
 
-# Fire up a terminal
-# xterm &
-# wait_for_program
-
 # Refresh X
 xrefresh &
+
 # Draw status bar
 /home/fede/.i3/dzen_conky
 

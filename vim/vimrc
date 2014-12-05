@@ -46,6 +46,8 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 " Mighty cholorscheme!
 Bundle 'w0ng/vim-hybrid'
+" Mighty cholorscheme moar!!
+Bundle 'flazz/vim-colorschemes'
 " Mail attachment for mutt
 Bundle 'chrisbra/CheckAttach'
 " Better cpp syntax highlighting.
@@ -260,7 +262,7 @@ set popt=left:0pc,right:1pc,paper:A4,header:2,number:y
 set printheader=%<\ \ \ %f%h%m%=%N\ of\ %{(line('$')+72)/73}
 set printfont=courier:h11
 set printexpr=PrintFile(v:fname_in)
-function PrintFile(fname)
+function! PrintFile(fname)
   call system("lpr -o page-bottom=15 -o page-top=15 -o page-left=40 -o page-right=40  -o page-border=single -o number-up=2 -o sides=two-sided-long-edge -o media=A4 " . a:fname)
   call delete(a:fname)
   return v:shell_error

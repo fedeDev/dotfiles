@@ -14,7 +14,7 @@ accounts = ETH
 
 #maxsyncaccounts = 1
 
-ui = TTYUI
+ui = Basic
 pythonfile = ~/bin/offlineimap.py
 socktimeout = 60
 fsync = false
@@ -53,11 +53,10 @@ quick = 5
 # The pre sync script has to complete before a sync to the account will
 # start.
 
-# presynchook = imapfilter
-postsynchook = /home/fede/bin/cron-lbdb-fetchaddr
-
 # You can also specify parameters to the commands
 # presynchook = imapfilter -c someotherconfig.lua
+
+postsynchook = /home/fede/bin/cron-lbdb-fetchaddr
 
 # OfflineImap caches the state of the synchronisation to e.g. be able to
 # determine if a mail has been deleted on one side or added on the
@@ -97,7 +96,7 @@ remotepasseval = mailpasswd('ETH')
 idlefolders = ['INBOX']
 maxconnections = 3
 holdconnectionopen = yes
-keepalive = 60
+# keepalive = 60
 #
 # Normally, OfflineIMAP will expunge deleted messages from the server.
 # You can disable that if you wish.  This means that OfflineIMAP will
