@@ -13,3 +13,15 @@ export LC_ALL=en_US.UTF-8
 # export TZ=America/Mexico_City
 export TZ=Europe/Zurich
 # export TZ=US/Pacific
+
+export PATH="$PATH:/home/fede/code/cuda/android-sdk-linux/platform-tools"
+
+export PATH="$PATH:/home/fede/code/cuda/android-sdk-linux/build-tools"
+
+export PATH="$PATH:/home/fede/code/cuda/android-sdk-linux/tools"
+
+export CUDA_TOOLKIT_ROOT="/home/fede/NVPACK/cuda-6.0"
+
+export PATH="$PATH:/home/fede/NVPACK/cuda-6.0/bin"
+
+export NVPACK_ROOT="/home/fede/NVPACK"

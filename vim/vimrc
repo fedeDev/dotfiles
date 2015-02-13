@@ -40,6 +40,8 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-fugitive'
 " Official syntax, indent, and filetypes plugin for git.
 Bundle 'tpope/vim-git'
+" Git diff enhanced.
+Bundle 'sjl/splice.vim'
 " Extend repeat '.' for plugins, support for vim-surround comes built-in.
 Bundle 'tpope/vim-repeat'
 " All about surroundings, quotes, brackets, parens, etc.

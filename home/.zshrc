@@ -110,22 +110,17 @@ alias trcli='transmission-remote-cli'
 #   echo $GPG_AGENT_PID > $HOME/'.gnupg/lock'
 # fi
 
-# Go
-export GOPATH=$HOME/gopath:$GOPATH
-
-# Pablo's incremental autocomplete
-# function load_incrauto() {
-#   source $HOME/.incrzsh
-#
-#   # MENU
-#   setopt noautoremoveslash
-#   zmodload zsh/complist
-#   bindkey -M menuselect '^M' .accept-line
-#   zstyle ':completion:*' completer _expand _complete #_approximate
-#   zstyle ':completion:*:*:default' force-list always
-#   autoload -U colors
-#   zstyle -e ':completion:*' list-colors 'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[cyan]" )'
-# }
-
-export PATH=$HOME/.local/bin:$PATH
+## Go
+export GOPATH=$HOME/.go
+# For go :)
+export PATH=$HOME/bin:$GOPATH/bin:$PATH
 export POWERLINE_CONFIG_COMMAND=$HOME/.local/bin/powerline-config
+# Go versioning tool
+[[ -s "/home/fede/.gvm/scripts/gvm" ]] && source "/home/fede/.gvm/scripts/gvm"
+
+# For mex and mexext in the command line/cmake
+export PATH=/opt/MATLAB/R2014a/bin:$PATH
+
+## CUDexport PATH=/usr/local/cuda-6.5/bin:$PATH
+export PATH=/usr/local/cuda-6.5/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-6.5/lib64:$LD_LIBRARY_PATHA

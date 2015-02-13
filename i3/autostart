@@ -34,5 +34,8 @@ xrefresh &
 # Set background image
 feh  --bg-scale '/home/fede/.i3/wall.jpg' &
 
+# Set monitors on the correct side.
+xrandr --output DVI-D-0 --auto --right-of DVI-I-1
+
 # Have fun :)
 exit 0
