@@ -13,3 +13,6 @@ export LC_ALL=en_US.UTF-8
 # export TZ=America/Mexico_City
 export TZ=Europe/Zurich
 # export TZ=US/Pacific
+
+# CCACHE
+export CCACHE_PATH="/usr/bin"

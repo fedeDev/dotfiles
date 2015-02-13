@@ -6,6 +6,7 @@ ZSH_THEME="fede"
 alias open="xdg-open"
 alias cal="cal -3"
 alias gits="git status"
+alias mplayer="mpv"
 
 gitcd() {
 	git rev-parse --show-cdup > /dev/null 2>&1

@@ -1,6 +1,6 @@
 #!/bin/sh
 # Start email client on the background
-offlineimap -l ~/.offlineimap/log &
+# offlineimap -l ~/.offlineimap/log &
 
 # Set color, xterm and other resources
 xrdb ~/.Xresources &
@@ -23,7 +23,7 @@ unclutter &
 redshift &
 
 # Start music player daemon
-mpd &
+# mpd &
 
 # Refresh X
 xrefresh &

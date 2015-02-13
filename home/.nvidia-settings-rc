@@ -2,7 +2,7 @@
 # /home/fede/.nvidia-settings-rc
 #
 # Configuration file for nvidia-settings - the NVIDIA X Server Settings utility
-# Generated on Wed Oct  2 17:58:44 2013
+# Generated on Fri Feb 13 16:19:41 2015
 #
 
 # ConfigProperties:
@@ -20,39 +20,3 @@ Timer = PowerMizer_Monitor_(GPU_0),Yes,1000
 
 # Attributes:
 
-0/SyncToVBlank=1
-0/LogAniso=0
-0/FSAA=0
-0/TextureSharpen=0
-0/TextureClamping=1
-0/FXAA=0
-0/AllowFlipping=1
-0/FSAAAppControlled=1
-0/LogAnisoAppControlled=1
-0/OpenGLImageSettings=1
-0/FSAAAppEnhanced=0
-0/DigitalVibrance[DFP-0]=0
-0/DigitalVibrance[DFP-3]=0
-0/ColorSpace[DFP-0]=0
-0/ColorSpace[DFP-3]=0
-0/ColorRange[DFP-0]=0
-0/ColorRange[DFP-3]=0
-0/XVideoSyncToDisplay=65536
-[DPY:DVI-I-1]/RedBrightness=0.000000
-[DPY:DVI-I-1]/GreenBrightness=0.000000
-[DPY:DVI-I-1]/BlueBrightness=0.000000
-[DPY:DVI-I-1]/RedContrast=0.000000
-[DPY:DVI-I-1]/GreenContrast=0.000000
-[DPY:DVI-I-1]/BlueContrast=0.000000
-[DPY:DVI-I-1]/RedGamma=1.000000
-[DPY:DVI-I-1]/GreenGamma=1.000000
-[DPY:DVI-I-1]/BlueGamma=1.000000
-[DPY:DVI-D-0]/RedBrightness=0.000000
-[DPY:DVI-D-0]/GreenBrightness=0.000000
-[DPY:DVI-D-0]/BlueBrightness=0.000000
-[DPY:DVI-D-0]/RedContrast=0.000000
-[DPY:DVI-D-0]/GreenContrast=0.000000
-[DPY:DVI-D-0]/BlueContrast=0.000000
-[DPY:DVI-D-0]/RedGamma=1.000000
-[DPY:DVI-D-0]/GreenGamma=1.000000
-[DPY:DVI-D-0]/BlueGamma=1.000000
