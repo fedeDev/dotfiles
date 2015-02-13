@@ -168,7 +168,7 @@ bar {
       position top
       colors {
                 background #1f1f1f
-                statusline #C5C8C6 
+                statusline #C5C8C6
                 # item                        border   bg   fg
                 # for multi monitor:
                 #focused_workspace #101010 #101010 #51df1d
@@ -184,7 +184,7 @@ exec --no-startup-id $bindir/autostart
 # exec --no-startup-id i3-msg 'workspace 3; exec blah; workspace 1'
 
 # custom window settings
-assign [class="Google-chrome"] 2
+assign [class="Google-chrome"] 1
 assign [class="Eclipse"] 3
 assign [class="Mendeleydesktop"] 6
 
@@ -194,6 +194,7 @@ for_window [class="Eclipse"] border 1pixel
 for_window [class="I3-exit"] floating enable, border 1pixel
 for_window [class="Android SDK Manager"] floating enable
 for_window [class="mpv"] floating enable
+for_window [class="Mplayer"] floating enable
 for_window [class="Xdot"] floating enable
 for_window [class="sxiv"] floating enable
 for_window [class="Meshlab"] floating enable; resize shrink right 100px or 100ppt; resize shrink left 100px or 100ppt; resize shrink up 100px or 100ppt; resize shrink down 100px or 100ppt
@@ -205,7 +206,6 @@ for_window [class="com-mathworks-util-PostVMInit" title="^MATLAB"] border 1pixel
 for_window [class="com-mathworks-util-PostVMInit" title="^Tab"] border 1pixel
 for_window [class="com-mathworks-util-PostVMInit" title="^Fi"] floating enable
 for_window [class="com-mathworks-util-PostVMInit" title="^Fi"] floating enable
-assign [class="com-mathworks-util-PostVMInit" title="^Fi"] 2
 
 # specifics for a projects
 # {{{
