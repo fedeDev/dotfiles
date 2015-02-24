@@ -30,8 +30,8 @@ use constant PULL_ERROR => "does not exist";
 # Substring returned by adb pull when a file/dir is missing
 use constant NO_SUCH_FILE => "No such file";
 # Default path in which the andoid player stores data.
-$app_path = "/data/data/com.motorola.atap.tangomapper/files/";
-$app_path_pure = "/data/data/com.motorola.atap.tangomapper/files/";
+$app_path = "/data/data/com.projecttango.tangomapper/files/";
+$app_path_pure = "/data/data/com.projecttango.tangomapper/files/";
 # Superframes dir name.
 $sf_dir_name = "superframes";
 # Note file name.

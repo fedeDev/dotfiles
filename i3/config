@@ -27,7 +27,7 @@ bindsym $mod+mod1+Return exec xterm
 bindsym $mod+Shift+c kill
 
 # start dmenu
-bindsym Mod1+space exec "dmenu_run -i -p run: -nb \#1f1f1f -nf \#A0A0A0 -sb \#285577 -sf white"
+bindsym Mod1+space exec j4-dmenu-desktop --dmenu="dmenu -i -fn '-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*'"
 
 # change focus
 bindsym $mod+h focus left
@@ -193,6 +193,9 @@ for_window [class="Google-chrome"] border 1pixel
 for_window [class="Eclipse"] border 1pixel
 for_window [class="I3-exit"] floating enable, border 1pixel
 for_window [class="Android SDK Manager"] floating enable
+for_window [title="Thunderbird"] floating enable, border 1pixel
+# facebook messenger chorme extension
+for_window [class="crx_mdapmeleikeppmfgadilffngabfpibok"] floating enable
 for_window [class="mpv"] floating enable
 for_window [class="Mplayer"] floating enable
 for_window [class="Xdot"] floating enable

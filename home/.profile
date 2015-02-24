@@ -3,7 +3,7 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/
 
 # Android developer tools
 export ANDROID_SDK=/opt/android-sdk
-export ANDROID_NDK=/opt/android-ndk
+export ANDROID_NDK=/opt/android-ndk-r10b
 PATH=$PATH:$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$ANDROID_NDK
 
 # Sanity check for system wide UTF-8

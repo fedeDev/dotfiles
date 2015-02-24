@@ -120,7 +120,7 @@ export POWERLINE_CONFIG_COMMAND=$HOME/.local/bin/powerline-config
 [[ -s "/home/fede/.gvm/scripts/gvm" ]] && source "/home/fede/.gvm/scripts/gvm"
 
 # For mex and mexext in the command line/cmake
-export PATH=/opt/MATLAB/R2014a/bin:$PATH
+export PATH=/usr/local/MATLAB/R2014b/bin/:$PATH
 
 ## CUDexport PATH=/usr/local/cuda-6.5/bin:$PATH
 export PATH=/usr/local/cuda-6.5/bin:$PATH
