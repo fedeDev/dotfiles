@@ -70,6 +70,9 @@ Bundle 'edkolev/tmuxline.vim'
 Bundle 'christoomey/vim-tmux-navigator'
 " Copy paste between tmux panes.
 Bundle 'kana/vim-fakeclip'
+" Latex plugin. Plays nice with Neocomplete.
+Bundle 'lervag/vim-latex'
+
 " Vundle packages ended, restore usual configuration:
 augroup vimrc
   autocmd!
@@ -201,7 +204,7 @@ if !has('gui_running')
 endif
 
 " Wrap text only at break locations for text and .tex files.
-au Filetype tex call SetupTextFile()
+au Filetype tex call SetupTexFile()
 au Filetype text call SetupTextFile()
 au Filetype mail call SetupMail()
 
@@ -216,7 +219,13 @@ function! SetupTextFile()
   let &l:showbreak='¤ '
   setlocal wrap
   setlocal linebreak
-  setlocal nonumber
+endfunction!
+
+function! SetupTexFile()
+  call SetupTextFile()
+  nnoremap <silent> <leader>v  :VimLatexView<cr>
+  nnoremap <silent> <leader>c  :VimLatexCompileSS<cr>
+  autocmd BufWritePost * :VimLatexCompileSS
 endfunction!
 
 " Return to last edit position when opening files.
@@ -433,6 +442,40 @@ let g:tagbar_sort = 0
 let g:tagbar_width = 46
 " Put cursor on tagbar when we first open
 let g:tagbar_autofocus = 1
+" This is just the default definition for c++ files.
+let g:tagbar_type_cuda = {
+    \ 'ctagstype' : 'c++',
+    \ 'kinds'     : [
+        \ 'd:macros:1:0',
+        \ 'p:prototypes:1:0',
+        \ 'g:enums:1:0',
+        \ 'e:enumerators:1:0',
+        \ 't:typedefs:0:0',
+        \ 'n:namespaces',
+        \ 'c:classes:1:0',
+        \ 's:structs:1:0',
+        \ 'u:unions:1:0',
+        \ 'f:functions:1:0',
+        \ 'm:members:0:0',
+        \ 'v:variables:0:0'
+    \ ],
+    \ 'sro'        : '::',
+    \ 'kind2scope' : {
+        \ 'g' : 'enum',
+        \ 'n' : 'namespace',
+        \ 'c' : 'class',
+        \ 's' : 'struct',
+        \ 'u' : 'union'
+    \ },
+    \ 'scope2kind' : {
+        \ 'enum'      : 'g',
+        \ 'namespace' : 'n',
+        \ 'class'     : 'c',
+        \ 'struct'    : 's',
+        \ 'union'     : 'u'
+    \ }
+\ }
+
 nnoremap <F4> :TagbarToggle<cr><c-w>=
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -460,7 +503,7 @@ function! SetupCPPFile()
   if stridx(expand('%:p'), 'RedwoodInternal') != -1
     let b:syntastic_checkers = ['cpplint']
     let g:syntastic_cpp_cpplint_exec =
-    \ '/home/fede/code/redwood_ws/RedwoodInternal/Redwood/tools/lint/cpplint.py'
+    \ '/home/fede/redwood_ws/RedwoodInternal/Redwood/tools/lint/cpplint.py'
     let g:syntastic_cpp_cpplint_args = '--verbose=1'
     let g:syntastic_cpp_cpplint_thres = 99
     let g:syntastic_stl_format = '%E{E: %fe}%B{, }%W{W: %fw}'
@@ -622,3 +665,24 @@ let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  vim-latex                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Allow vim-latex to autocomplete bibliography entries.
+let g:latex_complete_recursive_bib = 1
+let g:latex_latexmk_callback = 1
+let g:latex_view_method = 'zathura'
+let g:latex_latexmk_continuous = 0
+let g:latex_latexmk_background = 1
+"   `cse`  - change surrounding environment
+"   `dse`  - delete surrounding environment
+"   `csc`  - change surrounding command
+"   `dsc`  - delete surrounding command
+"          Note: This mappings is only available if `surround.vim` is also
+"                available.
+"   `tsd`  - toggle delimiters (add/remove `\left` and `\right`)
+"   `tse`  - toggle starred environment
+"
+" An environment that has been opened but not closed may be closed by the
+" mapping `]]`.
