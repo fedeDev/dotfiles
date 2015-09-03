@@ -18,3 +18,5 @@
 	diffcool = !sh -c '~/bin/git-diffall $@' -
 [color]
 	ui = true
+[merge]
+	tool = meld

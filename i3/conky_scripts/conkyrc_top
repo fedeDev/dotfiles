@@ -4,8 +4,8 @@ cpu_avg_samples 6
 net_avg_samples 6
 out_to_x no
 update_interval 0.5
-mpd_host localhost
-mpd_port 6600
+# mpd_host localhost
+# mpd_port 6600
 mail_spool /home/fede/Mail/ETH/INBOX
 out_to_console yes
 no_buffers yes

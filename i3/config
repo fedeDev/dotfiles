@@ -29,6 +29,9 @@ bindsym $mod+Shift+c kill
 # start dmenu
 bindsym Mod1+space exec j4-dmenu-desktop --dmenu="dmenu -i -fn '-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*'"
 
+# lock screen with Ctrl+Alt L
+bindsym Mod1+Control+l exec $bindir/i3-lock
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -215,6 +218,12 @@ for_window [class="com-mathworks-util-PostVMInit" title="^Fi"] floating enable
 for_window [class="Video stream"] floating enable
 for_window [title="noshow"] border 1pixel
 for_window [title="GL 3.0 Window"] floating enable, border 1pixel
+for_window [title="Figure 1"] floating enable, border 1pixel
+for_window [title="Figure 2"] floating enable, border 1pixel
+for_window [title="Figure 3"] floating enable, border 1pixel
+for_window [title="Figure 4"] floating enable, border 1pixel
+for_window [title="Figure 5"] floating enable, border 1pixel
+for_window [title="Figure 6"] floating enable, border 1pixel
 for_window [title="Main"] floating enable, border 1pixel
 for_window [class="Lines"] floating enable, border 1pixel
 # }}}

@@ -72,14 +72,6 @@ export LESS=' -RiMX'
 # This turns off zsh's "helpful" autocorrect feature
 unsetopt correct_all
 
-# https://bbs.archlinux.org/viewtopic.php?id=93683
-# list all pacman packages
-if hash pacman 2>/dev/null; then
-  paclist-all() {
-    sudo pacman -Qei $(pacman -Qu|cut -d" " -f 1)|awk ' BEGIN {FS=":"}/^Name/{printf("\033[1;36m%s\033[1;37m", $2)}/^Description/{print $2}'
-}
-fi
-
 # Load variables and path
 if [[ -f $HOME/'.profile' ]]; then
   source $HOME/'.profile'
@@ -98,7 +90,7 @@ alias ncdu="ncdu -x"
 export GPG_TTY=$(tty)
 
 # torrents
-alias trcli='transmission-remote-cli'
+# alias trcli='transmission-remote-cli'
 
 # Check for gpg-agent key, prompt if not present ... so very unsafe
 # GPG_AGENT_PID=$(echo $GPG_AGENT_INFO | cut -d : -f2)
@@ -112,16 +104,31 @@ alias trcli='transmission-remote-cli'
 # fi
 
 ## Go
-export GOPATH=$HOME/.go
+# export GOPATH=$HOME/.go
 # For go :)
-export PATH=$HOME/bin:$GOPATH/bin:$PATH
+# export PATH=$HOME/bin:$GOPATH/bin:$PATH
 export POWERLINE_CONFIG_COMMAND=$HOME/.local/bin/powerline-config
 # Go versioning tool
 [[ -s "/home/fede/.gvm/scripts/gvm" ]] && source "/home/fede/.gvm/scripts/gvm"
 
 # For mex and mexext in the command line/cmake
-export PATH=/usr/local/MATLAB/R2014b/bin/:$PATH
+# export PATH=/usr/local/MATLAB/R2014b/bin/:$PATH
 
-## CUDexport PATH=/usr/local/cuda-6.5/bin:$PATH
-export PATH=/usr/local/cuda-6.5/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-6.5/lib64:$LD_LIBRARY_PATHA
+# CUDA
+# export PATH=/usr/local/cuda-6.5/bin:$PATH
+# export LD_LIBRARY_PATH=/usr/local/cuda-6.5/lib64:$LD_LIBRARY_PATHA
+
+stty erase ^H
+export NDK_CCACHE=/usr/bin/ccache
+export PATH=${HOME}/bin/cmake-3.2.1-Linux-x86_64/bin:${PATH}
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/usr/local/google/home/fedecp/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables bash completion for gcloud.
+source '/usr/local/google/home/fedecp/google-cloud-sdk/completion.zsh.inc'
+export LARGE_TEST_DATA_ROOT=${HOME}/.cmake/ExternalData
+
+export CUDA_TOOLKIT_ROOT=${HOME}/tools/NVPACK/cuda-6.0
+export PATH=${PATH}:${CUDA_TOOLKIT_ROOT}/bin
+export LD_LIBRARY_PATH=${CUDA_TOOLKIT_ROOT}/lib64:${LD_LIBRARY_PATH}

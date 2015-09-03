@@ -1,4 +1,4 @@
-$pdflatex = 'pdflatex -synctex=1 %O %S';
+$pdflatex = 'pdflatex --shell-escape --synctex=1 %O %S';
 $compiling_cmd = "xdotool search --name \"%D\" " .
                  "set_window --name \"%D compiling...\"";
 $success_cmd = "xdotool search --name \"%D\" " .

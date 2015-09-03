@@ -13,17 +13,19 @@ Bundle 'Lokaltog/vim-easymotion'
 " Beautiful status line
 Bundle 'fedeDev/vim-airline'
 " Improve the behaviour of parenthesis, quotations, etc.
-Bundle 'Raimondi/delimitMate'
+" Bundle 'Raimondi/delimitMate'
+Bundle 'cohama/lexima.vim'
 " Easily show the quickfix and list windows
 Bundle 'Valloric/ListToggle'
 " Highlight math operators (+, -, *, ...).
 Bundle 'Valloric/vim-operator-highlight'
 " Intelli-awesome completer for python/c(++).
-" Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
+" Bundle 'oblitum/YouCompleteMe'
 " Enhanced python highlighting
 Bundle 'hdima/python-syntax'
-" Autocomplete engine plus snippets from Shougo.
-Bundle 'Shougo/neocomplete'
+" Autocomplete engine from Shougo.
+" Bundle 'Shougo/neocomplete'
 " This awesome plugin manager!
 Bundle 'gmarik/vundle'
 " Align all sorts of stuff.
@@ -72,6 +74,8 @@ Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'kana/vim-fakeclip'
 " Latex plugin. Plays nice with Neocomplete.
 Bundle 'lervag/vim-latex'
+" Use the silver searcher for grepping.
+Bundle 'rking/ag.vim'
 
 " Vundle packages ended, restore usual configuration:
 augroup vimrc
@@ -223,9 +227,11 @@ endfunction!
 
 function! SetupTexFile()
   call SetupTextFile()
-  nnoremap <silent> <leader>v  :VimLatexView<cr>
-  nnoremap <silent> <leader>c  :VimLatexCompileSS<cr>
-  autocmd BufWritePost * :VimLatexCompileSS
+  nnoremap <silent> <leader>v  :VimtexView<cr>
+  nnoremap <silent> <leader>c  :VimtexCompileSS!<cr>
+  " autocmd BufWritePost * :VimtexCompileSS!
+  nnoremap <F6> :VimtexTocToggle<cr>
+  nnoremap <F7> :VimtexLabelsToggle<cr>
 endfunction!
 
 " Return to last edit position when opening files.
@@ -355,64 +361,65 @@ let g:gundo_width=60
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                     TODO!!  Neocomplete                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-k>     neocomplete#complete_common_string()
-
-" Toggle the plugin.
-nnoremap <F10> :NeoCompleteToggle<cr>
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplete#close_popup()
-" inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.c =
-      \ '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp =
-      \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
+" " Use neocomplete.
+" let g:neocomplete#enable_at_startup = 1
+" " Use smartcase.
+" let g:neocomplete#enable_smart_case = 1
+" " Set minimum syntax keyword length.
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"
+" " Define dictionary.
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"     \ 'default' : '',
+"     \ 'vimshell' : $HOME.'/.vimshell_hist',
+"     \ 'scheme' : $HOME.'/.gosh_completions'
+"         \ }
+"
+" " Define keyword.
+" if !exists('g:neocomplete#keyword_patterns')
+"     let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+"
+" " Plugin key-mappings.
+" inoremap <expr><C-g>     neocomplete#undo_completion()
+" inoremap <expr><C-k>     neocomplete#complete_common_string()
+"
+" " Toggle the plugin.
+" nnoremap <F10> :NeoCompleteToggle<cr>
+"
+" " Recommended key-mappings.
+" " <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+"   return neocomplete#close_popup() . "\<CR>"
+"   " For no inserting <CR> key.
+"   "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+" endfunction
+" " <TAB>: completion.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" " <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" " inoremap <expr><C-y>  neocomplete#close_popup()
+" " inoremap <expr><C-e>  neocomplete#cancel_popup()
+" " Close popup by <Space>.
+" "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+"
+" " AutoComplPop like behavior.
+" "let g:neocomplete#enable_auto_select = 1
+"
+" " Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+" let g:neocomplete#sources#omni#input_patterns.c =
+"       \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+" let g:neocomplete#sources#omni#input_patterns.cpp =
+"       \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+" let g:neocomplete#sources#omni#input_patterns.tex =
+"       \ '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               ListToggle                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -420,7 +427,31 @@ let g:neocomplete#sources#omni#input_patterns.cpp =
 let g:lt_location_list_toggle_map = 'tl'
 " Toggle quickfix
 let g:lt_quickfix_list_toggle_map = 'tq'
-let g:lt_height = 12
+let g:lt_height = 10
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               YouCompleteMe                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Populate the location list. This will clobber the list, but these messasges
+" are likely always more important anyway.
+let g:ycm_always_populate_location_list = 1
+let g:ycm_allow_changing_updatetime = 0
+set updatetime=1000
+let g:ycm_complete_in_comments = 0
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<c-j>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<c-k>']
+
+" Hack to have <cr> accept the completion and _not_ issue a carriage return.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+
+let g:ycm_extra_conf_globlist = ['~/redwood_ws/RedwoodInternal/*']
+nnoremap <F10> :YcmForceCompileAndDiagnostics<cr>
+nnoremap g. :YcmCompleter GoToImprecise<cr>
+nnoremap <leader>? :YcmCompleter GetType<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 FSwitch                                      "
@@ -488,22 +519,16 @@ let g:syntastic_style_warning_symbol = '▷'
 highlight SyntasticErrorSign ctermfg=red
 highlight SyntasticWarningSign ctermfg=yellow
 let g:syntastic_always_populate_loc_list = 1
-let b:syntastic_checkers = ['pylint']
+let b:syntastic_checkers = ['']
 " Make pylint work with 2-space indentation and allow uppercase variables.
 let g:syntastic_python_pylint_args = "--indent-string='  ' --disable=C0103"
-" TODO
-" if exists('g:loaded_youcompleteme')
-"   let g:syntastic_cpp_checkers = ['ycm']
-" elseif executable('oclint')
-"   let g:syntastic_cpp_checkers = ['oclint']
-" endif
 au Filetype cpp call SetupCPPFile()
 function! SetupCPPFile()
   " Check if we are in a specific project, else do nothing for now.
   if stridx(expand('%:p'), 'RedwoodInternal') != -1
     let b:syntastic_checkers = ['cpplint']
     let g:syntastic_cpp_cpplint_exec =
-    \ '/home/fede/redwood_ws/RedwoodInternal/Redwood/tools/lint/cpplint.py'
+    \ '~/redwood_ws/RedwoodInternal/Redwood/tools/lint/cpplint.py'
     let g:syntastic_cpp_cpplint_args = '--verbose=1'
     let g:syntastic_cpp_cpplint_thres = 99
     let g:syntastic_stl_format = '%E{E: %fe}%B{, }%W{W: %fw}'
@@ -638,11 +663,11 @@ omap <silent> aa <Plug>ParameterObjectA
 autocmd VimEnter * redraw!
 autocmd VimEnter * redraw!
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           Python Enhanced Syntax                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let python_version_2 = 1
+let python_highlight_all = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Tmuxline                                     "
@@ -670,11 +695,14 @@ nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 "                                  vim-latex                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Allow vim-latex to autocomplete bibliography entries.
-let g:latex_complete_recursive_bib = 1
-let g:latex_latexmk_callback = 1
-let g:latex_view_method = 'zathura'
-let g:latex_latexmk_continuous = 0
-let g:latex_latexmk_background = 1
+let g:vimtex_complete_recursive_bib = 1
+let g:vimtex_latexmk_callback = 1
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_latexmk_continuous = 0
+let g:vimtex_latexmk_background = 1
+let g:vimtex_toc_show_preamble = 0
+let g:vimtex_toc_secnumdepth = 1
+let g:vimtex_index_split_width = 45
 "   `cse`  - change surrounding environment
 "   `dse`  - delete surrounding environment
 "   `csc`  - change surrounding command
@@ -686,3 +714,8 @@ let g:latex_latexmk_background = 1
 "
 " An environment that has been opened but not closed may be closed by the
 " mapping `]]`.
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                     Ag.vim                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ag_working_path_mode='r'
