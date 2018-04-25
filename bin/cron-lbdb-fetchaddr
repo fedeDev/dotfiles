@@ -1,7 +1,0 @@
-#!/bin/bash
-
-find /home/fede/Mail/ETH/INBOX -type f -mtime -0 -print0 | \
-  xargs -0 -n 1 -r /bin/bash -c 'lbdb-fetchaddr -a < "$1"' lbdb-fetchaddr
-
-# remove duplicates
-SORT_OUTPUT=name /usr/lib/lbdb/lbdb-munge

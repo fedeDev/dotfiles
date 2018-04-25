@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# ~/.xinitrc
-
-exec i3

@@ -1,9 +1,0 @@
-#!/bin/zsh
-case "$1" in
-  bar)
-    echo -e -n '\x1b[\x36 q'
-    ;;
-  block)
-    echo -e -n '\x1b[\x32 q'
-    ;;
-esac

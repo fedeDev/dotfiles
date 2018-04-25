@@ -1,8 +1,0 @@
-#!/bin/bash
-# get public IP using the curl utility and save in tmp file
-#
-IP_FILE='/tmp/dzenbar-publicIP'
-if [[ ! -f $IP_FILE ]]; then
-  touch $IP_FILE
-  curl --retry 3 "ifconfig.me" > $IP_FILE 2> /dev/null
-fi

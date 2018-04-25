@@ -1,5 +1,0 @@
-#!/bin/bash
-cd ~/workspace/redwood_ws
-. Redwood/setup.sh
-. Redwood/prebuilts/Linux/setup.bash
-redwood_make --platform linux $1
