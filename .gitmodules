@@ -1,0 +1,3 @@
+[submodule "terminal/st"]
+	path = terminal/st
+	url = git://git.suckless.org/st
