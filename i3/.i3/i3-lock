@@ -1,0 +1,8 @@
+#!/bin/bash
+blurredScreen=$(mktemp --tmpdir i3lock-wrapper-XXXXXXXXXX.png)
+currScreen=$(mktemp --tmpdir i3lock-wrapper-XXXXXXXXXX.png)
+
+scrot -d0 "$currScreen"
+convert "$currScreen" -blur 0x3 "$blurredScreen"
+i3lock -i "$blurredScreen"
+rm "$currScreen" "$blurredScreen"

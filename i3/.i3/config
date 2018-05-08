@@ -1,0 +1,249 @@
+# ----------------------- i3 window manager settings ---------------------------
+set $mod Mod4
+set $bindir ~/.i3
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. ISO 10646 = Unicode
+font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec $bindir/stcd
+
+# kill focused window
+bindsym $mod+Shift+c kill
+
+# start dmenu
+bindsym Mod1+space exec j4-dmenu-desktop --dmenu="dmenu -i -fn '-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*'"
+
+# lock screen with Ctrl+Alt L
+bindsym Mod1+Control+l exec $bindir/i3-lock
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# check emails on inbox
+# bindsym $mod+o exec $bindir/checkmailfast
+# bindsym $mod+Shift+o exec $bindir/checkmail
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout default
+
+# toggle tiling / floating
+bindsym $mod+Control+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# toggle border
+bindsym $mod+Shift+space border toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Switch workspaces with meta-tab
+bindsym $mod+Tab workspace back_and_forth
+
+# Cycle through used workspaces
+bindsym $mod+mod1+h workspace prev
+bindsym $mod+mod1+l workspace next
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move workspace 1
+bindsym $mod+Shift+2 move workspace 2
+bindsym $mod+Shift+3 move workspace 3
+bindsym $mod+Shift+4 move workspace 4
+bindsym $mod+Shift+5 move workspace 5
+bindsym $mod+Shift+6 move workspace 6
+bindsym $mod+Shift+7 move workspace 7
+bindsym $mod+Shift+8 move workspace 8
+bindsym $mod+Shift+9 move workspace 9
+bindsym $mod+Shift+0 move workspace 10
+
+# Move workspaces, not working in 4.1.2
+# bindsym $mod+Shift+mod1+h move output left
+# bindsym $mod+Shift+mod1+l move output right
+
+# Bind media keys
+# alsa + amixer needed
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 -- +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -- -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle
+# bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
+bindsym $mod+F12 exec pactl set-sink-volume 1 -- +5%
+bindsym $mod+F11 exec pactl set-sink-volume 1 -- -5%
+bindsym $mod+F10 exec pactl set-sink-mute 1 toggle
+
+# reload the configuration file
+bindsym $mod+Shift+e reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Shutdown scripts
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+  bindsym l exec --no-startup-id $bindir/i3exit lock, mode "default"
+  bindsym e exec --no-startup-id $bindir/i3exit logout, mode "default"
+  bindsym s exec --no-startup-id $bindir/i3exit suspend, mode "default"
+  bindsym h exec --no-startup-id $bindir/i3exit hibernate, mode "default"
+  bindsym r exec --no-startup-id $bindir/i3exit reboot, mode "default"
+  bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
+  bindsym h resize grow left 5 px or 5 ppt
+  bindsym j resize grow down 5 px or 5 ppt
+  bindsym k resize grow up 5 px or 5 ppt
+  bindsym l resize grow right 5 px or 5 ppt
+  bindsym Shift+h resize shrink right 5 px or 5 ppt
+  bindsym Shift+j resize shrink up 5 px or 5 ppt
+  bindsym Shift+k resize shrink down 5 px or 5 ppt
+  bindsym Shift+l resize shrink left 5 px or 5 ppt
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# TODO add a mode for opening very used apps/terms into paths: 
+# $mod+p -> "Open: [t]: some prog; [a]: some other ... and so on"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+  font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
+  # status_command i3status
+  status_command py3status -c ~/i3statuspy3.conf
+  output DP-0
+  # tray_output primary
+  position top
+  # separator_symbol " : | : " # not yet in my version!
+  colors {
+    background #1f1f1f
+    statusline #C5C8C6
+    # item                        border   bg   fg
+    # for multi monitor:
+    active_workspace #3300FF #101010 #101010
+    urgent_workspace #2e3436 #9a878f #000000
+  }
+}
+
+# Dummy status bary in order to show the workspace labels. Fonts are slightly smaller since display is smaller.
+bar {
+  font -misc-fixed-medium-r-normal--9-90-75-75-C-60-koi8-r
+  output DVI-D-0
+  position top
+  colors {
+    background #1f1f1f
+    statusline #C5C8C6
+    # item                        border   bg   fg
+    # for multi monitor:
+    active_workspace #3300FF #101010 #101010
+    urgent_workspace #2e3436 #9a878f #000000
+  }
+}
+
+# Start all the custom goodness
+exec --no-startup-id $bindir/autostart
+# desktop apps
+# exec --no-startup-id i3-msg 'workspace 5; exec spotify; workspace 1; exec google-chrome'
+
+# custom window settings
+hide_edge_borders vertical
+new_float none
+assign [class="Google-chrome"] 1
+
+for_window [class="Google-chrome"] border 1pixel
+for_window [class="I3-exit"] floating enable, border 1pixel
+for_window [class="Xfce4-notifyd"] floating enable, border 1pixel
+for_window [class="xfce4-notifyd"] floating enable, border 1pixel
+for_window [class="Android SDK Manager"] floating enable
+for_window [title="Evolution"] border 1pixel
+# facebook messenger chorme extension
+for_window [class="crx_mdapmeleikeppmfgadilffngabfpibok"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="Mplayer"] floating enable
+for_window [class="Xdot"] floating enable
+for_window [class="sxiv"] floating enable
+for_window [class="Meshlab"] floating enable; resize shrink right 200px or 200ppt; resize shrink left 200px or 200ppt; resize shrink up 200px or 200ppt; resize shrink down 200px or 200ppt
+# Matlab 2014b
+for_window [class="com-mathworks-util-PostVMInit"] border 1pixel
+# Matlab 2016a
+for_window [class="MATLAB R2016a - academic use"] border 1pixel
+# Maple 2016
+for_window [instance="sun-awt-X11-XFramePeer"] border 1pixel
+# remove border for st
+for_window [class="st-256color"] border pixel 3
+# colmap float
+for_window [class="colmap"] floating enable
+
+# specifics for a projects
+# {{{
+for_window [class="Video stream"] floating enable
+for_window [title="noshow"] border 1pixel
+for_window [title="GL 3.0 Window"] floating enable, border 1pixel
+for_window [title="Figure 1"] floating enable, border 1pixel
+for_window [title="Figure 2"] floating enable, border 1pixel
+for_window [title="Figure 3"] floating enable, border 1pixel
+for_window [title="Figure 4"] floating enable, border 1pixel
+for_window [title="Figure 5"] floating enable, border 1pixel
+for_window [title="Figure 6"] floating enable, border 1pixel
+for_window [title="Main"] floating enable, border 1pixel
+for_window [class="Lines"] floating enable, border 1pixel
+# }}}
+
+# arrange workspaces
+workspace 1 output DVI-D-1
+workspace 3 output DVI-D-1
+workspace 5 output DVI-D-1
+workspace 7 output DVI-D-1
+
+workspace 2 output DP-0
+workspace 4 output DP-0
+workspace 6 output DP-0
+workspace 8 output DP-0

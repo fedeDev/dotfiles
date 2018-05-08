@@ -1,0 +1,32 @@
+#!/bin/sh
+# Set color, xterm and other resources
+xrdb ~/.Xresources &
+
+# Customize peripherals
+# xinput --set-prop 'Razer  Razer Abyssus' 'Device Accel Constant Deceleration' 2 &
+# setxkbmap -option caps:escape &
+# setxkbmap -option escape:caps &
+
+# Start compositor
+# compton &
+
+# Start notification daemon
+# dunst &
+
+# Hide mouse
+# unclutter &
+
+# Refresh X
+xrefresh &
+
+# Set background image
+feh  --bg-scale $HOME/.i3/wall.jpg &
+
+# Set monitors on the correct side.
+xrandr --output DVI-D-0 --auto --right-of DVI-I-1
+
+# Google lock
+# $HOME/bin/locker &
+
+# Have fun :)
+exit 0
