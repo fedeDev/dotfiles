@@ -3,7 +3,7 @@
 There are some subtrees to manage external repositories (e.g., st and zim).
 Remember to update changes in upstream regulary using
 ```
-git subtree pull --prefix <> master --squash
+git subtree pull --prefix <name-of-remote-do:git remote> master --squash
 ```
 
 Setup (assuming ubuntu-based distro):
