@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+read -d -r TEMPLATE << EOM
+if exists('g:loaded_\${FT}_after_custom')
+  finish
+endif
+let g:loaded_\${FT}_after_custom = 1
+EOM
+
+touch ${1}.vim
+FT=$1 envsubst <<< "$TEMPLATE" >> ${1}.vim
