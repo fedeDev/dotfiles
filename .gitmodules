@@ -1,3 +1,0 @@
-[submodule "terminal/st"]
-	path = terminal/.local/st
-	url = git@github.com:fedeDev/st-nord.git
