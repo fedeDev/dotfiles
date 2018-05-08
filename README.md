@@ -13,7 +13,7 @@ git clone <repo> ~/dotfiles
 cd ~/dotfiles
 stow <each folder>
 ```
-profit!
+Compile st and register it with ```tic -s st.info```.
 
 Dependencies
 ```
