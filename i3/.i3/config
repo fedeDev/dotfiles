@@ -158,7 +158,7 @@ bindsym $mod+r mode "resize"
 bar {
   font -misc-fixed-medium-r-normal--10-100-75-75-C-60-iso10646-1
   # status_command i3status
-  status_command py3status -c ~/i3statuspy3.conf
+  status_command py3status -c ~/.i3/i3statuspy3.conf
   output DP-0
   # tray_output primary
   position top

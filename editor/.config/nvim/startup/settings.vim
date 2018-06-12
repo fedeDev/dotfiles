@@ -37,7 +37,11 @@ set noshowmode                   " Don't show the mode (" -- INSERT -- ").
 set cursorline                   " Highlights the current line.
 set number                       " Show line numbers.
 set completeopt=menu,menuone,noinsert,noselect
+" TODO add something to extends to listchars :)
 set listchars=tab:›\ ,eol:¬      " Characters for tab and CR in list mode
+set linebreak                    " If wrap is on (tex[t] files) break at word.
+set breakindent                  " Wraped lines are aligned horizontally.
+set showbreak=↳\                 " If wrap-broke line, start with ↳ .
  
 " Auto generated files options.
 set undofile                     " Stores undo state even when files are closed.

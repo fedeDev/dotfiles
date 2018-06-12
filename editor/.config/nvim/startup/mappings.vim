@@ -6,6 +6,7 @@ nnoremap <silent> zj o<Esc>k
 nnoremap <silent> zk O<Esc>j
 nnoremap <silent> zl >>
 nnoremap <silent> zh <<
+nnoremap <silent> <space> i<space><esc>
 " Scroll through command history from home row.
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
