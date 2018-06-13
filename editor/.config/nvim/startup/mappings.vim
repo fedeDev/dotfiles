@@ -24,12 +24,6 @@ noremap <down>  <C-W>-
 noremap <left>  3<C-W><
 noremap <right> 3<C-W>>
 
-" Switch to the directory of the open buffer.
-function! ChangeToBufferDir()
-  execute ':cd %:p:h'
-  echohl Title | echom 'Changed to folder: '.expand('%:p:h') | echohl None
-endfunction
-noremap <leader>cd :call ChangeToBufferDir()<cr>
 " Get spelling suggestions.
 noremap <leader>s<leader> z=
 " Toggle and untoggle spell checking.
