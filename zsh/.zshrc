@@ -29,6 +29,14 @@ bindkey '^r' history-incremental-search-backward
 alias open="xdg-open"
 alias cal="cal -3"
 alias gits="git status"
+# rsync -avz -> archive (preserve symlinks, permissions, owners), verbose,
+#               compressed transmission/copy.
+# rsync -h   -> human-readable progress/units.
+alias rsync-copy="rsync -az --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
+alias exag="exa --color-scale --group-directories-first -lh --git -a -s new"
 
 calc () { bc -l <<< "$@" }
 

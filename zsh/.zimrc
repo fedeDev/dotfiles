@@ -3,18 +3,18 @@
 # The second line of modules may depend on options set by modules in the first
 # line. These dependencies are noted on the respective module's README.md.
 zmodules=(directory environment archive minimal2 git git-info history input utility custom \
-          syntax-highlighting history-substring-search prompt completion)
+          syntax-highlighting history-substring-search prompt completion fasd)
 
 ###################
 function my_mnml_jobs {
-  local output="[background jobs: %F{cyan}%j%f]"
+  local output="[jobs: %F{cyan}%j%f] --"
   echo -n "%(1j.${output}.)"
 }
 function my_mnml_err {
-  [[ "${MNML_LAST_ERR}" -eq 0 ]] || echo -n "[error: %F{${MNML_ERR_COLOR}}${MNML_LAST_ERR}%f]"
+  [[ "${MNML_LAST_ERR}" -eq 0 ]] || echo -n "[error: %F{${MNML_ERR_COLOR}}${MNML_LAST_ERR}%f] --"
 }
 function pretty_print_pwd {
-  echo -n "%F{green}"$(pwd)"%f →"
+  echo -n "[%F{cyan}"$(date +'%A, %B %d')"%f] -- [%F{yellow}"$(pwd)"%f] --"
 }
 # Prompt »》
 MNML_OK_COLOR=cyan
@@ -26,16 +26,22 @@ function my_isontmux {
     echo -n '[%F{red}no tmux%f]'
   fi
 }
+# Show nothing in MAGICENTER
+function my_nope { }
 MNML_USER_CHAR='$'
+# MNML_INSERT_CHAR='»'
 MNML_INSERT_CHAR='》'
 MNML_NORMAL_CHAR='• '
 MNML_PROMPT=(mnml_pyenv my_isontmux mnml_status mnml_keymap)
 MNML_RPROMPT=('mnml_cwd 4 18' mnml_git)
 MNML_INFOLN=(my_mnml_err my_mnml_jobs pretty_print_pwd mnml_files)
-MNML_MAGICENTER=(mnml_me_ls mnml_me_git)
+MNML_MAGICENTER=(my_nope)
 
 zprompt_theme='minimal2'
 zinput_mode='vi'
+
+# ztermtitle='%n@%m:%~'
+ztermtitle='zsh:%~'
 
 # This appends '../' to your input for each '.' you type after an initial '..'
 zdouble_dot_expand='true'
