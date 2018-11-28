@@ -22,15 +22,12 @@ if (( terminfo[colors] >= 8 )); then
   else
     # BSD
 
+    (( ! ${+CLICOLOR} )) && export CLICOLOR=1
     (( ! ${+LSCOLORS} )) && export LSCOLORS='ExfxcxdxbxGxDxabagacad'
 
     # stock OpenBSD ls does not support colors at all, but colorls does.
-    if [[ ${OSTYPE} == openbsd* ]]; then
-      if (( ${+commands[colorls]} )); then
-        alias ls='colorls -G'
-      fi
-    else
-      alias ls='ls -G'
+    if [[ ${OSTYPE} == openbsd* && ${+commands[colorls]} -ne 0 ]]; then
+      alias ls='colorls'
     fi
   fi
 
@@ -53,20 +50,6 @@ if (( terminfo[colors] >= 8 )); then
     (( ! ${+LESS_TERMCAP_ue} )) && export LESS_TERMCAP_ue=$'\E[0m'      # Ends underline.
     (( ! ${+LESS_TERMCAP_us} )) && export LESS_TERMCAP_us=$'\E[1;32m'   # Begins underline.
   fi
-fi
-
-
-#
-# GNU only
-#
-
-if (( ${+commands[dircolors]} )); then
-
-  alias lx='ll -X' # long format, sort by extension
-
-  # Always wear a condom
-  alias chmod='chmod --preserve-root -v'
-  alias chown='chown --preserve-root -v'
 fi
 
 
@@ -105,6 +88,20 @@ fi
 
 alias df='df -h'
 alias du='du -h'
+
+
+#
+# GNU only
+#
+
+if (( ${+commands[dircolors]} )); then
+
+  alias lx='ll -X' # long format, sort by extension
+
+  # Always wear a condom
+  alias chmod='chmod --preserve-root -v'
+  alias chown='chown --preserve-root -v'
+fi
 
 
 # not aliasing rm -i, but if safe-rm is available, use condom.
