@@ -144,4 +144,4 @@ fi
 export PATH="/home/fede/.cargo/bin:$PATH"
 export PATH="/usr/local/cuda-8.0/bin:$PATH"
 
-eval "$(dircolors ~/.dir_colors)"
+#eval "$(dircolors ~/.dir_colors)"
