@@ -19,7 +19,7 @@ set shortmess+=cF       " Avoid the 'hit enter to continue' messages.
 set inccommand=split    " When using, e.g., :%s, preview changes to buffer
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 
-" Set C-indentation to follow google's C++ style.
+" Set C-indentation to follow facebook's viper C++ style.
 set expandtab                " Turn a tab into spaces
 set tabstop=2                " Number of spaces a tab counts for
 set shiftwidth=2             " Spaces for autoindents
@@ -30,7 +30,7 @@ set shiftround               " Makes indenting a multiple of shiftwidth
 set smartindent
 set cinoptions=l1,g1,h1,E-s,N-s,t0,i4,+4,(0,w1,W4
 set colorcolumn=+1
-set textwidth=80
+set textwidth=100
 
 " Visual options.
 set noshowmode                   " Don't show the mode (" -- INSERT -- ").

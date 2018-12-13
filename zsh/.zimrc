@@ -2,8 +2,10 @@
 # Select what modules you would like enabled.
 # The second line of modules may depend on options set by modules in the first
 # line. These dependencies are noted on the respective module's README.md.
-zmodules=(directory environment archive minimal2 git git-info history input utility custom \
-          syntax-highlighting history-substring-search prompt completion fasd)
+#zmodules=(directory environment archive minimal2 history input utility custom \
+          #syntax-highlighting history-substring-search prompt completion fasd)
+zmodules=(directory environment archive minimal2 history input utility custom prompt \
+	  history-substring-search completion)
 
 ###################
 function my_mnml_jobs {
@@ -32,31 +34,28 @@ MNML_USER_CHAR='$'
 # MNML_INSERT_CHAR='»'
 MNML_INSERT_CHAR='》'
 MNML_NORMAL_CHAR='• '
-MNML_PROMPT=(mnml_pyenv my_isontmux mnml_status mnml_keymap)
-MNML_RPROMPT=('mnml_cwd 4 18' mnml_git)
+MNML_PROMPT=(mnml_pyenv mnml_status mnml_keymap)
+#MNML_PROMPT=(mnml_pyenv my_isontmux mnml_status mnml_keymap)
+MNML_RPROMPT=('mnml_cwd 4 18')
+#MNML_RPROMPT=('mnml_cwd 4 18' mnml_git)
 MNML_INFOLN=(my_mnml_err my_mnml_jobs pretty_print_pwd mnml_files)
 MNML_MAGICENTER=(my_nope)
 
 zprompt_theme='minimal2'
 zinput_mode='vi'
 
-# ztermtitle='%n@%m:%~'
-ztermtitle='zsh:%~'
+ ztermtitle='%n@%m:%~'
+#ztermtitle='zsh:%~'
 
 # This appends '../' to your input for each '.' you type after an initial '..'
-zdouble_dot_expand='true'
+# zdouble_dot_expand='true'
 
 # This determines what highlighters will be used with the syntax-highlighting
 # module.  Documentation of the highlighters can be found here:
 # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 # For (u)rxvt, termite and gnome-terminal users, removing the 'cursor'
 # highlighter will fix the disappearing cursor problem
-zhighlighters=(main brackets cursor)
+# zhighlighters=(main brackets cursor)
 
 # Load these ssh identities with the ssh module
 #zssh_ids=(id_rsa)
-
-# Set (optional) pacman front-end.
-#zpacman_frontend='powerpill'
-# Load any helper scripts as defined here
-#zpacman_helper=(aur)

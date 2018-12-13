@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Change default zim location
 export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+export EDITOR=nvim
 
 # Start zim
 [[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh
@@ -41,8 +42,8 @@ alias exag="exa --color-scale --group-directories-first -lh --git -a -s new"
 calc () { bc -l <<< "$@" }
 
 # Bind ctrl-j and ctr-k for up and down
-bindkey "^J" down-line-or-search
-bindkey "" up-line-or-search
+bindkey "^J" history-substring-search-down
+bindkey "" history-substring-search-up
 
 # have ranger cd to the pwd when exit
 if hash ranger 2>/dev/null; then
@@ -63,6 +64,10 @@ fi
 # NCurses 'du'
 if hash ncdu 2>/dev/null; then
   alias ncdu="ncdu -x"
+fi
+
+if hash cdu 2>/dev/null; then
+  alias cdu="cdu -dh"
 fi
 
 # export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
@@ -141,7 +146,21 @@ if [[ -n "$SSH_CLIENT" ]]; then
   source ~/.profile
 fi
 
-export PATH="/home/fede/.cargo/bin:$PATH"
-export PATH="/usr/local/cuda-8.0/bin:$PATH"
-
 #eval "$(dircolors ~/.dir_colors)"
+
+alias starttracking='adb shell trackingservice_ctl start'
+alias stoptracking='adb shell trackingservice_ctl stop'
+alias restarttracking='adb shell trackingservice_ctl restart'
+alias startcubes='adb shell am start com.oculus.vrseaofcubesfw/com.oculus.vrseaofcubes.MainActivity'
+alias stopcubes='adb shell am force-stop com.oculus.vrseaofcubesfw'
+alias startdab='adb shell am start com.oculus.dabcoretech/com.unity3d.player.UnityPlayerActivity'
+alias stopdab='adb shell am force-stop com.oculus.dabcoretech'
+alias startbogo='adb shell am start com.oculus.MontereyNUX/com.epicgames.ue4.GameActivity'
+alias osver='adb shell getprop ro.build.fingerprint'
+
+# Perl-related stuff.
+# PATH="/Users/fcamposeco/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB="/Users/fcamposeco/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/Users/fcamposeco/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/Users/fcamposeco/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/Users/fcamposeco/perl5"; export PERL_MM_OPT;

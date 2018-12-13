@@ -26,3 +26,4 @@ source $HOME/.config/nvim/startup/plugins/textobj-parameter.vim
 source $HOME/.config/nvim/startup/plugins/vimtex.vim
 source $HOME/.config/nvim/startup/plugins/windowswap.vim
 source $HOME/.config/nvim/startup/plugins/list-toggle.vim
+source $HOME/.config/nvim/startup/plugins/ncm2.vim

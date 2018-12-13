@@ -82,7 +82,7 @@ call plug#begin('~/.config/nvim/plugged')
   " Startup page.
   Plug 'mhinz/vim-startify'
   " Autocompletion and Code Indexing -------------------------------------------
-  Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'ludovicchabant/vim-gutentags'
   " Interface with Language Server Protocols.
   Plug 'autozimu/LanguageClient-neovim', {
       \     'for' : ['c', 'cpp'],
@@ -90,11 +90,12 @@ call plug#begin('~/.config/nvim/plugged')
       \      'do' : 'bash install.sh',
       \ }
   " Autocompletion manager
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp'
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   " Autocomplete from syntax
-  Plug 'Shougo/neco-syntax'
+  " Plug 'Shougo/neco-syntax'
   " Autocomplete includes
-  Plug 'Shougo/neoinclude.vim', {'for' : ['c', 'cpp']}
+  " Plug 'Shougo/neoinclude.vim', {'for' : ['c', 'cpp']}
   " Linting and Formatting -----------------------------------------------------
   Plug 'w0rp/ale'
   " Clang style.
