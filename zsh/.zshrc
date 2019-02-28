@@ -121,7 +121,8 @@ _fzf_compgen_dir() {
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden  --glob "!.hg/*"'
+export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden  --glob "!.hg/*"'
 
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh
@@ -158,9 +159,7 @@ alias stopdab='adb shell am force-stop com.oculus.dabcoretech'
 alias startbogo='adb shell am start com.oculus.MontereyNUX/com.epicgames.ue4.GameActivity'
 alias osver='adb shell getprop ro.build.fingerprint'
 
-# Perl-related stuff.
-# PATH="/Users/fcamposeco/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/Users/fcamposeco/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/Users/fcamposeco/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/Users/fcamposeco/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/Users/fcamposeco/perl5"; export PERL_MM_OPT;
+alias gencmake='cd $HOME/ovrsource && python2 arvr/tools/buck/cmake_generator/cmake_generator.py @mode/mac/coretech/dev-debug //Software/CoreTech/...; cd -'
+alias pip_ct='~/virtualenvs/coretech/bin/pip'
+alias ipython_ct='~/virtualenvs/coretech/bin/ipython'
+alias cdo='cd `hg root`'

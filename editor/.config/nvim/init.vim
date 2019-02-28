@@ -20,9 +20,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'osyo-manga/vim-anzu'
   " Highligh current searched item.
   Plug 'inside/vim-search-pulse'
-  """ Manage per-project vim settings (used once for fortran, perhaps useless)
-  """ TODO: It takes quite a bit to load, somehow. Disabled for now.
-  """ Plug 'LucHermitte/local_vimrc' | Plug 'LucHermitte/lh-vim-lib'
   " fzf integration ------------------------------------------------------------
   " Fzf fuzzy finder for files, tags, and output of rg, ag, etc.
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -79,40 +76,14 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'blueyed/vim-diminactive'
   " When scrolling with <C-U/D/B/F>, use smooth scrolling.
   Plug 'yuttie/comfortable-motion.vim'
-  " Startup page.
-  Plug 'mhinz/vim-startify'
   " Autocompletion and Code Indexing -------------------------------------------
-  " Plug 'ludovicchabant/vim-gutentags'
-  " Interface with Language Server Protocols.
-  Plug 'autozimu/LanguageClient-neovim', {
-      \     'for' : ['c', 'cpp'],
-      \  'branch' : 'next',
-      \      'do' : 'bash install.sh',
-      \ }
   " Autocompletion manager
   Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp'
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Autocomplete from syntax
-  " Plug 'Shougo/neco-syntax'
-  " Autocomplete includes
-  " Plug 'Shougo/neoinclude.vim', {'for' : ['c', 'cpp']}
-  " Linting and Formatting -----------------------------------------------------
-  Plug 'w0rp/ale'
-  " Clang style.
-  Plug 'sbdchd/neoformat', {'for' : ['cpp', 'fortran', 'python']}
-  " C++ ------------------------------------------------------------------------
-  " Enhanced C++ syntax.
-  Plug 'octol/vim-cpp-enhanced-highlight', {'for' : 'cpp'}
-  " Latex ----------------------------------------------------------------------
-  " Everything we need and want for \latex.
-  Plug 'lervag/vimtex', { 'for' : 'tex' }
-  " Git ------------------------------------------------------------------------
-  " Amazing plugin to use git inside vim, also add git commit types etc.
-  Plug 'tpope/vim-fugitive'
-  " Add :GV command for browsing git repo.
-  Plug 'junegunn/gv.vim'
-  " Official syntax, indent, and filetypes plugin for git.
-  Plug 'tpope/vim-git'
+  Plug 'ncm2/ncm2-bufword'
+  Plug 'ncm2/ncm2-path'
+  Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+  Plug 'fgrsnau/ncm2-otherbuf'
+  Plug 'ncm2/ncm2-jedi'
   " Show git status info on gutter.
   Plug 'mhinz/vim-signify'
 call plug#end()

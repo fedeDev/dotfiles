@@ -5,7 +5,7 @@ if exists('g:loaded_ncm2_after_custom')
 endif
 let g:loaded_ncm2_after_custom = 1
 
-autocmd BufEnter  *  call ncm2#enable_for_buffer()
+autocmd BufEnter * call ncm2#enable_for_buffer()
 " Affects the visual representation of what happens after you hit <C-x><C-o>
 " https://neovim.io/doc/user/insert.html#i_CTRL-X_CTRL-O
 " https://neovim.io/doc/user/options.html#'completeopt'
@@ -15,6 +15,7 @@ autocmd BufEnter  *  call ncm2#enable_for_buffer()
 " into the current line (noinsert).
 set completeopt=noinsert,menuone,noselect
 
+let g:ncm2_jedi#environment = '/Users/fcamposeco/virtualenvs/coretech/bin/python3'
 
 " let g:deoplete#enable_at_startup = 1
 " " Assuming one uses <C-U> for expanding a snippet.
