@@ -11,6 +11,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-utils/vim-interruptless'
   " Add unix utility commands.
   Plug 'tpope/vim-eunuch'
+  " Csv view and edit
+  Plug 'chrisbra/csv.vim'
   " Serach enhancements --------------------------------------------------------
   " Hihgligh search pattern while typing and nexting it.
   Plug 'haya14busa/is.vim'
@@ -41,19 +43,19 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'machakann/vim-highlightedyank'
   " Add 's' operator to replace a {motion} with register.
   Plug 'kana/vim-operator-replace' | Plug 'kana/vim-operator-user'
-  " File browser.
-  Plug 'justinmk/vim-dirvish'
+  " File browser.                
+  Plug 'justinmk/vim-dirvish'    
   " Adds the 'cx' exchange operator.
   Plug 'tommcdo/vim-exchange'
   " Make T,t,F,t behave a bit smarter.
   Plug 'rhysd/clever-f.vim'
   " Mappings and commands for convenience --------------------------------------
-  " Avoid overusing j/k, use <A-j/k>.
-  Plug 'haya14busa/vim-signjk-motion'
   " Smart close buffers with <leader>d.
   Plug 'cespare/vim-sbd'
   " Move code lines with <M-k/j>.
   Plug 'matze/vim-move'
+  " Avoid overusing j/k, use <A-j/k>.
+  Plug 'haya14busa/vim-signjk-motion'
   " Use jk/kj to exit insert mode.
   Plug 'fedeDev/vim-easyescape'
   " Change to git root using <leader>rp, change to buffer with <leader>cd.
@@ -77,13 +79,18 @@ call plug#begin('~/.config/nvim/plugged')
   " When scrolling with <C-U/D/B/F>, use smooth scrolling.
   Plug 'yuttie/comfortable-motion.vim'
   " Autocompletion and Code Indexing -------------------------------------------
-  " Autocompletion manager
   Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp'
   Plug 'ncm2/ncm2-bufword'
   Plug 'ncm2/ncm2-path'
   Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-  Plug 'fgrsnau/ncm2-otherbuf'
+  Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
+  " PYthon ---------------------------------------------------------------------
+  " Completion source
   Plug 'ncm2/ncm2-jedi'
+  " pep8/autopep8
+  Plug 'w0rp/ale'
+  " Plug ''
+  
   " Show git status info on gutter.
   Plug 'mhinz/vim-signify'
 call plug#end()
