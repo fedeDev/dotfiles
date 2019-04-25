@@ -9,6 +9,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tomtom/tcomment_vim'
   " No interruptions of 'file changed', just a warning instead.
   Plug 'vim-utils/vim-interruptless'
+  " Auto reload a file if buffer didn't change.
+  Plug 'djoshea/vim-autoread'
   " Add unix utility commands.
   Plug 'tpope/vim-eunuch'
   " Csv view and edit

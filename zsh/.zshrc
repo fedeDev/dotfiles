@@ -108,12 +108,12 @@ function preexec {
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+  fd --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type d --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" . "$1"
 }
 
 # --files: List files that would be searched but do not search
@@ -121,8 +121,8 @@ _fzf_compgen_dir() {
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden  --glob "!.hg/*"'
-export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden  --glob "!.hg/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*"'
+export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*"'
 
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh
