@@ -23,7 +23,7 @@ command! -bang -nargs=* GRg
   \   <bang>0)
 nnoremap <silent> tt :Files<cr>
 nnoremap <silent> tT :GFiles --cached --others --exclude-standard<cr>
-nnoremap <silent> tb :Buffers<cr>
+nnoremap <silent> to :Buffers<cr>
 nnoremap <leader>g :Rg <C-R><C-W>
 nnoremap <leader>G :GRg <C-R><C-W>
 nnoremap <leader>h :FZF -1 -e --query=%:t:r\ !.%:e$<cr>

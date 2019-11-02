@@ -27,7 +27,7 @@ bindkey '^h' backward-delete-char
 # Re-enable incremental search from emacs mode (it's useful)
 bindkey '^r' history-incremental-search-backward
 
-alias open="xdg-open"
+# alias open="xdg-open"
 alias cal="cal -3"
 alias gits="git status"
 # rsync -avz -> archive (preserve symlinks, permissions, owners), verbose,
@@ -38,8 +38,10 @@ alias rsync-move="rsync -avz --progress -h --remove-source-files"
 alias rsync-update="rsync -avzu --progress -h"
 alias rsync-synchronize="rsync -avzu --delete --progress -h"
 alias exag="exa --color-scale --group-directories-first -lh --git -a -s new"
+alias rgo="rg  --glob '!buck-out/*' --glob '!.hg/*' --glob '!.ccls-cache/*' --hidden --type 'cpp' "
+alias rgoa="rg  --glob '!buck-out/*' --glob '!.hg/*' --glob '!.ccls-cache/*' --hidden "
 
-calc () { bc -l <<< "$@" }
+# calc () { bc -l <<< "$@" }
 
 # Bind ctrl-j and ctr-k for up and down
 bindkey "^J" history-substring-search-down
@@ -108,12 +110,12 @@ function preexec {
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" . "$1"
+  fd --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" --exclude ".ccls-cache" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" . "$1"
+  fd --type d --hidden --follow --exclude ".git" --exclude ".hg" --exclude ".vscode" --exclude ".ccls-cache" . "$1"
 }
 
 # --files: List files that would be searched but do not search
@@ -121,8 +123,8 @@ _fzf_compgen_dir() {
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*"'
-export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*" --glob "!.ccls-cache/*"'
+export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden --glob "!*buck-out*"  --glob "!.hg/*" --glob "!.vscode/*" --glob "!.ccls-cache/*"'
 
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh
@@ -162,4 +164,5 @@ alias osver='adb shell getprop ro.build.fingerprint'
 alias gencmake='cd $HOME/ovrsource && python2 arvr/tools/buck/cmake_generator/cmake_generator.py @mode/mac/coretech/dev-debug //Software/CoreTech/...; cd -'
 alias pip_ct='~/virtualenvs/coretech/bin/pip'
 alias ipython_ct='~/virtualenvs/coretech/bin/ipython'
+alias jupyter_ct='~/virtualenvs/coretech/bin/jupyter'
 alias cdo='cd `hg root`'
