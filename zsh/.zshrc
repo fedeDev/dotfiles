@@ -142,10 +142,10 @@ if [ -f ~/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 # On SSH we haven't yet sourced profiles.
-if [[ -n "$SSH_CLIENT" ]]; then
-  source /etc/profile
-  source ~/.profile
-fi
+# if [[ -n "$SSH_CLIENT" ]]; then
+  # source /etc/profile
+  # source ~/.profile
+# fi
 
 #eval "$(dircolors ~/.dir_colors)"
 
