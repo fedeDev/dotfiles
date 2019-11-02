@@ -8,7 +8,7 @@ source $HOME/.config/nvim/startup/plugins/highlightedyank.vim
 source $HOME/.config/nvim/startup/plugins/list-toggle.vim
 source $HOME/.config/nvim/startup/plugins/local_vimrc.vim
 source $HOME/.config/nvim/startup/plugins/mundo.vim
-source $HOME/.config/nvim/startup/plugins/ncm2.vim
+source $HOME/.config/nvim/startup/plugins/coc.vim
 source $HOME/.config/nvim/startup/plugins/neodark.vim
 source $HOME/.config/nvim/startup/plugins/operator_replace.vim
 source $HOME/.config/nvim/startup/plugins/rooter.vim

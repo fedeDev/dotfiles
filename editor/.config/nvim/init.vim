@@ -29,11 +29,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Funcionality to integrate fzf to various vim concepts.
   Plug 'junegunn/fzf.vim'
-  " Tmux integration -----------------------------------------------------------
-  " Navigate windows, traverse tmux panes seamlessly.
-  Plug 'christoomey/vim-tmux-navigator'
-  " Fix focus events s.t autoread works (as well as GitGutter and Fugitive).
-  Plug 'tmux-plugins/vim-tmux-focus-events'
   " Text objects and motions ---------------------------------------------------
   " New text objects.
   Plug 'kana/vim-textobj-user'
@@ -80,19 +75,11 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'blueyed/vim-diminactive'
   " When scrolling with <C-U/D/B/F>, use smooth scrolling.
   Plug 'yuttie/comfortable-motion.vim'
+  " Better C++ highlighting.
+  Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
   " Autocompletion and Code Indexing -------------------------------------------
-  Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp'
-  Plug 'ncm2/ncm2-bufword'
-  Plug 'ncm2/ncm2-path'
-  Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-  Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-  " PYthon ---------------------------------------------------------------------
-  " Completion source
-  Plug 'ncm2/ncm2-jedi'
-  " pep8/autopep8
-  Plug 'w0rp/ale'
-  " Plug ''
-  
+   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+   Plug 'chiel92/vim-autoformat', {'for': 'cpp'}
   " Show git status info on gutter.
   Plug 'mhinz/vim-signify'
 call plug#end()
@@ -102,3 +89,22 @@ source $HOME/.config/nvim/startup/settings.vim
 source $HOME/.config/nvim/startup/mappings.vim
 source $HOME/.config/nvim/startup/autocommands.vim
 source $HOME/.config/nvim/startup/plugins.vim
+
+"-------------------------------------------------------------------------------
+" Better C++ highlighting.
+" Plug 'octol/vim-enhanced-highlight', {'for': 'cpp'}
+" Faster but not 100% precise template highlighting.
+let g:cpp_experimental_template_highlight = 1
+"-------------------------------------------------------------------------------
+
+"-------------------------------------------------------------------------------
+" Autoformat using different formaters.
+" Plug 'octol/vim-enhanced-highlight', {'for': 'cpp'}
+let g:formatterpath = ['/usr/local/Cellar/llvm/9.0.0/bin/']
+" 'clang-format']
+noremap <silent> <leader>f :Autoformat<CR>
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+"-------------------------------------------------------------------------------

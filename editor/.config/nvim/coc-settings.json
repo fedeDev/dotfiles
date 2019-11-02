@@ -1,0 +1,20 @@
+{
+"languageserver": {
+  "ccls": {
+    "command": "ccls",
+    "filetypes": ["c", "cpp"],
+    "rootPatterns": ["compile_commands.json"],
+    "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+  }
+},
+"diagnostic.errorSign": "✖",
+"python.jediEnabled": true,
+"python.jediPath": "/Users/fcamposeco/virtualenvs/coretech/lib/python3.6/site-packages",
+"python.pythonPath": "/Users/fcamposeco/virtualenvs/coretech/bin/python3",
+"python.linting.flake8Path": "/usr/local/bin/flake8",
+"python.formatting.autopep8Path": "autopep8"
+}

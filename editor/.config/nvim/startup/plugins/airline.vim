@@ -10,31 +10,34 @@ let g:airline_mode_map = {
       \ 'V'  : 'V line', '' : 'V blck' }
 function! AirlineInit()
   let g:airline_section_c = ''
-  let g:airline_section_x = airline#section#create(['LC_status'])
-  let g:airline_section_y = airline#section#create(['filetype'])
-  let g:airline_section_error =
-        \ airline#section#create(['ale_error_count', 'LC_error_count'])
+  " let g:airline_section_x = airline#section#create(['LC_status'])
+  let g:airline_section_y = ''
+  " airline#section#create(['filetype'])
+  " let g:airline_section_error =
+        " \ airline#section#create(['ale_error_count', 'LC_error_count'])
   let g:airline_symbols.spell = 'Ꞩ'
 endfunction
 
-call airline#parts#define_function('LC_error_count', 'LC_error_count')
-call airline#parts#define_function('LC_status', 'LC_status')
+" call airline#parts#define_function('LC_error_count', 'LC_error_count')
+" call airline#parts#define_function('LC_status', 'LC_status')
 
-function! LC_error_count()
-  let count = len(getqflist())
-  if exists('g:LanguageClient_loaded') && count
-    if g:LanguageClient_loaded 
-      return 'E: ' . count
-    endif
-  endif
-  return ''
-endfunction
-function! LC_status()
-  if exists('g:LanguageClient_loaded') && g:LanguageClient_loaded
-    return LanguageClient#statusLine()
-  endif
-  return ''
-endfunction
+" function! LC_error_count()
+"   let count = len(getqflist())
+"   if exists('g:LanguageClient_loaded') && count
+"     if g:LanguageClient_loaded 
+"       return 'E: ' . count
+"     endif
+"   endif
+"   return ''
+" endfunction
+" function! LC_status()
+"   if exists('g:LanguageClient_loaded') && g:LanguageClient_loaded
+"     return LanguageClient#statusLine()
+"   endif
+"   return ''
+" endfunction
+
+let g:airline#extensions#coc#enabled = 1
 
 augroup AirlineVimrc
   autocmd!
