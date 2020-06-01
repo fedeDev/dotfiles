@@ -9,7 +9,7 @@
 
 function ranger-cd {
     tempfile='/tmp/chosendir'
-    /usr/local/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    ~/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
     test -f "$tempfile" &&
     if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
         cd -- "$(cat "$tempfile")"

@@ -1,20 +1,33 @@
 {
 "languageserver": {
-  "ccls": {
-    "command": "ccls",
+  "cquery": {
+    "command": "/usr/bin/cquery-language-server",
+    "args": ["--log-file=/tmp/cq.log"],
     "filetypes": ["c", "cpp"],
     "rootPatterns": ["compile_commands.json"],
     "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
+      "cacheDirectory": "/tmp/cquery",
+      "index": {
+        "blacklist": [".*/buck-out/.*", ".*/third-party-buck/.*", ".*/_build.*/.*"]
+      },
+      "completion":{
+        "includeBlacklist": [".*/buck-out/.*", ".*/third-party-buck/.*", ".*/_build.*/.*"]
+      },
+      "diagnostics": {
+          "blacklist": [".*/buck-out/.*", ".*/third-party-buck/.*", ".*/_build.*/.*"]
+      },
+      "discoverSystemIncludes": false,
+      "showDocumentLinksOnIncludes": false,
+      "codeLens": {
+          "localVariables": false
       }
+    }
   }
 },
 "diagnostic.errorSign": "✖",
 "python.jediEnabled": true,
-"python.jediPath": "/Users/fcamposeco/virtualenvs/coretech/lib/python3.6/site-packages",
-"python.pythonPath": "/Users/fcamposeco/virtualenvs/coretech/bin/python3",
+"python.jediPath": "/home/fcamposeco/.local/lib/python3.6/site-packages",
+"python.pythonPath": "/usr/bin/python3.6",
 "python.linting.flake8Path": "/usr/local/bin/flake8",
 "python.formatting.autopep8Path": "autopep8"
 }

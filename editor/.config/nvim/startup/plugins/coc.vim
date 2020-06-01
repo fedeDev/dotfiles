@@ -10,6 +10,8 @@ endif
 " into the current line (noinsert).
 set completeopt=noinsert,menuone,noselect
 
+let g:coc_node_path = expand("/data/users/$USER/fbsource/xplat/third-party/node/bin/node")
+
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -52,6 +54,6 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 set updatetime=300
-autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd CursorHoldI * sil call CocActionAsync('showSignatureHelp')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHoldI * sil call CocActionAsync('showSignatureHelp')
 

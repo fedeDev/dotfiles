@@ -100,7 +100,7 @@ let g:cpp_experimental_template_highlight = 1
 "-------------------------------------------------------------------------------
 " Autoformat using different formaters.
 " Plug 'octol/vim-enhanced-highlight', {'for': 'cpp'}
-let g:formatterpath = ['/usr/local/Cellar/llvm/9.0.0/bin/']
+let g:formatterpath = ['/usr/local/bin/']
 " 'clang-format']
 noremap <silent> <leader>f :Autoformat<CR>
 
