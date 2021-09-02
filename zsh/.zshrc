@@ -30,6 +30,7 @@ bindkey '^r' history-incremental-search-backward
 # alias open="xdg-open"
 alias cal="cal -3"
 alias gits="git status"
+alias hgs="hg show --stat"
 # rsync -avz -> archive (preserve symlinks, permissions, owners), verbose,
 #               compressed transmission/copy.
 # rsync -h   -> human-readable progress/units.
@@ -161,7 +162,6 @@ alias stopdab='adb shell am force-stop com.oculus.dabcoretech'
 alias startbogo='adb shell am start com.oculus.MontereyNUX/com.epicgames.ue4.GameActivity'
 alias osver='adb shell getprop ro.build.fingerprint'
 
-alias gencmake='cd $HOME/ovrsource && python2 arvr/tools/buck/cmake_generator/cmake_generator.py @mode/mac/coretech/dev-debug //Software/CoreTech/...; cd -'
 alias pip_ct='~/virtualenvs/coretech/bin/pip'
 alias ipython_ct='~/virtualenvs/coretech/bin/ipython'
 alias jupyter_ct='~/virtualenvs/coretech/bin/jupyter'

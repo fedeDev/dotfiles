@@ -100,10 +100,10 @@ let g:cpp_experimental_template_highlight = 1
 "-------------------------------------------------------------------------------
 " Autoformat using different formaters.
 " Plug 'octol/vim-enhanced-highlight', {'for': 'cpp'}
-let g:formatterpath = ['/usr/local/Cellar/llvm/9.0.0/bin/']
-" 'clang-format']
+" let g:formatterpath = ['/usr/local/Cellar/llvm/9.0.1/bin']
+let g:formatterpath = ['/Users/fcamposeco/fbsource/tools/third-party/clang-format']
 noremap <silent> <leader>f :Autoformat<CR>
-
+" Do not fallback to some ''sensible'' indenting and retabing.
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
