@@ -1,12 +1,5 @@
 # Personal Configuration and Useful Tools
 
-There are some subtrees to manage external repositories (e.g., st and zim).
-Remember to update changes in upstream regulary using
-```
-git subtree pull --prefix=terminal/.local/st st_remote master --squash
-git subtree pull --prefix=zsh/.zim zim_remote master --squash
-```
-
 Setup (assuming ubuntu-based distro):
 ```bash
 sudo apt install git
