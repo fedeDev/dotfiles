@@ -13,7 +13,6 @@
 
   system.defaults = {
     NSGlobalDomain = {
-      AppleInterfaceStyle = "Dark";
       AppleShowAllExtensions = true;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
@@ -21,7 +20,7 @@
     };
 
     dock = {
-      autohide = true;
+      autohide = false;
       show-recents = false;
       tilesize = 40;
     };
@@ -29,7 +28,7 @@
     finder = {
       AppleShowAllFiles = true;
       CreateDesktop = false;
-      FXPreferredViewStyle = "Nlsv";
+      FXPreferredViewStyle = "clmv";
       ShowPathbar = true;
       ShowStatusBar = true;
     };
@@ -39,7 +38,13 @@
 
   nix-homebrew = {
     enable = true;
+    autoMigrate = true;
+    enableZshIntegration = false;
     inherit user;
+
+    trust.formulae = [
+      "can1357/tap/omp"
+    ];
   };
 
   homebrew = {
@@ -59,10 +64,21 @@
     ];
 
     onActivation = {
-      autoUpdate = true;
+      autoUpdate = false;
+      upgrade = false;
       # cleanup = "zap";
       cleanup = "none";
-      extraFlags = [ "--force" ];
+      extraEnv = {
+        HOMEBREW_NO_ANALYTICS = "1";
+        HOMEBREW_NO_ENV_HINTS = "1";
+        HOMEBREW_NO_UPDATE_REPORT_NEW = "1";
+      };
     };
+  };
+
+  programs.zsh = {
+    enableBashCompletion = false;
+    enableGlobalCompInit = false;
+    promptInit = "";
   };
 }

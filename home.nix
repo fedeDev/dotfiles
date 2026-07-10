@@ -61,10 +61,12 @@ in
     mdterm
     neovim
     nerd-fonts.jetbrains-mono
+    nodejs
     python3Packages.pylatexenc
     ripgrep
     scc
     tealdeer
+    tree-sitter
     yazi
     zoxide
   ];
@@ -90,6 +92,16 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    completionInit = ''
+      autoload -Uz compinit
+      zcompdump="${config.home.homeDirectory}/.cache/zsh/zcompdump-$ZSH_VERSION"
+      if [[ -r "$zcompdump" ]]; then
+        compinit -C -d "$zcompdump"
+      else
+        compinit -d "$zcompdump"
+      fi
+      unset zcompdump
+    '';
     autocd = true;
 
     history = {
@@ -134,10 +146,6 @@ in
       zstyle ':completion:*' menu select
       zstyle ':fzf-tab:*' fzf-command fzf
       zstyle ':fzf-tab:*' switch-group ',' '.'
-
-      if command -v omp >/dev/null 2>&1; then
-        eval "$(omp completions zsh)"
-      fi
     '';
 
     shellAliases = {
@@ -263,5 +271,17 @@ in
 
   home.activation.buildBatCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     ${pkgs.bat}/bin/bat cache --build >/dev/null 2>&1 || true
+  '';
+
+  home.activation.cleanupBrokenHomebrewCompletions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.cache/zsh"
+    completion_dir="/opt/homebrew/share/zsh/site-functions"
+    if [ -d "$completion_dir" ]; then
+      broken_links="$(${pkgs.findutils}/bin/find -L "$completion_dir" -maxdepth 1 -type l -print)"
+      if [ -n "$broken_links" ]; then
+        printf '%s\n' "$broken_links" | ${pkgs.findutils}/bin/xargs -r rm -f
+        rm -f "$HOME/.zcompdump" "$HOME/.zcompdump.zwc" "$HOME/.cache/zsh"/zcompdump*
+      fi
+    fi
   '';
 }
