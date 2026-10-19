@@ -1,14 +1,24 @@
 add_newline = false
-format = "$directory$cmd_duration$line_break$character"
+format = "$directory$cmd_duration$fill$time$line_break$character"
 
 [character]
 success_symbol = "[>](#cba6f7)"
 error_symbol = "[>](#f38ba8)"
 
 [directory]
+format = "[ $path]($style)[$read_only]($read_only_style) "
 style = "bold #89b4fa"
 truncation_length = 4
 truncate_to_repo = false
+
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+format = "[$time]($style)"
+style = "#a6adc8"
+time_format = "%Y-%m-%d %H:%M"
 
 [cmd_duration]
 min_time = 500

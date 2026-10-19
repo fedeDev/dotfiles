@@ -1,5 +1,5 @@
 add_newline = false
-format = "${custom.worktree}$directory$git_branch$git_status$cmd_duration$line_break$character"
+format = "${custom.worktree}$directory$git_branch$git_status$cmd_duration$fill$time$line_break$character"
 palette = "catppuccin_mocha"
 
 [character]
@@ -21,9 +21,19 @@ style = "bold yellow"
 when = "git_dir=$(git rev-parse --git-dir 2>/dev/null) && test -f \"$git_dir/commondir\""
 
 [directory]
+format = "[ $path]($style)[$read_only]($read_only_style) "
 style = "bold blue"
 truncate_to_repo = false
 truncation_length = 4
+
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+format = "[$time]($style)"
+style = "subtext0"
+time_format = "%Y-%m-%d %H:%M"
 
 [git_branch]
 style = "mauve"
