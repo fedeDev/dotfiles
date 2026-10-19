@@ -26,7 +26,7 @@ Exact mise versions are committed in `packages/mise.toml`, deployed identically 
 | nerd-fonts.fira-code | Homebrew Nerd Font cask | manual Nerd Font installation; apt Fira Code fallback | Linux terminal may use an existing local/remote client font. Plain Fira Code lacks Nerd glyphs; install FiraCode Nerd Font on GUI Linux before visual acceptance. |
 | ninja | Homebrew | apt | Native build dependency. |
 | nixfmt | retained Nix during rollback | omitted unless editing Nix | Only needed for the legacy configuration, no replacement forced. |
-| nodejs | Homebrew | apt | Runtime for editor/tool integrations; no exact project Node version requirement identified. |
+| nodejs | Homebrew | employer/project runtime when needed | No committed Node-based LSP requires a global Linux runtime. Avoid adding Jammy Node 12 beside the approved runtime; Node is omitted from the personal Ubuntu apt baseline. |
 | python3 | Homebrew/uv infrastructure | apt | Dedicated venv owns application dependencies; no global pip installs. |
 | beautifulsoup4 | retain Nix pending investigation | deferred | No consumer found in dotfiles. Private project source was not inspected. Do not remove until user identifies its external consumer. |
 | lxml | retain Nix pending investigation | deferred | Same unresolved external consumer; do not assume a replacement environment. |
@@ -51,7 +51,7 @@ Exact mise versions are committed in `packages/mise.toml`, deployed identically 
 | Tig | Homebrew | apt | Stable native Git browser; existing Mac command is in ~/.local/bin until package cutover. |
 | Git | native Apple Git / Homebrew | apt | No personal identity or employer signing settings in portable include. |
 
-Ubuntu baseline is Ubuntu 24.04 or newer. Its native package versions may differ from macOS; full runtime acceptance must be performed there. Ubuntu preview dependencies include ffmpeg/poppler and Wayland/X11 clipboard tools. Native package manifests intentionally do not copy all employer Homebrew packages from the inventory.
+Ubuntu baseline is Ubuntu 22.04 LTS, following the supplied workstation onboarding requirement. Complete employer provisioning before personal packages; see [docs/ubuntu.md](ubuntu.md). Its native package versions may differ from macOS; full runtime acceptance must be performed there. Ubuntu preview dependencies include ffmpeg/poppler and Wayland/X11 clipboard tools. Native package manifests intentionally do not copy all employer Homebrew packages from the inventory.
 
 ## Decisions before the first ownership change
 
@@ -64,3 +64,5 @@ Ubuntu baseline is Ubuntu 24.04 or newer. Its native package versions may differ
 7. Nix remains the rollback provider and the owner of unconverted packages. No unrelated Nix workflow was inspected. Retirement must wait for both machines to pass acceptance and for unresolved Python use to be identified.
 
 Mise backend details: [aqua backend](https://mise.jdx.dev/dev-tools/backends/aqua.html), [GitHub backend](https://mise.jdx.dev/dev-tools/backends/github.html). These manifests were tested with mise 2026.10.15.
+
+Onboarding compatibility update: Ubuntu scripts preserve `~/bin`, do not upgrade already-installed requested apt packages, and never configure employer authentication, corporate trust, VPN/DNS, GPU drivers, Docker access or private project libraries. Optional Tk support must match the application interpreter.

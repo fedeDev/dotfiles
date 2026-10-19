@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["tomli==2.2.1; python_version < '3.11'"]
+# ///
 """Exercise renders and migration boundaries using temporary homes only."""
 import json
 import os
 from pathlib import Path
 import subprocess
 import tempfile
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    try:
+        import tomli as tomllib
+    except ModuleNotFoundError:
+        raise SystemExit('Python 3.10: run `uv run tests/validate.py` to load the isolated TOML test dependency.')
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -42,6 +52,13 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
             (dest / 'gpfs-link').symlink_to(dest / 'ci-gpfs')
             shell = 'source "$HOME/.config/zsh/functions.zsh"; cd "$HOME/gpfs-link"; [[ "$STARSHIP_CONFIG" == "$HOME/.config/starship-gpfs.toml" && "$aliases[ls]" == "command ls" ]] || exit 1; cd "$HOME"; [[ -z "$STARSHIP_CONFIG" && "$aliases[ls]" == "eza --icons=auto" ]]'
             run(['zsh', '-dfc', shell], env=env)
+            # Root-mounted and home-mounted shares both select the lightweight prompt.
+            for mount in ['/ci-gpfs', '/qs-gpfs', '/gpfs']:
+                shell = 'source "$HOME/.config/zsh/functions.zsh"; PWD=' + mount + '; _set_gpfs_shell_mode; [[ "$STARSHIP_CONFIG" == "$HOME/.config/starship-gpfs.toml" && "$aliases[ls]" == "command ls" ]]'
+                run(['zsh', '-dfc', shell], env=env)
+            if platform == 'linux':
+                shell = 'source "$HOME/.config/zsh/platform/linux.zsh"; [[ "$path[1]" == "$HOME/.local/bin" && "$path[2]" == "$HOME/bin" && "$path[3]" == "$HOME/.local/share/mise/shims" ]]'
+                run(['zsh', '-dfc', shell], env=env)
             print(name + ': render, empty diff, ordinary files, syntax, quiet shell and GPFS switching passed')
     # Named group application must preserve the release boundary and install children.
     group_home = base / 'group-test'
@@ -89,3 +106,8 @@ for parent in ['dot_config', 'packages']:
 assert (ROOT / 'packages/mise.toml').read_bytes() == (ROOT / 'dot_config/mise/config.toml').read_bytes()
 run([str(ROOT / 'scripts/secret-scan')])
 print('TOML, manifest synchronization and source secret scan passed')
+
+preview = run([str(ROOT / 'scripts/bootstrap-ubuntu'), '--plan'])
+assert '22.04' in preview.stdout and 'Plan only:' in preview.stdout
+assert 'build-essential' in preview.stdout and 'sshfs' in preview.stdout
+print('Ubuntu bootstrap supports read-only planning without sudo or network access')

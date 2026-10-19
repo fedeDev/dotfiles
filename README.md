@@ -6,7 +6,7 @@ The checkout is `~/dotfiles`. On this Mac, `~/.local/share/chezmoi` and the lega
 
 **Existing Nix machine:** start with [the cutover runbook](docs/cutover.md). Phase 3's first group is applied; the interactive group is prepared for the next user-run `./rebuild.sh` before `./scripts/cutover apply interactive`. Do not run an unrestricted live apply while Home Manager owns these files.
 
-**Fresh machine:** clone this migration branch, review package manifests and run explicit bootstrap:
+**Fresh machine:** complete employer provisioning first where applicable; Ubuntu users should follow [docs/ubuntu.md](docs/ubuntu.md). Clone this migration branch, review package manifests and run explicit bootstrap:
 
 ```sh
 git clone --branch migration/chezmoi https://github.com/fedeDev/dotfiles.git ~/dotfiles
@@ -21,7 +21,7 @@ ya pkg install                   # fetch Yazi plugins/flavor from package.toml
 ./scripts/doctor
 ```
 
-The migration branch must be pushed before a fresh-machine clone can use it. Ubuntu 24.04+ is the intended Linux baseline; actual Ubuntu runtime validation is pending. Linux GUI users must install Ghostty and FiraCode Nerd Font according to their desktop setup. Homebrew must already exist on macOS; the employer installation stays independent of Nix. No package installer runs during an ordinary `chezmoi apply`.
+Use the migration branch until the cutover is complete and merged. Ubuntu 22.04 LTS is the intended Linux baseline; actual Ubuntu runtime validation is pending. Linux GUI users must install Ghostty and FiraCode Nerd Font according to their desktop setup. Homebrew must already exist on macOS; the employer installation stays independent of Nix. No package installer runs during an ordinary `chezmoi apply`.
 
 `packages/mise.toml` and `dot_config/mise/config.toml` intentionally match. Update both and run `python3 tests/validate.py`. Exact owners, exceptions, Python environments and credential-provider choices are in [docs/packages.md](docs/packages.md). `scripts/macos-defaults` is an explicit optional action; it prints changes, never touches the menu bar/Dock and does not restart Finder automatically.
 
@@ -42,7 +42,7 @@ The checkout's GitHub.com credential helper uses gh locally; do not run `gh auth
 ## Verification and remaining work
 
 ```sh
-python3 tests/validate.py
+uv run tests/validate.py          # isolated tomli dependency on Python 3.10
 shellcheck scripts/bootstrap scripts/bootstrap-macos scripts/bootstrap-ubuntu scripts/install-packages scripts/install-herdr-plugins scripts/macos-defaults
 nix flake check --no-build
 ./scripts/secret-scan

@@ -37,3 +37,11 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 - Hunk runtime state was mistakenly deleted and was not recovered; see docs/cutover.md. This prevents claiming lossless state preservation.
 
 The migration remains incomplete until these checks pass. Existing live Nix ownership remains the rollback path.
+
+## Ubuntu onboarding compatibility update
+
+The provided onboarding text requires Ubuntu 22.04 LTS. The earlier 24.04 minimum has been corrected. Employer provisioning order is recorded generically in docs/ubuntu.md; the internal guides, certificates and scripts were not copied into this public source. Bootstrap now supports a read-only --plan, checks the 22.04 release on installation, preserves ~/bin, checks package candidates and passes --no-upgrade for existing requested apt packages. Linux Node is left to the employer/project runtime rather than the Jammy Node 12 default.
+
+Validation on Mac passed for root/home GPFS mount detection, Linux PATH order, all four render combinations, and the no-install Ubuntu plan. The original 32-package list was verified against Canonical's Jammy amd64 main/universe indexes; all existed. Removing Node/npm leaves 30 previously verified packages. Jammy versions observed include CMake 3.22.1, clangd 14 and Python 3.10, so approved project toolchains must remain authoritative. The Python validation entry point supports uv's isolated tomli dependency for Python 3.10. No live Ubuntu runtime test was available; the configured Docker engine was unreachable, and no VM/driver/network settings were changed.
+
+Additional binary metadata check: the pinned Linux x86-64 Neovim executable references GLIBC up to 2.34, Hunk up to 2.17, and the inspected Herdr executable has no GLIBC version references. This checks only those executables, not all bundled libraries or other tools, and is not a runtime test. Jammy ships GLIBC 2.35 ([package reference](https://packages.ubuntu.com/jammy/libc6)). Operational Python scripts also parse with Python 3.10 grammar; the pinned tomli 2.2.1 test dependency exists on PyPI and supports Python >=3.8.

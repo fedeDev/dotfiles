@@ -40,8 +40,9 @@ gsl() {
 autoload -Uz add-zsh-hook
 _set_gpfs_shell_mode() {
   local ci_root="$HOME/ci-gpfs" qs_root="$HOME/qs-gpfs"
+  local ci_system=/ci-gpfs qs_system=/qs-gpfs gpfs_root=/gpfs
   case "${PWD:A}/" in
-    "${ci_root:A}/"*|"${qs_root:A}/"*|/gpfs/*)
+    "${ci_root:A}/"*|"${qs_root:A}/"*|"${ci_system:A}/"*|"${qs_system:A}/"*|"${gpfs_root:A}/"*)
       export STARSHIP_CONFIG="$HOME/.config/starship-gpfs.toml"
       alias ls='command ls'
       alias ll='command ls -la'

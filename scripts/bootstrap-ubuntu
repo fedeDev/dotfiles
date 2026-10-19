@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
-# shellcheck disable=SC1091
-. /etc/os-release
-[[ "$ID" == ubuntu ]] || { echo 'This script supports Ubuntu only.' >&2; exit 1; }
-dpkg --compare-versions "$VERSION_ID" ge 24.04 || { echo "Ubuntu 24.04 or newer is required." >&2; exit 1; }
+case "${1:-}" in
+  ""|--plan) ;;
+  *) echo 'Usage: scripts/bootstrap-ubuntu [--plan]' >&2; exit 2 ;;
+esac
 packages=()
 while IFS= read -r package; do
   [[ -z "$package" || "$package" == \#* ]] || packages+=("$package")
@@ -12,11 +12,33 @@ done < "$ROOT/packages/ubuntu.txt"
 printf 'Explicit Ubuntu package install:
 %s
 ' "${packages[*]}"
+echo 'Baseline: Ubuntu 22.04 LTS. Complete employer provisioning first; see docs/ubuntu.md.'
+if [[ "${1:-}" == --plan ]]; then
+  echo 'Plan only: no sudo, downloads, installs, or dotfile application.'
+  exit 0
+fi
+# shellcheck disable=SC1091
+. /etc/os-release
+[[ "$ID" == ubuntu && "$VERSION_ID" == 22.04 ]] || {
+  echo 'This bootstrap targets Ubuntu 22.04 LTS; other releases have not been validated.' >&2
+  exit 1
+}
 sudo apt-get update
-sudo apt-get install -y "${packages[@]}"
+# Fail before installation if a required package is unavailable (e.g. universe disabled).
+missing=()
+for package in "${packages[@]}"; do
+  apt-cache show "$package" >/dev/null 2>&1 || missing+=("$package")
+done
+if (( ${#missing[@]} )); then
+  printf 'Missing package candidates: %s\n' "${missing[*]}" >&2
+  echo 'Check the approved apt sources, including universe, before retrying.' >&2
+  exit 1
+fi
+# Preserve already-installed requested packages; dependency changes may still be needed.
+sudo apt-get install -y --no-upgrade "${packages[@]}"
 # Install bootstrappers into ~/.local/bin, never the Nix profile.
 mkdir -p "$HOME/.local/bin"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 if ! command -v chezmoi >/dev/null; then
   tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
   curl -fsSL https://get.chezmoi.io -o "$tmp/chezmoi-install"

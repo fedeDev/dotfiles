@@ -43,9 +43,9 @@ for tool in json.loads((ROOT / '.chezmoidata/packages.json').read_text())['tools
             report(f'{command}: version mismatch or --version does not identify release')
     except (OSError, subprocess.TimeoutExpired):
         report(f'{command}: version check failed')
-native = ['git', 'gh', 'btop', 'cmake', 'ninja', 'clangd', 'clang-format', 'node', 'uv', 'chezmoi', 'mise', 'magick', 'python3']
+native = ['git', 'gh', 'btop', 'cmake', 'ninja', 'clangd', 'clang-format', 'uv', 'chezmoi', 'mise', 'magick' if shutil.which('magick') else 'convert', 'python3']
 if sys.platform == 'darwin':
-    native += ['eza', 'herdr']
+    native += ['node', 'eza', 'herdr']
 for command in native:
     provider = shutil.which(command)
     print(f'{command} (native): {provider or "MISSING"}')
@@ -53,7 +53,7 @@ for command in native:
         report(f'{command}: missing native dependency')
     elif '/nix/store/' in str(Path(provider).resolve()):
         report(f'{command}: native dependency still provided by Nix')
-for relative in ['.zshrc' , '.config/git/config', '.config/git/portable.gitconfig', '.config/git/ignore', '.config/nvim/init.lua', '.config/ghostty/config']:
+for relative in ['.zshrc', '.config/git/config', '.config/git/portable.gitconfig', '.config/git/ignore', '.config/nvim/init.lua', '.config/ghostty/config']:
     target = HOME / relative
     if not target.exists():
         report(f'{relative}: missing')
