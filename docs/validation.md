@@ -26,10 +26,10 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Final user-run shell rebuild, then private archival of .zshrc.local and live shell apply/checks. Token revocation/rotation is user-confirmed; no replacement secret is copied. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Package-provider migration and ownership cleanup. All six live configuration groups, including the shell, are applied and checked. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
-- Archive/remove legacy `.zshrc.local` at shell cutover. External token revocation/rotation is user-confirmed. If a replacement token is needed, configure and verify its lazy provider with the consumer.
+- The legacy local shell file is privately archived and absent from its old location; token revocation/rotation is user-confirmed. If a replacement token is needed, configure and verify its lazy provider with the consumer.
 - Identify external BeautifulSoup/lxml consumers without inspecting private project source.
 - Full Ubuntu bootstrap/runtime/clipboard/font/GUI acceptance; Linux rendering on Mac does not establish Linux runtime compatibility.
 - Install native replacements, validate command paths and library dependencies, then remove Nix package ownership in batches with user rebuilds.
@@ -77,3 +77,9 @@ Independent Antidote was installed at the committed revision without changing th
 The user confirmed that the exposed token was revoked or rotated. No replacement secret value was requested, retrieved or copied into the new setup. The old local file remains active until the final rebuild, after which it will be archived privately before apply. Its non-secret helper content exactly matches the migrated work module. The retired token is not migrated; optional replacement usage remains lazy through the existing wrapper.
 
 All four OS/work renders pass, including silent non-interactive startup, login PATH/environment preservation, GPFS aliases, named-group state preservation and Git precedence. A final PTY work-shell test passed plugin widgets, work helpers and bindings without sourcing a sentinel .zshrc.local or loading a token. Ordinary .zshenv/.zprofile source environment-only platform paths without prompt/plugin initialization. Nix evaluation confirms startup/config paths are released while Starship/FZF/Zoxide/Tealdeer command providers remain installed. Starship was added explicitly to home.packages to retain the same provider previously pulled in by programs.starship. The last configuration rebuild is staged; no agent rebuild has been run.
+
+## Live shell-group result
+
+The user confirmed the sixth successful rebuild. The old local shell file was moved into a private retired-shell archive after matching its non-secret helpers to source. Shell startup files, modules, prompt configs, manifest and worktree setup script are independent writable files outside the checkout, Downloads and Nix store; the setup script retains executable permission and was not run. All six configuration-group diffs are empty.
+
+A fresh interactive login shell loaded history/autosuggestion/fzf-tab widgets, gsl/nuke/p/psan/pdeb helpers, Starship/Zoxide commands and the Alt-J/Alt-. bindings without errors or doctor warnings. Clean non-interactive login startup was silent and did not load the retired token. The active Python wrappers passed cmake-format version and latex2text help checks using the isolated pinned environment with Homebrew Python. No global Python packages were installed. The configuration cutover is complete; package cleanup, GUI checks, real Ubuntu acceptance and Nix retirement remain outstanding.

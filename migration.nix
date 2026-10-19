@@ -1,5 +1,5 @@
 # Release one group at a time, then USER runs ./rebuild.sh.
-# Phase 3: groups 1-5 applied; final shell group staged for the user rebuild.
+# Phase 3: all six configuration groups applied; package cleanup is separate.
 {
   releasedTargets = [
     ".config/bat"
