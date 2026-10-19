@@ -9,6 +9,9 @@
 }:
 
 let
+  releasedTargets = (import ./migration.nix).releasedTargets;
+  ownsShell = !(builtins.elem ".zshrc" releasedTargets);
+  ownsGit = !(builtins.elem ".config/git/home-manager.gitconfig" releasedTargets);
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
   mocha = {
     rosewater = "#f5e0dc";
@@ -122,7 +125,7 @@ in
   programs.home-manager.enable = true;
 
   programs.zsh = {
-    enable = true;
+    enable = ownsShell;
     enableCompletion = true;
     completionInit = ''
       autoload -Uz compinit
@@ -314,7 +317,7 @@ in
   };
 
   programs.starship = {
-    enable = true;
+    enable = ownsShell;
     settings = {
       add_newline = false;
       palette = "catppuccin_mocha";
@@ -384,22 +387,22 @@ in
   };
 
   programs.zoxide = {
-    enable = true;
+    enable = ownsShell;
     enableZshIntegration = false; # initialized last in programs.zsh.initContent
     options = [ "--cmd cd" ];
   };
 
   programs.fzf = {
-    enable = true;
+    enable = ownsShell;
     enableZshIntegration = true;
   };
 
   programs.tealdeer = {
-    enable = true;
+    enable = ownsShell;
     settings.updates.auto_update = true;
   };
 
-  home.file = {
+  home.file = lib.filterAttrs (name: _: !(builtins.elem name releasedTargets)) {
     ".config/ghostty".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/ghostty";
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
     ".config/lazygit".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/lazygit";
@@ -485,28 +488,32 @@ in
     '';
   };
 
-  home.activation.buildBatCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    ${pkgs.bat}/bin/bat cache --build >/dev/null 2>&1 || true
-  '';
+  home.activation.buildBatCache = lib.mkIf (!(builtins.elem ".config/bat" releasedTargets)) (
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      ${pkgs.bat}/bin/bat cache --build >/dev/null 2>&1 || true
+    ''
+  );
 
   # `programs.git` normally links ~/.config/git/config into /nix/store. That is
   # correct for purely declarative setups, but libgit2-based setup tools try to
   # lock and update that exact file. Replace only Home Manager's old symlink,
   # seed a writable front config once, and never overwrite it on later rebuilds.
   # Machine-local tools remain optional and Home Manager never invokes them.
-  home.activation.bootstrapWritableGitConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    git_config="$HOME/.config/git/config"
-    if [ -L "$git_config" ]; then
-      case "$(${pkgs.coreutils}/bin/readlink "$git_config")" in
-        /nix/store/*-home-manager-files/.config/git/config)
-          rm "$git_config"
-          ;;
-      esac
-    fi
-    if [ ! -e "$git_config" ]; then
-      mkdir -p "$HOME/.config/git"
-      ${pkgs.coreutils}/bin/install -m 0600 ${writableGitConfigSeed} "$git_config"
-    fi
-  '';
+  home.activation.bootstrapWritableGitConfig = lib.mkIf ownsGit (
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      git_config="$HOME/.config/git/config"
+      if [ -L "$git_config" ]; then
+        case "$(${pkgs.coreutils}/bin/readlink "$git_config")" in
+          /nix/store/*-home-manager-files/.config/git/config)
+            rm "$git_config"
+            ;;
+        esac
+      fi
+      if [ ! -e "$git_config" ]; then
+        mkdir -p "$HOME/.config/git"
+        ${pkgs.coreutils}/bin/install -m 0600 ${writableGitConfigSeed} "$git_config"
+      fi
+    ''
+  );
 
 }

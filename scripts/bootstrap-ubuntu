@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
+# shellcheck disable=SC1091
+. /etc/os-release
+[[ "$ID" == ubuntu ]] || { echo 'This script supports Ubuntu only.' >&2; exit 1; }
+dpkg --compare-versions "$VERSION_ID" ge 24.04 || { echo "Ubuntu 24.04 or newer is required." >&2; exit 1; }
+packages=()
+while IFS= read -r package; do
+  [[ -z "$package" || "$package" == \#* ]] || packages+=("$package")
+done < "$ROOT/packages/ubuntu.txt"
+printf 'Explicit Ubuntu package install:
+%s
+' "${packages[*]}"
+sudo apt-get update
+sudo apt-get install -y "${packages[@]}"
+# Install bootstrappers into ~/.local/bin, never the Nix profile.
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v chezmoi >/dev/null; then
+  tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+  curl -fsSL https://get.chezmoi.io -o "$tmp/chezmoi-install"
+  sh "$tmp/chezmoi-install" -b "$HOME/.local/bin"
+fi
+if ! command -v mise >/dev/null; then
+  tmp="${tmp:-$(mktemp -d)}"; trap 'rm -rf "$tmp"' EXIT
+  curl -fsSL https://mise.run -o "$tmp/mise-install"
+  sh "$tmp/mise-install"
+fi
+# uv is bootstrap infrastructure; application dependencies remain pinned.
+if ! command -v uv >/dev/null; then
+  tmp="${tmp:-$(mktemp -d)}"; trap 'rm -rf "$tmp"' EXIT
+  curl -fsSL https://astral.sh/uv/install.sh -o "$tmp/uv-install"
+  UV_INSTALL_DIR="$HOME/.local/bin" sh "$tmp/uv-install"
+fi
+exec "$ROOT/scripts/install-packages"

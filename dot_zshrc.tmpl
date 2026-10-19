@@ -1,0 +1,13 @@
+# Interactive initialization order: options, platform/PATH, aliases, helpers,
+# completion/plugins, keybindings, integrations; Zoxide installs hooks last.
+[[ -o interactive ]] || return
+for module in options platform/{{ .chezmoi.os }} aliases functions; do
+  source "$HOME/.config/zsh/$module.zsh"
+done
+{{ if .workMachine }}
+source "$HOME/.config/zsh/work.zsh"
+{{ end }}
+for module in completion integrations; do
+  source "$HOME/.config/zsh/$module.zsh"
+done
+unset module

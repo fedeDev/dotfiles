@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+[[ "$(uname -s)" == Darwin ]] || { echo 'macOS only' >&2; exit 1; }
+# Explicit invocation; no Finder restart or logout forced.
+write() { printf 'defaults write %s %s %s %s
+' "$@"; defaults write "$@"; }
+write NSGlobalDomain AppleShowAllExtensions -bool true
+write NSGlobalDomain InitialKeyRepeat -int 15
+write NSGlobalDomain KeyRepeat -int 2
+write com.apple.finder AppleShowAllFiles -bool true
+write com.apple.finder CreateDesktop -bool false
+write com.apple.finder FXPreferredViewStyle -string clmv
+write com.apple.finder ShowPathbar -bool true
+write com.apple.finder ShowStatusBar -bool true
+write com.apple.AppleMultitouchTrackpad Clicking -bool true
+write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+echo 'Restart Finder to see Finder changes; log out/in for remaining changes.'

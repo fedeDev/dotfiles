@@ -1,0 +1,4 @@
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+workMachine = {{ promptBoolOnce . "workMachine" "Is this an employer workstation?" false }}

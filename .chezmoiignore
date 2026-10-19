@@ -1,0 +1,32 @@
+# Repository material must never become home-directory targets.
+README.md
+MIGRATION_PLAN.md
+*.md
+*.nix
+flake.lock
+home
+home/**
+scripts
+scripts/**
+packages
+packages/**
+docs
+docs/**
+tests
+tests/**
+bootstrap.sh
+rebuild.sh
+.gitignore
+.claude
+.claude/**
+*.log
+result*
+**/state.json
+**/state.yml
+**/.DS_Store
+{{ if eq .chezmoi.os "darwin" }}
+.config/lazygit
+{{ else }}
+Library
+Library/**
+{{ end }}

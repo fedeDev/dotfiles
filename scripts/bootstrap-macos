@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
+command -v brew >/dev/null || { echo 'Install Homebrew using your machine policy first.' >&2; exit 1; }
+cat "$ROOT/packages/Brewfile"
+HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --no-upgrade --file="$ROOT/packages/Brewfile"
+exec "$ROOT/scripts/install-packages"

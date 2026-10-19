@@ -1,0 +1,6 @@
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+Aloxaf/fzf-tab
+# Last: widgets and bindings must exist before highlighting wraps them.
+zsh-users/zsh-syntax-highlighting

@@ -1,0 +1,17 @@
+# Stable native packages; never run bundle cleanup on this machine.
+brew "chezmoi"
+brew "mise"
+brew "git"
+brew "gh"
+brew "btop"
+brew "eza"
+brew "cmake"
+brew "ninja"
+brew "llvm"
+brew "node"
+brew "uv"
+brew "imagemagick"
+brew "herdr"
+cask "ghostty"
+cask "font-fira-code-nerd-font"
+# SSHFS: existing employer mount setup is retained; no automatic macFUSE install.

@@ -1,0 +1,11 @@
+[review]
+# Keep review initiation explicit; reuse one live, refreshing pane per worktree.
+auto_open = false
+reuse_pane = true
+default_target = "auto"
+watch = true
+placement = "zoomed"
+
+[hunk]
+# Resolve Hunk from the selected package owner on PATH.
+bin = "hunk"

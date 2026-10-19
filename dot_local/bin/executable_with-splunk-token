@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""Retrieve the rotated token only for an explicitly invoked child process."""
+import os
+from pathlib import Path
+import stat
+import subprocess
+import sys
+
+if len(sys.argv) < 2:
+    raise SystemExit('Usage: with-splunk-token COMMAND [ARG ...]')
+try:
+    if sys.platform == 'darwin':
+        command = ['security', 'find-generic-password', '-s', 'dotfiles/SPLUNK_TOKEN_IAG', '-w']
+    else:
+        command = ['secret-tool', 'lookup', 'service', 'dotfiles', 'name', 'SPLUNK_TOKEN_IAG']
+    result = subprocess.run(command, capture_output=True, text=True)
+    token = result.stdout.rstrip('\n') if result.returncode == 0 else ''
+except FileNotFoundError:
+    token = ''
+if not token:
+    bridge = Path.home() / '.local/state/dotfiles-secrets/SPLUNK_TOKEN_IAG'
+    if bridge.is_symlink() or not bridge.is_file():
+        raise SystemExit('No token in the credential provider or private bridge.')
+    info = bridge.stat()
+    if stat.S_IMODE(info.st_mode) != 0o600 or info.st_uid != os.getuid():
+        raise SystemExit('Private bridge must be owned by you with mode 0600.')
+    token = bridge.read_text().rstrip('\n')
+if not token:
+    raise SystemExit('Credential provider returned an empty token.')
+environment = os.environ.copy()
+environment['SPLUNK_TOKEN_IAG'] = token
+os.execvpe(sys.argv[1], sys.argv[1:], environment)

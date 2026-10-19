@@ -1,0 +1,142 @@
+{
+  "tools": [
+    {
+      "name": "neovim",
+      "backend": "aqua:neovim/neovim",
+      "version": "0.12.4",
+      "command": "nvim"
+    },
+    {
+      "name": "yazi",
+      "backend": "aqua:sxyazi/yazi",
+      "version": "26.5.6",
+      "command": "yazi"
+    },
+    {
+      "name": "fzf",
+      "backend": "aqua:junegunn/fzf",
+      "version": "0.72.0",
+      "command": "fzf"
+    },
+    {
+      "name": "ripgrep",
+      "backend": "aqua:BurntSushi/ripgrep",
+      "version": "15.2.0",
+      "command": "rg"
+    },
+    {
+      "name": "fd",
+      "backend": "aqua:sharkdp/fd",
+      "version": "10.4.2",
+      "command": "fd"
+    },
+    {
+      "name": "bat",
+      "backend": "aqua:sharkdp/bat",
+      "version": "0.26.1",
+      "command": "bat"
+    },
+    {
+      "name": "eza",
+      "backend": "github:eza-community/eza",
+      "version": "0.23.4",
+      "command": "eza",
+      "os": [
+        "linux"
+      ]
+    },
+    {
+      "name": "zoxide",
+      "backend": "aqua:ajeetdsouza/zoxide",
+      "version": "0.9.9",
+      "command": "zoxide"
+    },
+    {
+      "name": "stylua",
+      "backend": "aqua:JohnnyMorganz/StyLua",
+      "version": "2.5.2",
+      "command": "stylua"
+    },
+    {
+      "name": "tree-sitter",
+      "backend": "aqua:tree-sitter/tree-sitter",
+      "version": "0.26.8",
+      "command": "tree-sitter"
+    },
+    {
+      "name": "scc",
+      "backend": "github:boyter/scc",
+      "version": "3.7.0",
+      "command": "scc"
+    },
+    {
+      "name": "glow",
+      "backend": "aqua:charmbracelet/glow",
+      "version": "2.1.2",
+      "command": "glow"
+    },
+    {
+      "name": "delta",
+      "backend": "aqua:dandavison/delta",
+      "version": "0.19.2",
+      "command": "delta"
+    },
+    {
+      "name": "difftastic",
+      "backend": "aqua:Wilfred/difftastic",
+      "version": "0.69.0",
+      "command": "difft"
+    },
+    {
+      "name": "diffnav",
+      "backend": "github:dlvhdr/diffnav",
+      "version": "0.11.0",
+      "command": "diffnav"
+    },
+    {
+      "name": "hunk",
+      "backend": "aqua:modem-dev/hunk",
+      "version": "0.22.0",
+      "command": "hunk"
+    },
+    {
+      "name": "worktrunk",
+      "backend": "aqua:max-sixty/worktrunk",
+      "version": "0.77.0",
+      "command": "wt"
+    },
+    {
+      "name": "gh-dash",
+      "backend": "github:dlvhdr/gh-dash",
+      "version": "4.26.2",
+      "command": "gh-dash"
+    },
+    {
+      "name": "starship",
+      "backend": "aqua:starship/starship",
+      "version": "1.25.1",
+      "command": "starship"
+    },
+    {
+      "name": "lazygit",
+      "backend": "aqua:jesseduffield/lazygit",
+      "version": "0.61.1",
+      "command": "lazygit"
+    },
+    {
+      "name": "tealdeer",
+      "backend": "aqua:tealdeer-rs/tealdeer",
+      "version": "1.8.1",
+      "command": "tldr"
+    },
+    {
+      "name": "herdr",
+      "backend": "aqua:herdrdev/herdr",
+      "version": "0.9.3",
+      "command": "herdr",
+      "os": [
+        "linux"
+      ]
+    }
+  ]
+}

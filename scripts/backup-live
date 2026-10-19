@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Copy known live configs and mutable state to a private local backup."""
+from pathlib import Path
+import os
+import shutil
+import tempfile
+
+home = Path.home()
+root = home / '.local/state/dotfiles-migration'
+root.mkdir(parents=True, mode=0o700, exist_ok=True)
+os.chmod(root, 0o700)
+backup = Path(tempfile.mkdtemp(prefix='live-', dir=root))
+# Explicit config roots only. Do not follow references into project repositories.
+targets = ['.zshrc', '.zshrc.local', '.gitconfig', '.config/git/config', '.config/git/home-manager.gitconfig', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/hunk/state.json', '.config/lazygit/state.yml', 'Library/Application Support/lazygit/state.yml']
+source = Path(__file__).resolve().parent.parent / 'home'
+targets += [str(p.relative_to(source)) for p in source.rglob('*') if p.is_file()]
+for relative in sorted(set(targets)):
+    file = home / relative
+    if file.is_file():
+        dest = backup / relative
+        dest.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+        shutil.copyfile(file, dest)
+        dest.chmod(0o600)
+print('Private live backup:', backup)

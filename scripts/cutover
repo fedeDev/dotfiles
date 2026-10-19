@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Preview/apply one group, refusing symlinks still owned by Home Manager."""
+import argparse
+import os
+from pathlib import Path
+import subprocess
+
+root = Path(__file__).resolve().parent.parent
+home = Path.home()
+groups = {
+    'readonly': ['.config/bat', '.config/btop', '.config/tig', '.config/diffnav', '.config/gh-dash'],
+    'interactive': ['.config/yazi', '.config/hunk/config.toml', '.config/herdr/config.toml', '.config/herdr/plugins/config/jhochenbaum.hunkdiff/config.toml', '.config/worktrunk', 'Library/Application Support/lazygit/config.yml' if os.uname().sysname == 'Darwin' else '.config/lazygit/config.yml'],
+    'ghostty': ['.config/ghostty'],
+    'nvim': ['.config/nvim'],
+    'git': ['.config/git/portable.gitconfig', '.config/git/ignore'],
+    'shell': ['.zshrc', '.zsh_plugins.txt', '.config/zsh', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/tealdeer', '.config/dev', '.local/bin/mdterm', '.local/bin/latex2text', '.local/bin/cmake-format', '.local/bin/with-splunk-token'],
+    'packages': ['.config/mise/config.toml'],
+}
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('action', choices=['preview', 'apply'])
+parser.add_argument('group', choices=groups)
+args = parser.parse_args()
+targets = [home / p for p in groups[args.group]]
+base = ['chezmoi', '--source', str(root)]
+if args.action == 'apply':
+    for target in targets:
+        for path in [target, *target.parents]:
+            if path == home:
+                break
+            if path.is_symlink():
+                raise SystemExit(f'Still linked: {path}. Release this group in migration.nix and run the user Nix rebuild first.')
+    if args.group == 'shell' and (home / '.zshrc.local').exists():
+        raise SystemExit('Rotate the exposed token, verify migrated helpers, then archive .zshrc.local outside the repo before shell cutover.')
+subprocess.run(base + ['diff', *map(str, targets)], check=True)
+if args.action == 'apply':
+    subprocess.run(base + ['apply', *map(str, targets)], check=True)
+    diff = subprocess.run(base + ['diff', *map(str, targets)], check=True, capture_output=True, text=True)
+    if diff.stdout:
+        raise SystemExit('Post-apply diff is nonempty; stop and use the documented rollback.')
+    if args.group == 'readonly':
+        subprocess.run(['bat', 'cache', '--build'], check=True)
+    print('Applied one group; complete its smoke tests before releasing the next.')

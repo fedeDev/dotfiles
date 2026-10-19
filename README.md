@@ -1,67 +1,53 @@
 # dotfiles
 
-Reproducible macOS development setup for `fede`, managed by Nix, nix-darwin,
-and home-manager. The employer-managed Homebrew installation stays outside
-this configuration.
+Portable Chezmoi configuration for macOS and Ubuntu, with pinned CLI tools in mise and explicit native package installers. The existing Nix setup remains available while configuration is migrated one group at a time.
 
-## First run
+The checkout is `~/dotfiles`. On this Mac, `~/.local/share/chezmoi` and the legacy `~/.dotfiles` compatibility path point here. Applied Chezmoi targets are ordinary files, independent of the checkout. Chezmoi supports a [custom source directory](https://www.chezmoi.io/user-guide/advanced/customize-your-source-directory/).
 
-Review `configuration.nix` before applying.
+**Existing Nix machine:** start with [the cutover runbook](docs/cutover.md). Phase 3's first group is prepared; the user must run `./rebuild.sh` before `./scripts/cutover apply readonly`. Do not run an unrestricted live apply while Home Manager owns these files.
+
+**Fresh machine:** clone this migration branch, review package manifests and run explicit bootstrap:
 
 ```sh
-./bootstrap.sh
+git clone --branch migration/chezmoi https://github.com/fedeDev/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./scripts/bootstrap --packages    # explicit native/mise installs; Ubuntu uses sudo
+./scripts/bootstrap               # configure Chezmoi; choose workMachine locally
+chezmoi diff
+chezmoi apply                    # only on a fresh home with no Nix ownership
+ya pkg install                   # fetch Yazi plugins/flavor from package.toml
+./scripts/install-herdr-plugins   # optional explicit plugin installation at saved revisions
+./scripts/setup-git-front         # retain writable machine-local Git front config
+./scripts/doctor
 ```
 
-`bootstrap.sh` installs Determinate Nix when needed, symlinks this repository to
-`~/.dotfiles`, checks the configured macOS user, locks flake inputs, then applies
-the `mac` nix-darwin configuration.
+The migration branch must be pushed before a fresh-machine clone can use it. Ubuntu 24.04+ is the intended Linux baseline; actual Ubuntu runtime validation is pending. Linux GUI users must install Ghostty and FiraCode Nerd Font according to their desktop setup. Homebrew must already exist on macOS; the employer installation stays independent of Nix. No package installer runs during an ordinary `chezmoi apply`.
 
-## Daily updates
+`packages/mise.toml` and `dot_config/mise/config.toml` intentionally match. Update both and run `python3 tests/validate.py`. Exact owners, exceptions, Python environments and credential-provider choices are in [docs/packages.md](docs/packages.md). `scripts/macos-defaults` is an explicit optional action; it prints changes, never touches the menu bar/Dock and does not restart Finder automatically.
+
+## Persisting changes to personal GitHub
+
+This checkout is connected to `https://github.com/fedeDev/dotfiles.git`, on `migration/chezmoi`, based on the remote's default `nix` branch. A baseline commit preserves the downloaded configuration before the migration implementation.
+
+The commit identity `fedeDev <fede.camposeco@gmail.com>` is set with `git config --local`; global Apple identity/signing settings remain unchanged. This checkout disables automatic commit signing and inherited hooks so employer tooling is not invoked for personal commits. Authentication is separate from commit identity. Public fetches work anonymously; publishing requires a personal GitHub.com login.
 
 ```sh
-./rebuild.sh
+gh auth login --hostname github.com --git-protocol https --web
+# Sign in as fedeDev. Your github.geo.apple.com login stays on its separate host.
+git push -u origin migration/chezmoi
 ```
 
-## Validation
+The checkout's GitHub.com credential helper uses gh locally; do not run `gh auth setup-git` globally. No token is stored in this repository. If work is saved as a private bundle before authentication is available, restore it with `git clone PATH-TO-BUNDLE ~/dotfiles-restored`.
 
-After Nix is installed:
+## Verification and remaining work
 
 ```sh
+python3 tests/validate.py
+shellcheck scripts/bootstrap scripts/bootstrap-macos scripts/bootstrap-ubuntu scripts/install-packages scripts/install-herdr-plugins scripts/macos-defaults
 nix flake check --no-build
-nix build .#darwinConfigurations.mac.system --dry-run
+./scripts/secret-scan
 ```
 
-## Notes
+Tests render all four OS/work combinations into temporary homes, assert empty post-apply diffs and ordinary files, check Zsh syntax/non-interactive startup/GPFS switching, and exercise Git front-config migration without touching real employer settings. Mac mise installs and Neovim startup were also tested in isolation. See [docs/validation.md](docs/validation.md) for observed results and incomplete acceptance checks.
 
-- Homebrew is not managed by nix-darwin (this machine uses an
-  employer-managed Homebrew at `/opt/homebrew`). Install Ghostty and herdr
-  yourself: `brew install --cask ghostty && brew install herdr`. Both are
-  Homebrew-managed, not pinned via flake.lock.
-- Most CLI tools are managed by home-manager.
-- Neovim's clangd/CMake tooling (`clangd`, `cmake`, `ninja`) is provided via
-  home-manager, not Mason, to keep tool versions declared in one place.
-- Neovim expects CMake's compilation database at `build/compile_commands.json`.
-  `,sw` and `,sb` search clangd's workspace and buffer symbols, and
-  `:ClangTidy` checks the current file using the project's compilation database
-  and `.clang-tidy` configuration.
-- `,d` deletes the current buffer without closing its window and `,cb` lists
-  its diagnostics. In normal mode, `,f` applies git-clang-format to changed
-  lines in the current file; over a visual range it applies clang-format
-  directly to that selection.
-- In Neovim, `-` opens Yazi at the current file. FFF powers `tt` file search,
-  `tg` live project grep, and `tw` grep for the word under the cursor or visual
-  selection; `tb` retains Telescope for open-buffer search.
-- Neovim's Herdr integration uses `,af` to place the current file in an
-  agent's prompt and visual `,as` to place the selected range there. The
-  target agent is focused, but the prompt is not submitted. `,yp` copies the
-  current path; visual `,yr` copies a portable `path:start-end` source
-  reference.
-- Herdr's reviewr plugin is installed separately with
-  `herdr plugin install persiyanov/herdr-reviewr`. `Ctrl-A Shift-V` toggles
-  its on-demand review overlay. Its PR tab uses `github.geo.apple.com` and
-  requires a valid `gh` login for that host.
-- `mdterm` is provided as a small wrapper around `glow`, so the markdown viewer
-  command is reproducible even though a package named `mdterm` was not available.
-- Neovim also includes `render-markdown.nvim` with Markdown, inline Markdown,
-  and LaTeX Treesitter parsers for terminal-native Markdown/math rendering.
-- Config directories under `home/.config` are symlinked into `~/.config`.
+The complete migration is **not finished**: live cutovers, Ubuntu runtime acceptance, token rotation, unresolved Python consumers and eventual Nix retirement remain. See the original [MIGRATION_PLAN.md](MIGRATION_PLAN.md), sanitized [inventory](docs/current-state.md), and the runbook's documented Hunk runtime-state deletion incident.

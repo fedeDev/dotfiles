@@ -1,0 +1,7 @@
+[mgr]
+prepend_keymap = [
+  { on = "-", run = "leave", desc = "Go to parent directory" },
+  { on = "+", run = "plugin zoom-fit 1", desc = "Zoom image toward fitted size" },
+  # Keep `-` for parent navigation; Shift-minus is the matching zoom-out key.
+  { on = "_", run = "plugin zoom-fit -1", desc = "Zoom out hovered image" },
+]

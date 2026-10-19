@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""Read-only checks: reports failures without changing installed state."""
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parent.parent
+HOME = Path.home()
+issues = 0
+
+def report(message):
+    global issues
+    issues += 1
+    print('WARN:', message)
+
+for tool in json.loads((ROOT / '.chezmoidata/packages.json').read_text())['tools']:
+    if "os" in tool and ("darwin" if sys.platform == "darwin" else "linux") not in tool["os"]:
+        continue
+    command = tool['command']
+    providers = []
+    for directory in os.get_exec_path():
+        candidate = Path(directory) / command
+        if candidate.is_file() and os.access(candidate, os.X_OK):
+            resolved = str(candidate.resolve())
+            if resolved not in providers:
+                providers.append(resolved)
+    print(f'{command}: {shutil.which(command) or "MISSING"} (wanted {tool["version"]})')
+    if not providers:
+        report(f'{command}: missing')
+        continue
+    if len(providers) > 1:
+        report(f'{command}: duplicate providers: {", ".join(providers)}')
+    if '/nix/store/' in providers[0] or '/Downloads/' in providers[0]:
+        report(f'{command}: still resolves through legacy provider')
+    try:
+        result = subprocess.run([command, '--version'], capture_output=True, text=True, timeout=5)
+        actual = result.stdout + result.stderr
+        if not re.search(r'(?<![\d.])' + re.escape(tool['version']) + r'(?![\d.])', actual):
+            report(f'{command}: version mismatch or --version does not identify release')
+    except (OSError, subprocess.TimeoutExpired):
+        report(f'{command}: version check failed')
+native = ['git', 'gh', 'btop', 'cmake', 'ninja', 'clangd', 'clang-format', 'node', 'uv', 'chezmoi', 'mise', 'magick', 'python3']
+if sys.platform == 'darwin':
+    native += ['eza', 'herdr']
+for command in native:
+    provider = shutil.which(command)
+    print(f'{command} (native): {provider or "MISSING"}')
+    if not provider:
+        report(f'{command}: missing native dependency')
+    elif '/nix/store/' in str(Path(provider).resolve()):
+        report(f'{command}: native dependency still provided by Nix')
+for relative in ['.zshrc' , '.config/git/config', '.config/git/portable.gitconfig', '.config/git/ignore', '.config/nvim/init.lua', '.config/ghostty/config']:
+    target = HOME / relative
+    if not target.exists():
+        report(f'{relative}: missing')
+    elif target.is_symlink() or '/nix/store/' in str(target.resolve()) or '/Downloads/' in str(target.resolve()) or str(target.resolve()).startswith(str(ROOT) + '/'):
+        report(f'{relative}: not an independent ordinary file')
+if (HOME / '.zshrc.local').exists():
+    report('legacy .zshrc.local still exists; shell cutover pending')
+print(f'{issues} issue(s); migration remains incomplete.' if issues else 'All checked providers and paths pass.')
+sys.exit(bool(issues))

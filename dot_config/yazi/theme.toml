@@ -1,0 +1,16 @@
+[flavor]
+dark = "catppuccin-mocha"
+
+# The catppuccin-mocha flavor sets these to rounded/powerline glyphs;
+# overridden to plain square blocks (indicator) and no separator glyphs at
+# all (status/tabs), instead of brackets.
+[indicator]
+padding = { open = "▐", close = "▌" }
+
+[status]
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }

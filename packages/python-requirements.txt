@@ -1,0 +1,3 @@
+# cmake-format is used by conform.nvim; latex2text by render-markdown.nvim.
+cmakelang==0.6.13
+pylatexenc==2.11

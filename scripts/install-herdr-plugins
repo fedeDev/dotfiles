@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
+while read -r plugin revision; do
+  [[ -z "$plugin" || "$plugin" == \#* ]] && continue
+  herdr plugin install "$plugin" --ref "$revision" --yes
+done < "$ROOT/packages/herdr-plugins.tsv"

@@ -1,0 +1,26 @@
+# Exact versions retained from the Mac; gh-dash is a new explicit addition.
+[tools]
+"aqua:neovim/neovim" = "0.12.4"
+"aqua:sxyazi/yazi" = "26.5.6"
+"aqua:junegunn/fzf" = "0.72.0"
+"aqua:BurntSushi/ripgrep" = "15.2.0"
+"aqua:sharkdp/fd" = "10.4.2"
+"aqua:sharkdp/bat" = "0.26.1"
+"github:eza-community/eza" = { version = "0.23.4", os = ["linux"] }
+"aqua:ajeetdsouza/zoxide" = "0.9.9"
+"aqua:JohnnyMorganz/StyLua" = "2.5.2"
+"aqua:tree-sitter/tree-sitter" = "0.26.8"
+"github:boyter/scc" = "3.7.0"
+"aqua:charmbracelet/glow" = "2.1.2"
+"aqua:dandavison/delta" = "0.19.2"
+"aqua:Wilfred/difftastic" = "0.69.0"
+"github:dlvhdr/diffnav" = "0.11.0"
+"aqua:modem-dev/hunk" = "0.22.0"
+"aqua:max-sixty/worktrunk" = "0.77.0"
+"github:dlvhdr/gh-dash" = "4.26.2"
+"aqua:starship/starship" = "1.25.1"
+"aqua:jesseduffield/lazygit" = "0.61.1"
+"aqua:tealdeer-rs/tealdeer" = "1.8.1"
+
+# Herdr remains employer Homebrew-owned on macOS.
+"aqua:herdrdev/herdr" = { version = "0.9.3", os = ["linux"] }

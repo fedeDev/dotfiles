@@ -11,3 +11,5 @@ result-*
 .env.*
 *.pem
 *.key
+__pycache__/
+*.pyc

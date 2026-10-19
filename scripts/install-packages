@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
+command -v mise >/dev/null
+# Use the committed manifest without relying on a global config cutover.
+MISE_CONFIG_FILE="$ROOT/packages/mise.toml" mise install
+antidote="$HOME/.local/share/antidote"
+revision="$(cat "$ROOT/packages/antidote-revision")"
+if [[ ! -e "$antidote" ]]; then
+  git clone https://github.com/mattmc3/antidote.git "$antidote"
+  git -C "$antidote" checkout --detach "$revision"
+elif [[ "$(git -C "$antidote" rev-parse HEAD)" != "$revision" ]]; then
+  echo "Existing Antidote checkout differs from pinned revision; review it manually." >&2
+  exit 1
+fi
+uv venv --allow-existing "$HOME/.local/share/dotfiles-python"
+uv pip install --python "$HOME/.local/share/dotfiles-python/bin/python" -r "$ROOT/packages/python-requirements.txt"
+echo 'Packages installed. Global PATH and configs require a separate reviewed cutover.'
+echo 'After Yazi config cutover: ya pkg install. Herdr pins: packages/herdr-plugins.tsv.'

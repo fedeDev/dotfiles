@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+exec "$HOME/.local/share/dotfiles-python/bin/latex2text" "$@"

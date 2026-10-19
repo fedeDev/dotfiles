@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
+case "${1:-}" in
+  --packages) case "$(uname -s)" in
+    Darwin) exec "$ROOT/scripts/bootstrap-macos" ;;
+    Linux) exec "$ROOT/scripts/bootstrap-ubuntu" ;;
+    *) echo "Unsupported OS" >&2; exit 1 ;;
+    esac ;;
+  "") ;;
+  *) echo "Usage: scripts/bootstrap [--packages]" >&2; exit 2 ;;
+esac
+command -v chezmoi >/dev/null || { echo 'Install chezmoi independently of Nix first; see README.' >&2; exit 1; }
+# Init only; never apply or upgrade packages implicitly.
+chezmoi --source "$ROOT" init
+printf 'Source configured. Review with: chezmoi --source %q diff
+' "$ROOT"
+echo 'On existing Nix machines follow docs/cutover.md before applying any files.'

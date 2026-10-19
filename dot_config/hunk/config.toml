@@ -1,0 +1,6 @@
+theme = "catppuccin-mocha"
+mode = "split"
+vcs = "git"
+line_numbers = true
+animations = false
+prompt_save_view_preferences = false
