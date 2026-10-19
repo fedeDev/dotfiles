@@ -1,5 +1,5 @@
 # Release one group at a time, then USER runs ./rebuild.sh.
-# Phase 3: group 1 applied; group 2 prepared for the next user rebuild.
+# Phase 3: groups 1-2 applied; Ghostty prepared for the next user rebuild.
 {
   releasedTargets = [
     ".config/bat"
@@ -13,5 +13,6 @@
     ".config/herdr/config.toml"
     ".config/herdr/plugins/config/jhochenbaum.hunkdiff/config.toml"
     ".config/worktrunk"
+    ".config/ghostty"
   ];
 }

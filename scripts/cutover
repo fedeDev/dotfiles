@@ -31,6 +31,11 @@ if args.action == 'apply':
                 raise SystemExit(f'Still linked: {path}. Release this group in migration.nix and run the user Nix rebuild first.')
     if args.group == 'shell' and (home / '.zshrc.local').exists():
         raise SystemExit('Rotate the exposed token, verify migrated helpers, then archive .zshrc.local outside the repo before shell cutover.')
+if args.action == 'apply':
+    # Applying explicit leaf targets does not automatically select all ancestors.
+    # Materialize missing parents only after every legacy-link guard has passed.
+    for target in targets:
+        target.parent.mkdir(parents=True, exist_ok=True)
 subprocess.run(base + ['diff', '--recursive', *map(str, targets)], check=True)
 if args.action == 'apply':
     subprocess.run(base + ['apply', '--recursive', *map(str, targets)], check=True)

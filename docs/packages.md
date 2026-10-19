@@ -66,3 +66,5 @@ Ubuntu baseline is Ubuntu 22.04 LTS, following the supplied workstation onboardi
 Mise backend details: [aqua backend](https://mise.jdx.dev/dev-tools/backends/aqua.html), [GitHub backend](https://mise.jdx.dev/dev-tools/backends/github.html). These manifests were tested with mise 2026.10.15.
 
 Onboarding compatibility update: Ubuntu scripts preserve `~/bin`, do not upgrade already-installed requested apt packages, and never configure employer authentication, corporate trust, VPN/DNS, GPU drivers, Docker access or private project libraries. Optional Tk support must match the application interpreter.
+
+Yazi keeps the upstream zoom plugin at revision `7200d73` as a reference for the authored zoom-fit variant. Keep explanatory comments outside package.toml because `ya pkg install` rewrites that manifest and removes comments.

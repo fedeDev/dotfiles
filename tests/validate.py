@@ -82,6 +82,19 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
     assert not (group_home / '.config/nvim/init.lua').exists()
     assert not run([str(ROOT / 'scripts/cutover'), 'preview', 'readonly'], env=env).stdout
     print('Named group: refuses legacy links, recursively installs only the released group, leaves empty diff')
+    # Interactive leaf targets must create missing parents and preserve runtime files.
+    hunk_state = group_home / '.config/hunk/state.json'
+    hunk_state.parent.mkdir(parents=True)
+    hunk_state.write_text('{"fixture": "keep"}\n')
+    lazy_state = group_home / ('Library/Application Support/lazygit/state.yml' if os.uname().sysname == 'Darwin' else '.config/lazygit/state.yml')
+    lazy_state.parent.mkdir(parents=True, exist_ok=True)
+    lazy_state.write_text('fixture: keep\n')
+    run([str(ROOT / 'scripts/cutover'), 'apply', 'interactive'], env=env)
+    assert (group_home / '.config/herdr/plugins/config/jhochenbaum.hunkdiff/config.toml').is_file()
+    assert hunk_state.read_text() == '{"fixture": "keep"}\n'
+    assert lazy_state.read_text() == 'fixture: keep\n'
+    assert not run([str(ROOT / 'scripts/cutover'), 'preview', 'interactive'], env=env).stdout
+    print('Interactive group: creates nested parents, preserves Hunk/Lazygit runtime state, leaves empty diff')
     # The front-config migration must preserve employer fields across repeated runs.
     home = base / 'git-test'
     git = home / '.config/git'

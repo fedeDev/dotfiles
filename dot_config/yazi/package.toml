@@ -7,7 +7,6 @@ hash = "7b625412411be411153886894d9acaf"
 use = "yazi-rs/plugins:zoom"
 rev = "7200d73"
 hash = "558bbb58e3dd36d488280a8f10e7b904"
-# Kept pinned as the upstream reference for the local `zoom-fit.yazi` variant.
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"

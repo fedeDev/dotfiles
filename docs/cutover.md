@@ -2,13 +2,13 @@
 
 ## Current checkpoint
 
-Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 group 1 is applied and checked after the user rebuild. Group 2 (interactive apps) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied only group 1 after the user ran the Nix rebuild. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
+Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1 and 2 are applied and checked after their user rebuilds. Ghostty (group 3) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied groups 1 and 2 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
 
 The user must run Nix rebuilds. `MIGRATION_PLAN.md`, phase 3 step 3, explicitly says “ask the user to run the Nix rebuild—an agent must not run it.” Ubuntu runtime acceptance, graphical terminal checks, and external token rotation also require work outside this session.
 
 ## First group: completed
 
-`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, plus the next prepared interactive group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
+`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, the applied interactive group, and the next prepared Ghostty group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
 
 The following first-group sequence has completed. Do not repeat its rebuild while the next group is prepared without reviewing the current releasedTargets. Runbook commands from `~/dotfiles`:
 
@@ -23,9 +23,11 @@ The apply command refuses existing symlinks, including parent-directory symlinks
 
 Smoke-test `bat --list-themes`, `btop --version`, `tig --version`, `diffnav --help`, `gh-dash --version`; launch the interactive applications in Ghostty. Check `realpath` and `test ! -L` for each target. Ordinary `chezmoi apply` never installs/upgrades packages or changes preferences.
 
-## Next checkpoint: interactive group ready
+## Next checkpoint: Ghostty ready
 
-A private snapshot was taken with `scripts/backup-live` immediately before preparing group 2. The next user action is `./rebuild.sh`, followed by `./scripts/cutover preview interactive` and `./scripts/cutover apply interactive`. Restore any individual backed-up runtime state files after the new directories exist. Keep installed Herdr plugin payloads and sessions unmanaged. Confirm the four existing plugins remain wanted before applying integration configuration.
+Interactive configs are applied as ordinary files. Yazi fetched pinned upstream packages; its manifest stays identical to source. All four existing Herdr plugins are retained at their recorded revisions; `herdr config check` passes. Lazygit state remains in place. Lazygit and Hunk opened and exited successfully; Worktrunk lists this repository. Yazi opened but reported a terminal-response timeout in the test PTY, so its previews still need a real Ghostty check. No private project was opened or built. Hunk created new runtime state after startup; the original state loss documented below remains unrecovered.
+
+Ghostty's rendered config passes its native validator using `+validate-config --config-file=PATH`. A private snapshot was taken before preparing its release. The next user action is `./rebuild.sh`, then the agent can run `./scripts/cutover preview ghostty` and `./scripts/cutover apply ghostty`. Open a new Ghostty window afterward to check appearance, clipboard and Yazi previews without Downloads access.
 
 ## Remaining groups
 

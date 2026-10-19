@@ -26,7 +26,7 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Next user-run Nix rebuild and interactive-app group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Next user-run Nix rebuild and Ghostty group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.
@@ -45,3 +45,11 @@ The provided onboarding text requires Ubuntu 22.04 LTS. The earlier 24.04 minimu
 Validation on Mac passed for root/home GPFS mount detection, Linux PATH order, all four render combinations, and the no-install Ubuntu plan. The original 32-package list was verified against Canonical's Jammy amd64 main/universe indexes; all existed. Removing Node/npm leaves 30 previously verified packages. Jammy versions observed include CMake 3.22.1, clangd 14 and Python 3.10, so approved project toolchains must remain authoritative. The Python validation entry point supports uv's isolated tomli dependency for Python 3.10. No live Ubuntu runtime test was available; the configured Docker engine was unreachable, and no VM/driver/network settings were changed.
 
 Additional binary metadata check: the pinned Linux x86-64 Neovim executable references GLIBC up to 2.34, Hunk up to 2.17, and the inspected Herdr executable has no GLIBC version references. This checks only those executables, not all bundled libraries or other tools, and is not a runtime test. Jammy ships GLIBC 2.35 ([package reference](https://packages.ubuntu.com/jammy/libc6)). Operational Python scripts also parse with Python 3.10 grammar; the pinned tomli 2.2.1 test dependency exists on PyPI and supports Python >=3.8.
+
+## Live interactive-group result
+
+The user confirmed the second successful rebuild. Yazi, Lazygit, Hunk, Herdr and Worktrunk configs were applied as independent writable files. All four installed Herdr plugins remain at recorded revisions and `herdr config check` reports `config: ok`. Lazygit and Hunk launched/exited successfully in a PTY; Worktrunk listed the personal dotfiles checkout. A local tracking `nix` branch was added without switching checkout to satisfy Worktrunk's existing default-branch setting. Lazygit runtime state remained in place, and Hunk created new runtime state; the original Hunk state was not recovered.
+
+Yazi fetched packages at committed revisions, loaded its UI and exited, but the synthetic terminal reported a terminal-response timeout. Real Ghostty preview/render checks remain pending. `ya pkg install` removed an explanatory comment from package.toml; the explanation was moved to docs without changing any pins, restoring an empty managed-group diff. Missing parent handling for explicitly selected leaf targets was fixed in scripts/cutover, with regression coverage for nested Herdr config and preserved Hunk/Lazygit runtime files. All four OS/work renders and named-group tests pass.
+
+Ghostty's rendered candidate passed its installed native validator with `+validate-config --config-file=PATH`; its live ownership release is staged for the next user rebuild.
