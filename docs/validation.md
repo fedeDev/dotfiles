@@ -26,7 +26,7 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Next user-run Nix rebuild and Ghostty group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Next user-run Nix rebuild and Neovim group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.
@@ -53,3 +53,7 @@ The user confirmed the second successful rebuild. Yazi, Lazygit, Hunk, Herdr and
 Yazi fetched packages at committed revisions, loaded its UI and exited, but the synthetic terminal reported a terminal-response timeout. Real Ghostty preview/render checks remain pending. `ya pkg install` removed an explanatory comment from package.toml; the explanation was moved to docs without changing any pins, restoring an empty managed-group diff. Missing parent handling for explicitly selected leaf targets was fixed in scripts/cutover, with regression coverage for nested Herdr config and preserved Hunk/Lazygit runtime files. All four OS/work renders and named-group tests pass.
 
 Ghostty's rendered candidate passed its installed native validator with `+validate-config --config-file=PATH`; its live ownership release is staged for the next user rebuild.
+
+## Live Ghostty-group result
+
+After the user's third successful rebuild, Ghostty config was applied as an independent writable file outside the checkout, Downloads and Nix store. The installed Ghostty `+validate-config` action passes and the managed-group diff is empty. No alternate `config.ghostty` or macOS-native config files were present. Fresh GUI/TCC/Yazi-preview validation remains a user check. Neovim's next rendered candidate started headlessly without errors; its ownership release is staged for the next user rebuild.

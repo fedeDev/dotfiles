@@ -4,7 +4,7 @@ Portable Chezmoi configuration for macOS and Ubuntu, with pinned CLI tools in mi
 
 The checkout is `~/dotfiles`. On this Mac, `~/.local/share/chezmoi` and the legacy `~/.dotfiles` compatibility path point here. Applied Chezmoi targets are ordinary files, independent of the checkout. Chezmoi supports a [custom source directory](https://www.chezmoi.io/user-guide/advanced/customize-your-source-directory/).
 
-**Existing Nix machine:** start with [the cutover runbook](docs/cutover.md). Phase 3's first two groups are applied; Ghostty is prepared for the next user-run `./rebuild.sh` before `./scripts/cutover apply ghostty`. Do not run an unrestricted live apply while Home Manager owns these files.
+**Existing Nix machine:** start with [the cutover runbook](docs/cutover.md). Phase 3's first three groups are applied; Neovim is prepared for the next user-run `./rebuild.sh` before `./scripts/cutover apply nvim`. Do not run an unrestricted live apply while Home Manager owns these files.
 
 **Fresh machine:** complete employer provisioning first where applicable; Ubuntu users should follow [docs/ubuntu.md](docs/ubuntu.md). Clone this migration branch, review package manifests and run explicit bootstrap:
 

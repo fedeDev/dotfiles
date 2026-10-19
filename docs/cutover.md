@@ -2,13 +2,13 @@
 
 ## Current checkpoint
 
-Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1 and 2 are applied and checked after their user rebuilds. Ghostty (group 3) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied groups 1 and 2 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
+Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1–3 are applied and checked after their user rebuilds. Neovim (group 4) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied groups 1–3 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
 
 The user must run Nix rebuilds. `MIGRATION_PLAN.md`, phase 3 step 3, explicitly says “ask the user to run the Nix rebuild—an agent must not run it.” Ubuntu runtime acceptance, graphical terminal checks, and external token rotation also require work outside this session.
 
 ## First group: completed
 
-`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, the applied interactive group, and the next prepared Ghostty group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
+`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, the applied interactive/Ghostty groups, and the next prepared Neovim group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
 
 The following first-group sequence has completed. Do not repeat its rebuild while the next group is prepared without reviewing the current releasedTargets. Runbook commands from `~/dotfiles`:
 
@@ -23,11 +23,13 @@ The apply command refuses existing symlinks, including parent-directory symlinks
 
 Smoke-test `bat --list-themes`, `btop --version`, `tig --version`, `diffnav --help`, `gh-dash --version`; launch the interactive applications in Ghostty. Check `realpath` and `test ! -L` for each target. Ordinary `chezmoi apply` never installs/upgrades packages or changes preferences.
 
-## Next checkpoint: Ghostty ready
+## Next checkpoint: Neovim ready
 
-Interactive configs are applied as ordinary files. Yazi fetched pinned upstream packages; its manifest stays identical to source. All four existing Herdr plugins are retained at their recorded revisions; `herdr config check` passes. Lazygit state remains in place. Lazygit and Hunk opened and exited successfully; Worktrunk lists this repository. Yazi opened but reported a terminal-response timeout in the test PTY, so its previews still need a real Ghostty check. No private project was opened or built. Hunk created new runtime state after startup; the original state loss documented below remains unrecovered.
+Groups 1–3 are applied. Ghostty's active config is an ordinary writable file at `~/.config/ghostty/config`; its native validator passes and the managed-group diff is empty. No alternate XDG/native Ghostty config files were present to override it. A fresh graphical window and Yazi preview/TCC checks remain user validation tasks.
 
-Ghostty's rendered config passes its native validator using `+validate-config --config-file=PATH`. A private snapshot was taken before preparing its release. The next user action is `./rebuild.sh`, then the agent can run `./scripts/cutover preview ghostty` and `./scripts/cutover apply ghostty`. Open a new Ghostty window afterward to check appearance, clipboard and Yazi previews without Downloads access.
+Interactive configs are ordinary files. All four Herdr plugins are retained at recorded revisions; `herdr config check` passes. Lazygit state remains in place. Lazygit/Hunk opened and exited successfully, and Worktrunk lists this repository. Yazi fetched pinned packages and opened, with a terminal-response timeout in the synthetic PTY. Hunk created new runtime state after startup; its original state loss below remains unrecovered.
+
+Neovim's rendered candidate starts headlessly without errors using existing installed plugin data. The committed lazy-lock.json is retained. A private live backup was taken before preparing the Neovim release. The next user action is `./rebuild.sh`, then the agent can run `./scripts/cutover preview nvim` and `./scripts/cutover apply nvim` and repeat startup/health checks against the actual ordinary files. No plugin upgrade or private project build is part of this cutover.
 
 ## Remaining groups
 
