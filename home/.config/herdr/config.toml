@@ -1,0 +1,83 @@
+onboarding = false
+[ui]
+agent_panel_sort = "spaces"
+status_indicators = "symbols"
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "datetime", format = "%-I:%M %p" },
+]
+tab_bar_right_separator = " · "
+
+show_agent_labels_on_pane_borders = true
+[ui.sound]
+enabled = false
+
+[ui.toast]
+delivery = "off"
+
+[keys]
+prefix = "ctrl+a"
+split_vertical = "prefix+|"
+last_pane = "prefix+a"
+copy_mode = ["prefix+[", "prefix+y"]
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+previous_agent = "ctrl+alt+p"
+next_agent = "ctrl+alt+n"
+# Keep the usual prefix navigation, tolerate holding Ctrl after the prefix,
+# and provide a conflict-free direct chord for fast pane movement.
+focus_pane_left = ["prefix+h", "prefix+ctrl+h", "ctrl+alt+h"]
+focus_pane_down = ["prefix+j", "prefix+ctrl+j", "ctrl+alt+j"]
+focus_pane_up = ["prefix+k", "prefix+ctrl+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "prefix+ctrl+l", "ctrl+alt+l"]
+
+# Custom plugin binding below replaces the native creation flow, so hooks run.
+new_worktree = ""
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "worktrunk.open"
+description = "worktree: switch/create from default branch"
+
+[[keys.command]]
+key = "prefix+shift+c"
+type = "plugin_action"
+command = "worktrunk.open-current"
+description = "worktree: switch/create from current branch"
+
+[[keys.command]]
+key = "prefix+d"
+type = "plugin_action"
+command = "worktrunk.remove"
+description = "worktree: remove"
+
+[[keys.command]]
+key = "prefix+/"
+type = "plugin_action"
+command = "yxhta.agents-picker.open"
+description = "pick an agent"
+
+[[keys.command]]
+key = "prefix+m"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review"
+description = "hunk: review changes"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.send-review"
+description = "hunk: send review to agent"
+
+[[keys.command]]
+key = "prefix+shift+h"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:branch"
+description = "hunk: review branch against base"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:staged"
+description = "hunk: review staged changes"

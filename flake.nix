@@ -10,19 +10,25 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    hunk.url = "github:modem-dev/hunk";
+    hunk.inputs.nixpkgs.follows = "nixpkgs";
+
+    # The Herdr Worktrunk plugin requires >= 0.60; stable nixpkgs has 0.50.
+    # Pin the upstream release without upgrading the rest of the environment.
+    worktrunk.url = "github:max-sixty/worktrunk/v0.77.0";
+    worktrunk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     inputs@{
       self,
       nix-darwin,
-      nix-homebrew,
       home-manager,
       nixpkgs,
+      ...
     }:
     let
-      user = "fede";
+      user = "f_camposeco";
       host = "mac";
     in
     {
@@ -30,13 +36,15 @@
         specialArgs = { inherit user host; };
         modules = [
           ./configuration.nix
-          nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
           {
             home-manager.backupFileExtension = "hm-backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit user host; };
+            home-manager.extraSpecialArgs = {
+              inherit user host;
+              inherit (inputs) hunk worktrunk;
+            };
             home-manager.users.${user} = import ./home.nix;
           }
         ];

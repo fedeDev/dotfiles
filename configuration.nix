@@ -16,13 +16,6 @@
       AppleShowAllExtensions = true;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
-      _HIHideMenuBar = true;
-    };
-
-    dock = {
-      autohide = false;
-      show-recents = false;
-      tilesize = 40;
     };
 
     finder = {
@@ -36,45 +29,9 @@
     trackpad.Clicking = true;
   };
 
-  nix-homebrew = {
-    enable = true;
-    autoMigrate = true;
-    enableZshIntegration = false;
-    inherit user;
-
-    trust.formulae = [
-      "can1357/tap/omp"
-    ];
-  };
-
-  homebrew = {
-    enable = true;
-
-    taps = [
-      "can1357/tap"
-    ];
-
-    brews = [
-      "herdr"
-      "omp"
-    ];
-
-    casks = [
-      "ghostty"
-    ];
-
-    onActivation = {
-      autoUpdate = false;
-      upgrade = false;
-      # cleanup = "zap";
-      cleanup = "none";
-      extraEnv = {
-        HOMEBREW_NO_ANALYTICS = "1";
-        HOMEBREW_NO_ENV_HINTS = "1";
-        HOMEBREW_NO_UPDATE_REPORT_NEW = "1";
-      };
-    };
-  };
+  # Homebrew is the employer-managed installation at /opt/homebrew.
+  # Keep it entirely outside nix-darwin; the flake does not import nix-homebrew.
+  homebrew.enable = false;
 
   programs.zsh = {
     enableBashCompletion = false;

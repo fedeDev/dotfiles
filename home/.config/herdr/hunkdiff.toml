@@ -1,0 +1,11 @@
+[review]
+# Keep review initiation explicit; reuse one live, refreshing pane per worktree.
+auto_open = false
+reuse_pane = true
+default_target = "auto"
+watch = true
+placement = "zoomed"
+
+[hunk]
+# Use the same Nix-managed Hunk inside and outside Herdr.
+bin = "/etc/profiles/per-user/f_camposeco/bin/hunk"

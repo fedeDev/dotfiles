@@ -1,0 +1,74 @@
+# Tig is intentionally scoped to two jobs: browsing commit history and blame.
+# The installed system tigrc supplies standard behavior; this file contains
+# only focused overrides that are portable between macOS and Linux.
+
+# A compact, topological graph makes feature branches and their merge points
+# easy to follow without loading every remote branch in a large repository.
+set main-view = line-number:no id:yes,color date:relative-compact \
+	author:abbreviated,maxwidth=18 committer:no \
+	commit-title:yes,graph=v2,refs,overflow=no
+set commit-order = topo
+set start-on-head = yes
+set show-changes = no
+
+# Follow moved and copied lines more aggressively. This costs some CPU, but is
+# valuable when tracing old C code that has been reorganized across files.
+set blame-view = id:yes,color file-name:auto,maxwidth=30 \
+	author:abbreviated,maxwidth=18 committer:no date:relative-compact \
+	line-number:yes,interval=1 text
+set blame-options = -C -C -C
+
+# Commit details remain readable beside the history or blame view.
+set diff-context = 5
+set vertical-split = auto
+set split-view-width = 55%
+set focus-child = yes
+set send-child-enter = yes
+set wrap-lines = no
+set horizontal-scroll = 25%
+set editor-line-number = yes
+
+set ignore-case = smart-case
+set wrap-search = yes
+set history-size = 500
+set mouse = no
+set line-graphics = utf-8
+
+# Open the selected commit—or the blamed file and line at that commit—on the
+# active GitHub/GitHub Enterprise host. `gh` derives the host from the remote.
+bind main  B @gh browse %(commit)
+bind blame B @gh browse %(file):%(lineno) --commit %(commit)
+
+# Catppuccin Mocha mapped onto Tig's 256-color palette. Keep the terminal's
+# background so this continues to look right with transparent Ghostty windows.
+color default          color189 default
+color cursor           color235 color183 bold
+color cursor-blur      color189 color237
+color status           color151 default
+color title-focus      color235 color111 bold
+color title-blur       color189 color237
+color header           color223 default bold
+color section          color152 default bold
+color delimiter        color102 default
+color date             color147 default
+color author           color111 default
+color id               color183 default
+color line-number      color102 default
+color file             color189 default
+color directory        color223 default
+color main-head        color152 default bold
+color main-ref         color111 default
+color main-tracked     color151 default bold
+color main-remote      color223 default
+color main-tag         color183 default bold
+color main-local-tag   color183 default
+color main-stash       color216 default
+color main-replace     color152 default
+color main-note        color111 default
+color diff-header      color111 default
+color diff-index       color147 default
+color diff-chunk       color183 default
+color diff-add         color151 default
+color diff-del         color211 default
+color diff-stat        color111 default
+color search-result    color235 color223 bold

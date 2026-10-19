@@ -1,3 +1,13 @@
 .DS_Store
 result
 result-*
+
+*.log
+.claude/
+**/state.json
+**/state.yml
+**/.DS_Store
+.env
+.env.*
+*.pem
+*.key

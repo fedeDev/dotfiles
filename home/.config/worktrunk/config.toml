@@ -1,0 +1,7 @@
+# Use one predictable checkout layout across Herdr and graphical editors.
+worktree-path = "~/pwin_worktrees/{{ branch | sanitize }}"
+
+# Personal setup belongs in dotfiles, not the private/shared Sputnik repo.
+# post-start runs once per new checkout, in the background with output logged.
+[projects."github.geo.apple.com/geo-flyover/sputnik".post-start]
+editor-cmake = "bash ~/.config/dev/setup-pwin-worktree.sh"

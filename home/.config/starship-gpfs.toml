@@ -1,0 +1,16 @@
+add_newline = false
+format = "$directory$cmd_duration$line_break$character"
+
+[character]
+success_symbol = "[>](#cba6f7)"
+error_symbol = "[>](#f38ba8)"
+
+[directory]
+style = "bold #89b4fa"
+truncation_length = 4
+truncate_to_repo = false
+
+[cmd_duration]
+min_time = 500
+format = "[$duration]($style) "
+style = "#f9e2af"

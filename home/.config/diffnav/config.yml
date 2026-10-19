@@ -1,0 +1,15 @@
+ui:
+  # Keep the file navigator prominent without spending rows on branding.
+  hideHeader: true
+  hideFooter: false
+  showFileTree: true
+  fileTreeWidth: 30
+  searchTreeWidth: 50
+
+  # Status-only glyphs keep the tree compact; filetype icons add little here.
+  icons: nerd-fonts-status
+  colorFileNames: true
+  showDiffStats: true
+  sideBySide: true
+  startFoldersOpenDepth: 1
+  theme: catppuccin_mocha

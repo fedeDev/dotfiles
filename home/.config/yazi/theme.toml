@@ -1,81 +1,16 @@
-[mgr]
-cwd = { fg = "#89b4fa" }
-hovered = { fg = "#11111b", bg = "#cba6f7" }
-preview_hovered = { fg = "#11111b", bg = "#cba6f7" }
-find_keyword = { fg = "#f9e2af", bold = true }
-find_position = { fg = "#f5c2e7", bg = "reset", bold = true }
-marker_selected = { fg = "#a6e3a1", bg = "#a6e3a1" }
-marker_copied = { fg = "#f9e2af", bg = "#f9e2af" }
-marker_cut = { fg = "#f38ba8", bg = "#f38ba8" }
-tab_active = { fg = "#11111b", bg = "#cba6f7" }
-tab_inactive = { fg = "#cdd6f4", bg = "#313244" }
-border_symbol = "│"
-border_style = { fg = "#585b70" }
+[flavor]
+dark = "catppuccin-mocha"
+
+# The catppuccin-mocha flavor sets these to rounded/powerline glyphs;
+# overridden to plain square blocks (indicator) and no separator glyphs at
+# all (status/tabs), instead of brackets.
+[indicator]
+padding = { open = "▐", close = "▌" }
 
 [status]
-separator_open = ""
-separator_close = ""
-separator_style = { fg = "#313244", bg = "#313244" }
-mode_normal = { fg = "#11111b", bg = "#89b4fa", bold = true }
-mode_select = { fg = "#11111b", bg = "#a6e3a1", bold = true }
-mode_unset = { fg = "#11111b", bg = "#f38ba8", bold = true }
-progress_label = { fg = "#cdd6f4", bold = true }
-progress_normal = { fg = "#89b4fa", bg = "#313244" }
-progress_error = { fg = "#f38ba8", bg = "#313244" }
-permissions_t = { fg = "#a6e3a1" }
-permissions_r = { fg = "#f9e2af" }
-permissions_w = { fg = "#f38ba8" }
-permissions_x = { fg = "#89b4fa" }
-permissions_s = { fg = "#6c7086" }
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 
-[select]
-border = { fg = "#cba6f7" }
-active = { fg = "#f5c2e7" }
-inactive = { fg = "#cdd6f4" }
-
-[input]
-border = { fg = "#cba6f7" }
-title = { fg = "#cba6f7" }
-value = { fg = "#cdd6f4" }
-selected = { bg = "#313244" }
-
-[completion]
-border = { fg = "#cba6f7" }
-active = { fg = "#f5c2e7", bg = "#313244" }
-inactive = { fg = "#cdd6f4" }
-
-[tasks]
-border = { fg = "#cba6f7" }
-title = { fg = "#cba6f7" }
-hovered = { fg = "#11111b", bg = "#cba6f7" }
-
-[which]
-mask = { bg = "#181825" }
-candidate = { fg = "#cdd6f4" }
-rest = { fg = "#6c7086" }
-desc = { fg = "#f5c2e7" }
-separator = "  "
-separator_style = { fg = "#585b70" }
-
-[help]
-on = { fg = "#89b4fa" }
-run = { fg = "#f5c2e7" }
-desc = { fg = "#cdd6f4" }
-hovered = { fg = "#11111b", bg = "#cba6f7" }
-footer = { fg = "#313244", bg = "#cdd6f4" }
-
-[filetype]
-rules = [
-  { mime = "image/*", fg = "#89b4fa" },
-  { mime = "video/*", fg = "#f9e2af" },
-  { mime = "audio/*", fg = "#f9e2af" },
-  { mime = "application/zip", fg = "#f5c2e7" },
-  { mime = "application/gzip", fg = "#f5c2e7" },
-  { mime = "application/x-tar", fg = "#f5c2e7" },
-  { mime = "application/x-bzip", fg = "#f5c2e7" },
-  { mime = "application/x-bzip2", fg = "#f5c2e7" },
-  { mime = "application/x-7z-compressed", fg = "#f5c2e7" },
-  { mime = "application/x-rar", fg = "#f5c2e7" },
-  { name = "*/", fg = "#89b4fa" },
-  { name = "*", fg = "#cdd6f4" },
-]
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
