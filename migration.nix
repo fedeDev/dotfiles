@@ -1,10 +1,17 @@
 # Release one group at a time, then USER runs ./rebuild.sh.
-# Phase 3, group 1 prepared; no live release occurs until the rebuild.
+# Phase 3: group 1 applied; group 2 prepared for the next user rebuild.
 {
   releasedTargets = [
     ".config/bat"
     ".config/btop"
     ".config/diffnav/config.yml"
     ".config/gh-dash/config.yml"
+    ".config/yazi"
+    ".config/lazygit"
+    "Library/Application Support/lazygit/config.yml"
+    ".config/hunk"
+    ".config/herdr/config.toml"
+    ".config/herdr/plugins/config/jhochenbaum.hunkdiff/config.toml"
+    ".config/worktrunk"
   ];
 }

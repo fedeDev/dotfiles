@@ -3,6 +3,7 @@ build-essential
 ca-certificates
 curl
 git
+tig
 gh
 zsh
 btop

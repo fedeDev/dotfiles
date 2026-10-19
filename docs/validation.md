@@ -19,9 +19,13 @@ Recorded on macOS arm64, 2026-10-19. This records completed checks, not full wor
 | GitHub persistence | Personal identity scoped to repository; public history fetched from `origin/nix`; publishing uses personal `github.com` authentication alongside employer host. |
 | Global Git preservation | PASS: `~/.gitconfig` and `~/.config/git/config` byte-identical to initial private backups after GitHub.com authentication. |
 
+## Live first-group result
+
+User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash configs were applied as seven ordinary writable files; realpaths are outside the checkout, Downloads and Nix store. Post-apply and post-smoke-test diffs are empty. Bat theme-cache/rendering passed, btop and Tig opened and exited in a PTY, and Diffnav/gh-dash YAML parses. gh-dash has no active provider yet; its installed isolated binary was verified earlier. This live GUI check remains pending package cutover.
+
 ## Outstanding acceptance
 
-- User-run Nix rebuild, first live group apply and runtime smoke checks.
+- Next user-run Nix rebuild and interactive-app group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.

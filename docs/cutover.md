@@ -2,15 +2,15 @@
 
 ## Current checkpoint
 
-Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 group 1 is prepared in `migration.nix`; it has NOT been released on the live machine. No package cutover, live Chezmoi apply, macOS preference change, Nix rebuild, or Nix removal has been run.
+Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 group 1 is applied and checked after the user rebuild. Group 2 (interactive apps) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied only group 1 after the user ran the Nix rebuild. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
 
 The user must run Nix rebuilds. `MIGRATION_PLAN.md`, phase 3 step 3, explicitly says “ask the user to run the Nix rebuild—an agent must not run it.” Ubuntu runtime acceptance, graphical terminal checks, and external token rotation also require work outside this session.
 
-## First group: ready for the user rebuild
+## First group: completed
 
-`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
+`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, plus the next prepared interactive group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
 
-Run from `~/dotfiles`:
+The following first-group sequence has completed. Do not repeat its rebuild while the next group is prepared without reviewing the current releasedTargets. Runbook commands from `~/dotfiles`:
 
 ```sh
 ./scripts/backup-live
@@ -22,6 +22,10 @@ Run from `~/dotfiles`:
 The apply command refuses existing symlinks, including parent-directory symlinks, until Home Manager has released them. It previews and applies only the named group, checks for an empty post-apply diff, and rebuilds Bat's theme cache. Preview output is local terminal output and may contain configuration details; do not paste sensitive Git front configs into issue trackers.
 
 Smoke-test `bat --list-themes`, `btop --version`, `tig --version`, `diffnav --help`, `gh-dash --version`; launch the interactive applications in Ghostty. Check `realpath` and `test ! -L` for each target. Ordinary `chezmoi apply` never installs/upgrades packages or changes preferences.
+
+## Next checkpoint: interactive group ready
+
+A private snapshot was taken with `scripts/backup-live` immediately before preparing group 2. The next user action is `./rebuild.sh`, followed by `./scripts/cutover preview interactive` and `./scripts/cutover apply interactive`. Restore any individual backed-up runtime state files after the new directories exist. Keep installed Herdr plugin payloads and sessions unmanaged. Confirm the four existing plugins remain wanted before applying integration configuration.
 
 ## Remaining groups
 

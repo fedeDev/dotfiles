@@ -48,6 +48,7 @@ Exact mise versions are committed in `packages/mise.toml`, deployed identically 
 | uv | Homebrew | explicit upstream installer | Creates isolated Python environment. |
 | Ghostty | Homebrew cask | manual distribution/upstream install | Linux GUI install depends on desktop; not needed on headless workstation. |
 | SSHFS | existing employer setup | apt | Do not install a macOS system extension automatically. |
+| Tig | Homebrew | apt | Stable native Git browser; existing Mac command is in ~/.local/bin until package cutover. |
 | Git | native Apple Git / Homebrew | apt | No personal identity or employer signing settings in portable include. |
 
 Ubuntu baseline is Ubuntu 24.04 or newer. Its native package versions may differ from macOS; full runtime acceptance must be performed there. Ubuntu preview dependencies include ffmpeg/poppler and Wayland/X11 clipboard tools. Native package manifests intentionally do not copy all employer Homebrew packages from the inventory.

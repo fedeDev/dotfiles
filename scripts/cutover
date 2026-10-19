@@ -31,10 +31,10 @@ if args.action == 'apply':
                 raise SystemExit(f'Still linked: {path}. Release this group in migration.nix and run the user Nix rebuild first.')
     if args.group == 'shell' and (home / '.zshrc.local').exists():
         raise SystemExit('Rotate the exposed token, verify migrated helpers, then archive .zshrc.local outside the repo before shell cutover.')
-subprocess.run(base + ['diff', *map(str, targets)], check=True)
+subprocess.run(base + ['diff', '--recursive', *map(str, targets)], check=True)
 if args.action == 'apply':
-    subprocess.run(base + ['apply', *map(str, targets)], check=True)
-    diff = subprocess.run(base + ['diff', *map(str, targets)], check=True, capture_output=True, text=True)
+    subprocess.run(base + ['apply', '--recursive', *map(str, targets)], check=True)
+    diff = subprocess.run(base + ['diff', '--recursive', *map(str, targets)], check=True, capture_output=True, text=True)
     if diff.stdout:
         raise SystemExit('Post-apply diff is nonempty; stop and use the documented rollback.')
     if args.group == 'readonly':

@@ -54,4 +54,3 @@ _set_gpfs_shell_mode() {
   esac
 }
 add-zsh-hook chpwd _set_gpfs_shell_mode
-

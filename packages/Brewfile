@@ -2,6 +2,7 @@
 brew "chezmoi"
 brew "mise"
 brew "git"
+brew "tig"
 brew "gh"
 brew "btop"
 brew "eza"

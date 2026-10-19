@@ -33,4 +33,3 @@ function zle-line-init {
   printf '\e[6 q'
 }
 zle -N zle-line-init
-
