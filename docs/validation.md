@@ -26,7 +26,7 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Package-provider migration and ownership cleanup. All six live configuration groups, including the shell, are applied and checked. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Native package replacement and ownership cleanup. All six configuration groups and the 20 pinned mise tools are active; Nix package declarations remain for rollback. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - The legacy local shell file is privately archived and absent from its old location; token revocation/rotation is user-confirmed. If a replacement token is needed, configure and verify its lazy provider with the consumer.
@@ -83,3 +83,11 @@ All four OS/work renders pass, including silent non-interactive startup, login P
 The user confirmed the sixth successful rebuild. The old local shell file was moved into a private retired-shell archive after matching its non-secret helpers to source. Shell startup files, modules, prompt configs, manifest and worktree setup script are independent writable files outside the checkout, Downloads and Nix store; the setup script retains executable permission and was not run. All six configuration-group diffs are empty.
 
 A fresh interactive login shell loaded history/autosuggestion/fzf-tab widgets, gsl/nuke/p/psan/pdeb helpers, Starship/Zoxide commands and the Alt-J/Alt-. bindings without errors or doctor warnings. Clean non-interactive login startup was silent and did not load the retired token. The active Python wrappers passed cmake-format version and latex2text help checks using the isolated pinned environment with Homebrew Python. No global Python packages were installed. The configuration cutover is complete; package cleanup, GUI checks, real Ubuntu acceptance and Nix retirement remain outstanding.
+
+## Live mise providers and full-state verification
+
+After completing the configuration checkpoint, the explicit package installer installed all 20 Mac-applicable mise tools at committed versions. Each command resolved to its independent install and its version output matched the manifest; inspected direct linkage contains no Nix-store paths. The global mise config is now an ordinary managed file. A fresh interactive shell resolves the expected commands through mise shims without loading the retired token. Mise Neovim starts and loads native FFF/FZF modules; Git difftool and Python wrapper checks pass. All 23 inspected Neovim runtime shared libraries have no Nix-store linkage.
+
+A repeated installer run initially selected a different uv Python interpreter. The installer now reuses an existing dedicated environment; a repeated-run check verified unchanged interpreter path and pyvenv.cfg. Tests were also adjusted to resolve host Bat outside mise shims before using an isolated fixture HOME with no global tool configuration. The full test suite and Bash ShellCheck pass.
+
+Full-source diff revealed parent mode differences not included in named group diffs. Private source directory attributes now preserve existing macOS Library parents at 0700 and set ~/.config to 0700 instead of its previous 0751. No unrelated contents or recursive permissions were modified. The full chezmoi diff is empty after apply. Doctor still reports 25 expected transition issues (retained duplicate providers and native replacements), so package cleanup/Nix retirement are not claimed complete. No additional Nix rebuild or package removal was staged.

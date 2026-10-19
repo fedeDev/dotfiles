@@ -33,9 +33,9 @@ The user completed the sixth configuration rebuild. `.zshenv`, `.zprofile`, `.zs
 
 `.zshrc.local` was archived privately at `~/.local/state/dotfiles-migration/retired-shell-0431y4re/.zshrc.local` (0600 file inside a 0700 directory). Its helpers were matched to the migrated work module before archival. The user confirmed external revocation/rotation. No old token is copied into the new configuration. Optional replacement-token usage remains lazy through the wrapper; no real replacement provider/consumer test is claimed.
 
-Independent Antidote is pinned. Starship's original Nix CLI is retained explicitly until package replacement checks pass. The newly active cmake-format and latex2text wrappers were verified against pinned dependencies in the dedicated `~/.local/share/dotfiles-python` environment, created using Homebrew Python without global pip installs. No private project setup script was run.
+Independent Antidote is pinned. Starship's original Nix CLI is retained explicitly until package replacement checks pass. The newly active cmake-format and latex2text wrappers were verified against pinned dependencies in the dedicated `~/.local/share/dotfiles-python` environment, managed through uv without global pip installs. No private project setup script was run.
 
-Package replacement/ownership cleanup is a later phase and may require additional user rebuilds. Their count is not yet established; the completed shell cutover does not imply that full migration, Ubuntu acceptance or Nix retirement have passed.
+The 20 pinned mise providers are installed and active through the global manifest. Their versions and executable paths were verified before activation; no old Nix package declarations have been removed. Native replacements and package ownership cleanup remain and may require additional user rebuilds. Their count is not yet established; the completed shell cutover does not imply that full migration, Ubuntu acceptance or Nix retirement have passed.
 
 ## Remaining groups
 
@@ -56,7 +56,7 @@ All names are relative to HOME. The `.zshrc` marker affects generated program mo
 ## Shell prerequisites
 
 1. Revoke/rotate the exposed Splunk token externally. Do not reuse the old value.
-2. Verify migrated work helper names in `dot_config/zsh/work.zsh`. They are sourced only when local Chezmoi `workMachine = true`; the old generic local shell file is never sourced by the new configuration.
+2. Verify migrated work helper names in `private_dot_config/zsh/work.zsh`. They are sourced only when local Chezmoi `workMachine = true`; the old generic local shell file is never sourced by the new configuration.
 3. The revoked old token is retired rather than migrated. If a replacement is needed, configure Keychain / Linux Secret Service, or the documented temporary private bridge, then test `with-splunk-token` with its actual consumer without logging its environment. The shell does not retrieve/export a token on startup.
 4. Install the pinned Antidote checkout and required CLI providers explicitly. Do not remove existing packages yet. `scripts/install-packages` creates user-space tool installations without changing the active global manifest or PATH. On this Mac uv must be installed before this step (`brew install uv`), or use the reviewed native manifest in phase 4.
 5. After the final user rebuild, archive `.zshrc.local` privately outside source before applying shell files; helper migration and token rotation are already verified/confirmed. Initial untouched backup is at `~/.local/state/dotfiles-migration/20261019-093836/.zshrc.local`; it contains the exposed token and must remain private. Archive the original without printing it, then ensure it is absent before `scripts/cutover apply shell`.
@@ -68,7 +68,7 @@ The active Nix-managed shell still sources `.zshrc.local` until this group is re
 
 Keep this separate from Git/Zsh configuration changes. Explicit installers are `scripts/bootstrap-macos`, `scripts/bootstrap-ubuntu` and `scripts/install-packages`. Brew uses `--no-upgrade`; dependencies may still require upgrades, so review output. There are no cleanup, autoremove or Nix uninstall operations.
 
-After installation and independent command/version tests, use `scripts/cutover preview packages` and `scripts/cutover apply packages` to deploy the global mise manifest. The new shell orders `~/.local/bin`, mise shims, native package paths, then remaining system/Nix paths; on Linux employer helpers in `~/bin` are retained between `~/.local/bin` and the shims. `scripts/doctor` reports missing commands, duplicates, legacy paths and version mismatches without changing them. Remove the corresponding `home.packages` entries only after their replacements pass runtime checks, then ask the user to rebuild each batch. Check linked libraries before removing Nix libraries.
+Mise installation, independent command/version tests and `scripts/cutover apply packages` have completed on this Mac. The new shell orders `~/.local/bin`, mise shims, native package paths, then remaining system/Nix paths; on Linux employer helpers in `~/bin` are retained between `~/.local/bin` and the shims. `scripts/doctor` reports missing commands, duplicates, legacy paths and version mismatches without changing them. Remove the corresponding `home.packages` entries only after their replacements pass runtime checks, then ask the user to rebuild each batch. Check linked libraries before removing Nix libraries.
 
 BeautifulSoup/lxml consumers are unresolved; their existing Nix provider must remain. macOS SSHFS/system extensions remain employer-owned. GUI Linux font/Ghostty installation requires desktop-specific setup. These are acceptance prerequisites, not completed steps.
 
@@ -81,3 +81,7 @@ Do not retire nix-darwin/Home Manager until BOTH Mac and Ubuntu pass every accep
 ## Known state loss during implementation
 
 The implementing agent mistakenly deleted the pre-existing, untracked `home/.config/hunk/state.json` while excluding runtime files. That path also backed the live Home Manager symlink. It was not in Git or the initial private backup, and was not recovered. Hunk state may need restoring from an independent backup or may regenerate; its prior contents are unknown. No fabricated replacement state was written. New source excludes runtime state, and backup-live now explicitly preserves existing Hunk/Lazygit state before future cutovers.
+
+## Full-source permissions
+
+The source uses `private_dot_config` and `private_Library/private_Application Support` so a full apply does not make the existing private Library parents world-readable. Library modes remained 0700; ~/.config was tightened from 0751 to 0700. All configuration groups and the full chezmoi diff are empty. No recursive permission changes were applied to unrelated files.

@@ -6,6 +6,7 @@
 """Exercise renders and migration boundaries using temporary homes only."""
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -71,6 +72,13 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
     (group_config / 'chezmoi.toml').write_text('[data]\nworkMachine = false\n')
     env = os.environ.copy()
     env.update(HOME=str(group_home), XDG_CONFIG_HOME=str(group_home / '.config'), XDG_CACHE_HOME=str(group_home / '.cache'), XDG_DATA_HOME=str(group_home / '.local/share'))
+    # The fixture home has no mise configuration: use the resolved host Bat binary.
+    bat = shutil.which('bat')
+    if bat and '/mise/shims/' in bat:
+        bat = run(['mise', 'which', 'bat']).stdout.strip()
+    if bat:
+        env['PATH'] = str(Path(bat).parent) + os.pathsep + env['PATH']
+
     sentinel = group_home / 'legacy-bat'
     sentinel.mkdir()
     (sentinel / 'untouched').write_text('legacy state')
@@ -122,11 +130,11 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
     assert run(['git', 'config', '--file', str(git / 'config'), '--includes', '--get', 'pull.ff'], env=env).stdout.strip() == 'false'
 
     print('Git front migration: preserves employer fields, materializes symlink, runs idempotently')
-for parent in ['dot_config', 'packages']:
+for parent in ['private_dot_config', 'packages']:
     for file in (ROOT / parent).rglob('*.toml'):
         with file.open('rb') as stream:
             tomllib.load(stream)
-assert (ROOT / 'packages/mise.toml').read_bytes() == (ROOT / 'dot_config/mise/config.toml').read_bytes()
+assert (ROOT / 'packages/mise.toml').read_bytes() == (ROOT / 'private_dot_config/mise/config.toml').read_bytes()
 run([str(ROOT / 'scripts/secret-scan')])
 print('TOML, manifest synchronization and source secret scan passed')
 

@@ -13,7 +13,10 @@ elif [[ "$(git -C "$antidote" rev-parse HEAD)" != "$revision" ]]; then
   echo "Existing Antidote checkout differs from pinned revision; review it manually." >&2
   exit 1
 fi
-uv venv --allow-existing "$HOME/.local/share/dotfiles-python"
+# Preserve the interpreter and installed environment on repeat bootstrap runs.
+if [[ ! -x "$HOME/.local/share/dotfiles-python/bin/python" ]]; then
+  uv venv --allow-existing "$HOME/.local/share/dotfiles-python"
+fi
 uv pip install --python "$HOME/.local/share/dotfiles-python/bin/python" -r "$ROOT/packages/python-requirements.txt"
 echo 'Packages installed. Global PATH and configs require a separate reviewed cutover.'
 echo 'After Yazi config cutover: ya pkg install. Herdr pins: packages/herdr-plugins.tsv.'
