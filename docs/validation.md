@@ -5,6 +5,7 @@ Recorded on macOS arm64, 2026-10-19. This records completed checks, not full wor
 | Check | Result |
 | --- | --- |
 | `python3 tests/validate.py` | PASS: Darwin/Linux × work/personal temporary renders; empty post-apply diffs; no symlinks/state/local shell file; per-OS Lazygit/Ghostty selection; Zsh syntax and quiet non-interactive startup; resolved GPFS symlinks and restored aliases; Git front materialization/idempotence/employer-field preservation; TOML parsing and synchronized manifests; source secret scan. |
+| Lazy token wrapper | PASS: fixture provider retrieval, refusal of 0644 bridge, accepted 0600 bridge, no emitted values; no real credential provider was queried. |
 | ShellCheck on all new Bash scripts | PASS. |
 | `nix flake check --no-build` | PASS, Darwin configuration evaluated. No rebuild was run. |
 | Home Manager `home.file` evaluation | PASS: Bat/btop/Diffnav/gh-dash declarations excluded; Neovim/Ghostty/Hunk/Git remain owned. This is source evaluation, not a live generation switch. |

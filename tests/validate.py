@@ -43,6 +43,28 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
             shell = 'source "$HOME/.config/zsh/functions.zsh"; cd "$HOME/gpfs-link"; [[ "$STARSHIP_CONFIG" == "$HOME/.config/starship-gpfs.toml" && "$aliases[ls]" == "command ls" ]] || exit 1; cd "$HOME"; [[ -z "$STARSHIP_CONFIG" && "$aliases[ls]" == "eza --icons=auto" ]]'
             run(['zsh', '-dfc', shell], env=env)
             print(name + ': render, empty diff, ordinary files, syntax, quiet shell and GPFS switching passed')
+    # Named group application must preserve the release boundary and install children.
+    group_home = base / 'group-test'
+    group_config = group_home / '.config/chezmoi'
+    group_config.mkdir(parents=True)
+    (group_config / 'chezmoi.toml').write_text('[data]\nworkMachine = false\n')
+    env = os.environ.copy()
+    env.update(HOME=str(group_home), XDG_CONFIG_HOME=str(group_home / '.config'), XDG_CACHE_HOME=str(group_home / '.cache'), XDG_DATA_HOME=str(group_home / '.local/share'))
+    sentinel = group_home / 'legacy-bat'
+    sentinel.mkdir()
+    (sentinel / 'untouched').write_text('legacy state')
+    (group_home / '.config/bat').symlink_to(sentinel)
+    refused = subprocess.run([str(ROOT / 'scripts/cutover'), 'apply', 'readonly'], env=env, capture_output=True, text=True)
+    assert refused.returncode != 0 and 'Still linked:' in refused.stderr
+    assert (sentinel / 'untouched').read_text() == 'legacy state'
+    (group_home / '.config/bat').unlink()
+    run([str(ROOT / 'scripts/cutover'), 'apply', 'readonly'], env=env)
+    for target in ['bat/config', 'btop/btop.conf', 'tig/config', 'diffnav/config.yml', 'gh-dash/config.yml']:
+        path = group_home / '.config' / target
+        assert path.is_file() and not path.is_symlink(), target
+    assert not (group_home / '.config/nvim/init.lua').exists()
+    assert not run([str(ROOT / 'scripts/cutover'), 'preview', 'readonly'], env=env).stdout
+    print('Named group: refuses legacy links, recursively installs only the released group, leaves empty diff')
     # The front-config migration must preserve employer fields across repeated runs.
     home = base / 'git-test'
     git = home / '.config/git'
