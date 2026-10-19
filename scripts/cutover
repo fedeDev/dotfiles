@@ -13,7 +13,7 @@ groups = {
     'ghostty': ['.config/ghostty'],
     'nvim': ['.config/nvim'],
     'git': ['.config/git/portable.gitconfig', '.config/git/ignore'],
-    'shell': ['.zshrc', '.zsh_plugins.txt', '.config/zsh', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/tealdeer', '.config/dev', '.local/bin/mdterm', '.local/bin/latex2text', '.local/bin/cmake-format', '.local/bin/with-splunk-token'],
+    'shell': ['.zshenv', '.zprofile', '.zshrc', '.zsh_plugins.txt', '.config/zsh', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/tealdeer', '.config/dev', '.local/bin/mdterm', '.local/bin/latex2text', '.local/bin/cmake-format', '.local/bin/with-splunk-token'],
     'packages': ['.config/mise/config.toml'],
 }
 parser = argparse.ArgumentParser(description=__doc__)

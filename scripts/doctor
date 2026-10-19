@@ -53,7 +53,7 @@ for command in native:
         report(f'{command}: missing native dependency')
     elif '/nix/store/' in str(Path(provider).resolve()):
         report(f'{command}: native dependency still provided by Nix')
-for relative in ['.zshrc', '.config/git/config', '.config/git/portable.gitconfig', '.config/git/ignore', '.config/nvim/init.lua', '.config/ghostty/config']:
+for relative in ['.zshenv', '.zprofile', '.zshrc', '.config/git/config', '.config/git/portable.gitconfig', '.config/git/ignore', '.config/nvim/init.lua', '.config/ghostty/config']:
     target = HOME / relative
     if not target.exists():
         report(f'{relative}: missing')

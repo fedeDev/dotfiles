@@ -96,6 +96,8 @@ in
     ripgrep
     scc
     stylua
+    # Keep the existing CLI while its generated integration is released.
+    starship
     tealdeer
     tree-sitter
     hunk.packages.${pkgs.stdenv.hostPlatform.system}.default

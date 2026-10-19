@@ -42,11 +42,15 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
             assert ('source "$HOME/.config/zsh/work.zsh"' in (dest / '.zshrc').read_text()) == work
             assert ('macos-titlebar-style' in (dest / '.config/ghostty/config').read_text()) == (platform == 'darwin')
             for file in dest.rglob('*'):
-                if file.is_file() and (file.suffix == '.zsh' or file.name == '.zshrc'):
+                if file.is_file() and (file.suffix == '.zsh' or file.name in ['.zshenv', '.zprofile', '.zshrc']):
                     run(['zsh', '-n', str(file)])
             env = os.environ.copy()
             env.update(HOME=str(dest), ZDOTDIR=str(dest))
             assert run(['zsh', '-d', '-lc', 'print -r -- quiet-startup'], env=env).stdout == 'quiet-startup\n'
+            expected_prefix = '$HOME/.local/bin:$HOME/bin:$HOME/.local/share/mise/shims' if platform == 'linux' else '$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin'
+            shell = '[[ "$PATH" == ' + expected_prefix + ':* && "$EDITOR" == nvim && "$BAT_THEME" == "Catppuccin Mocha" ]]'
+            run(['zsh', '-d', '-lc', shell], env=env)
+
             # GPFS mode must follow symlinks and restore normal aliases on exit.
             (dest / 'ci-gpfs').mkdir()
             (dest / 'gpfs-link').symlink_to(dest / 'ci-gpfs')

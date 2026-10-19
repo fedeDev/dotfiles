@@ -11,7 +11,7 @@ root.mkdir(parents=True, mode=0o700, exist_ok=True)
 os.chmod(root, 0o700)
 backup = Path(tempfile.mkdtemp(prefix='live-', dir=root))
 # Explicit config roots only. Do not follow references into project repositories.
-targets = ['.zshrc', '.zshrc.local', '.gitconfig', '.config/git/config', '.config/git/home-manager.gitconfig', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/hunk/state.json', '.config/lazygit/state.yml', 'Library/Application Support/lazygit/state.yml']
+targets = ['.zshenv', '.zprofile', '.zshrc', '.zshrc.local', '.gitconfig', '.config/git/config', '.config/git/home-manager.gitconfig', '.config/starship.toml', '.config/starship-gpfs.toml', '.config/hunk/state.json', '.config/lazygit/state.yml', 'Library/Application Support/lazygit/state.yml']
 source = Path(__file__).resolve().parent.parent / 'home'
 targets += [str(p.relative_to(source)) for p in source.rglob('*') if p.is_file()]
 for relative in sorted(set(targets)):

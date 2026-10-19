@@ -2,7 +2,7 @@
 
 ## Current checkpoint
 
-Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1–5 are applied and checked after their user rebuilds. The final configuration group, Zsh/Starship, awaits its remaining prerequisites; its ownership release is not staged yet. The agent applied groups 1–5 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
+Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1–5 are applied and checked after their user rebuilds. The final configuration group, Zsh/Starship, is staged for the last user-run configuration rebuild. The user confirmed token revocation/rotation; the existing local shell file remains in place until after that rebuild. The agent applied groups 1–5 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
 
 The user must run Nix rebuilds. `MIGRATION_PLAN.md`, phase 3 step 3, explicitly says “ask the user to run the Nix rebuild—an agent must not run it.” Ubuntu runtime acceptance, graphical terminal checks, and external token rotation also require work outside this session.
 
@@ -23,13 +23,15 @@ The apply command refuses existing symlinks, including parent-directory symlinks
 
 Smoke-test `bat --list-themes`, `btop --version`, `tig --version`, `diffnav --help`, `gh-dash --version`; launch the interactive applications in Ghostty. Check `realpath` and `test ! -L` for each target. Ordinary `chezmoi apply` never installs/upgrades packages or changes preferences.
 
-## Next checkpoint: final shell prerequisites
+## Next checkpoint: final shell rebuild ready
 
 Groups 1–5 are applied. Git's front config, portable include and ignore are ordinary writable files; active Git origins avoid Downloads and Nix paths. The helper replaced the old include in place, preserving all other XDG front values and the byte-identical primary `~/.gitconfig`. Status, log, blame, global ignore and Difftastic comparison checks pass. Employer signing-tool behavior and effective configuration from a real Ghostty window remain user checks; no signing tool or credentials were modified during testing.
 
 Neovim starts headlessly/interactively, and all 19 plugin revisions match the lockfile. Native FFF/FZF modules load. The FFF binary was downloaded for the same locked commit without Nix; unused LuaRocks integration is disabled. Health has no errors and retains package-directory/log-size warnings. Ghostty's validator passes. Real Ghostty/Yazi visual/TCC checks remain user validation tasks. The original Hunk state loss documented below remains unrecovered.
 
-Exactly **one configuration-release rebuild remains**, for Zsh/Starship. Do not run it yet: `.zshrc` has not been added to releasedTargets. Independent Antidote is installed at its committed revision, the rendered work helpers/widgets were checked, and non-interactive initialization is silent. Confirmation of external token revocation/rotation and the intended replacement credential-provider usage is still pending. The old local shell file is still active under the current Nix shell and has not been archived or removed. Complete those prerequisites, stage the shell release, then ask the user for the final configuration rebuild.
+Exactly **one configuration-release rebuild remains**, for Zsh/Starship. The user confirmed external token revocation/rotation. Independent Antidote is installed at its committed revision, and non-secret work helpers match the old local file exactly. Final rendered interactive/login/non-interactive shells passed helper/widget, keybinding, PATH and no-token/no-local-file sourcing checks. Startup environment is managed through ordinary `.zshenv`/`.zprofile` files so login profiles do not lose CLI paths. Starship's existing Nix package is explicitly retained because disabling the generated integration would otherwise remove the command; this is not a package upgrade.
+
+The next user action is `cd ~/dotfiles && ./rebuild.sh`. Keep the existing terminal open and report success. Then the agent archives `.zshrc.local` outside the repository with private permissions, applies only the shell group and verifies the active startup files. The old token will never be copied to the new configuration. The optional lazy wrapper supports Keychain/Secret Service or the documented private bridge if a replacement token is needed; no replacement value was requested, read or copied, and no real consumer/provider check is claimed yet.
 
 Package replacement/ownership cleanup is a later phase and may require additional user rebuilds. Their count is not yet established; do not imply that the remaining shell rebuild completes the full migration or that Ubuntu acceptance/Nix retirement have passed.
 
@@ -53,9 +55,9 @@ All names are relative to HOME. The `.zshrc` marker affects generated program mo
 
 1. Revoke/rotate the exposed Splunk token externally. Do not reuse the old value.
 2. Verify migrated work helper names in `dot_config/zsh/work.zsh`. They are sourced only when local Chezmoi `workMachine = true`; the old generic local shell file is never sourced by the new configuration.
-3. Configure Keychain / Linux Secret Service, or the documented temporary private bridge. Test the `with-splunk-token` wrapper with the actual consumer without logging its environment. This is lazy per-process retrieval.
+3. The revoked old token is retired rather than migrated. If a replacement is needed, configure Keychain / Linux Secret Service, or the documented temporary private bridge, then test `with-splunk-token` with its actual consumer without logging its environment. The shell does not retrieve/export a token on startup.
 4. Install the pinned Antidote checkout and required CLI providers explicitly. Do not remove existing packages yet. `scripts/install-packages` creates user-space tool installations without changing the active global manifest or PATH. On this Mac uv must be installed before this step (`brew install uv`), or use the reviewed native manifest in phase 4.
-5. Archive `.zshrc.local` privately outside source after verifying helper migration and token rotation. Initial untouched backup is at `~/.local/state/dotfiles-migration/20261019-093836/.zshrc.local`; it contains the exposed token and must remain private. Archive the original without printing it, then ensure it is absent before `scripts/cutover apply shell`.
+5. After the final user rebuild, archive `.zshrc.local` privately outside source before applying shell files; helper migration and token rotation are already verified/confirmed. Initial untouched backup is at `~/.local/state/dotfiles-migration/20261019-093836/.zshrc.local`; it contains the exposed token and must remain private. Archive the original without printing it, then ensure it is absent before `scripts/cutover apply shell`.
 6. After shell apply, test a fresh interactive shell in a real terminal and `zsh -lc 'true'`; verify widgets, completion, GPFS switching, prompt and Zoxide warning absence. The first Antidote load may download plugins. Follow with a second clean startup.
 
 The active Nix-managed shell still sources `.zshrc.local` until this group is rebuilt. Do not remove it early without accounting for active Nix shell behavior.

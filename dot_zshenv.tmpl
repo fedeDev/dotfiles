@@ -1,0 +1,5 @@
+# Environment only: available to non-interactive shells without plugin/prompt work.
+export EDITOR=nvim BAT_THEME='Catppuccin Mocha'
+typeset -U path
+[[ -r "$HOME/.config/zsh/platform/{{ .chezmoi.os }}.zsh" ]] && source "$HOME/.config/zsh/platform/{{ .chezmoi.os }}.zsh"
+return 0

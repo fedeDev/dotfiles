@@ -26,10 +26,10 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Final configuration-group prerequisites (token revocation/rotation and credential-provider decision), then one user-run shell rebuild. No shell ownership release is staged yet. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Final user-run shell rebuild, then private archival of .zshrc.local and live shell apply/checks. Token revocation/rotation is user-confirmed; no replacement secret is copied. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
-- External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.
+- Archive/remove legacy `.zshrc.local` at shell cutover. External token revocation/rotation is user-confirmed. If a replacement token is needed, configure and verify its lazy provider with the consumer.
 - Identify external BeautifulSoup/lxml consumers without inspecting private project source.
 - Full Ubuntu bootstrap/runtime/clipboard/font/GUI acceptance; Linux rendering on Mac does not establish Linux runtime compatibility.
 - Install native replacements, validate command paths and library dependencies, then remove Nix package ownership in batches with user rebuilds.
@@ -71,3 +71,9 @@ Before staging Git release, the front-config helper was improved to preserve inc
 After the user's fifth successful rebuild, the Git portable include and global ignore were applied as ordinary writable files. The migration helper replaced the known Home Manager include in place in the writable XDG front. All other front settings were preserved, and ~/.gitconfig remained byte-identical. Active config origins include the portable file and avoid Downloads/Nix paths. Git status/log/blame/global-ignore and Difftastic comparison checks pass. The managed group diff is empty. No employer signing/authentication tool was run; Ghostty and employer-tool verification remain user checks.
 
 Independent Antidote was installed at the committed revision without changing the active shell. A temporary rendered work shell passed helper/widget checks; non-interactive initialization was silent. The existing local shell file has not been archived, its secret value was not copied, and token revocation/rotation confirmation remains pending. One configuration-release rebuild remains, followed by separately evaluated package-removal batches.
+
+## Final shell release staged
+
+The user confirmed that the exposed token was revoked or rotated. No secret value was requested/read/copied. The old local file remains active until the final rebuild, after which it will be archived privately before apply. Its non-secret helper content exactly matches the migrated work module. The retired token is not migrated; optional replacement usage remains lazy through the existing wrapper.
+
+All four OS/work renders pass, including silent non-interactive startup, login PATH/environment preservation, GPFS aliases, named-group state preservation and Git precedence. A final PTY work-shell test passed plugin widgets, work helpers and bindings without sourcing a sentinel .zshrc.local or loading a token. Ordinary .zshenv/.zprofile source environment-only platform paths without prompt/plugin initialization. Nix evaluation confirms startup/config paths are released while Starship/FZF/Zoxide/Tealdeer command providers remain installed. Starship was added explicitly to home.packages to retain the same provider previously pulled in by programs.starship. The last configuration rebuild is staged; no agent rebuild has been run.

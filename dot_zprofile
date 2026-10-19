@@ -1,0 +1,3 @@
+# Restore user CLI precedence after macOS path_helper / system login profiles.
+[[ -r "$HOME/.zshenv" ]] && source "$HOME/.zshenv"
+return 0
