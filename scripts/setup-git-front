@@ -30,12 +30,18 @@ elif not front.exists():
     front.touch(mode=0o600)
 old = '~/.config/git/home-manager.gitconfig'
 new = '~/.config/git/portable.gitconfig'
-# --fixed-value prevents treating dots/tilde as regular expressions.
-result = subprocess.run(['git', 'config', '--file', str(front), '--fixed-value', '--unset-all', 'include.path', old])
-if result.returncode not in (0, 5):
-    raise SystemExit(result.returncode)
+# Preserve include position so existing machine-local overrides keep precedence.
 existing = subprocess.run(['git', 'config', '--file', str(front), '--get-all', 'include.path'], capture_output=True, text=True).stdout.splitlines()
-if new not in existing:
-    subprocess.run(['git', 'config', '--file', str(front), '--add', 'include.path', new], check=True)
+if old in existing:
+    if new in existing:
+        subprocess.run(['git', 'config', '--file', str(front), '--fixed-value', '--unset-all', 'include.path', old], check=True)
+    else:
+        subprocess.run(['git', 'config', '--file', str(front), '--fixed-value', '--replace-all', 'include.path', new, old], check=True)
+elif new not in existing:
+    # Defaults precede machine-local settings, including on an already-written front.
+    content = front.read_bytes()
+    bom = b'\xef\xbb\xbf' if content.startswith(b'\xef\xbb\xbf') else b''
+    prefix = ('[include]\n  path = ' + new + '\n').encode()
+    front.write_bytes(bom + prefix + content[len(bom):])
 print('Portable include added. Employer settings preserved. Private backup:', backup)
 print('Inspect origins in Ghostty and another terminal; ~/.gitconfig can override XDG settings.')

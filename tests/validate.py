@@ -101,7 +101,7 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
     git.mkdir(parents=True)
     (git / 'portable.gitconfig').write_text('[pull]\n ff = only\n')
     old = home / 'old-config'
-    old.write_text('[user]\n name = employer-value\n[include]\n path = ~/.config/git/home-manager.gitconfig\n[employer]\n marker = preserve\n')
+    old.write_text('[user]\n name = employer-value\n[include]\n path = ~/.config/git/home-manager.gitconfig\n[employer]\n marker = preserve\n[pull]\n ff = false\n')
     (git / 'config').symlink_to(old)
     env = os.environ.copy()
     env.update(HOME=str(home), GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL=str(home / '.gitconfig'))
@@ -111,6 +111,12 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
     assert not (git / 'config').is_symlink() and old.exists()
     assert content.count('portable.gitconfig') == 1 and 'home-manager.gitconfig' not in content
     assert 'employer-value' in content and 'preserve' in content
+    assert run(['git', 'config', '--file', str(git / 'config'), '--includes', '--get', 'pull.ff'], env=env).stdout.strip() == 'false'
+    # A front without the former include must also keep its local overrides.
+    (git / 'config').write_text('[pull]\n ff = false\n')
+    run([str(ROOT / 'scripts/setup-git-front')], env=env)
+    assert run(['git', 'config', '--file', str(git / 'config'), '--includes', '--get', 'pull.ff'], env=env).stdout.strip() == 'false'
+
     print('Git front migration: preserves employer fields, materializes symlink, runs idempotently')
 for parent in ['dot_config', 'packages']:
     for file in (ROOT / parent).rglob('*.toml'):

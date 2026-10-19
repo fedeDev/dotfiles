@@ -1,5 +1,5 @@
 # Release one group at a time, then USER runs ./rebuild.sh.
-# Phase 3: groups 1-3 applied; Neovim prepared for the next user rebuild.
+# Phase 3: groups 1-4 applied; Git prepared for the next user rebuild.
 {
   releasedTargets = [
     ".config/bat"
@@ -15,5 +15,7 @@
     ".config/worktrunk"
     ".config/ghostty"
     ".config/nvim"
+    ".config/git/home-manager.gitconfig"
+    ".config/git/ignore"
   ];
 }

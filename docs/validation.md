@@ -26,7 +26,7 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Next user-run Nix rebuild and Neovim group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Next user-run Nix rebuild and Git group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.
@@ -57,3 +57,11 @@ Ghostty's rendered candidate passed its installed native validator with `+valida
 ## Live Ghostty-group result
 
 After the user's third successful rebuild, Ghostty config was applied as an independent writable file outside the checkout, Downloads and Nix store. The installed Ghostty `+validate-config` action passes and the managed-group diff is empty. No alternate `config.ghostty` or macOS-native config files were present. Fresh GUI/TCC/Yazi-preview validation remains a user check. Neovim's next rendered candidate started headlessly without errors; its ownership release is staged for the next user rebuild.
+
+## Live Neovim-group result
+
+The user confirmed the fourth successful rebuild. init.lua/lazy-lock.json are independent writable files, with an empty managed-group diff; all 19 installed plugin revisions match the committed lock. Headless and interactive startup pass. Telescope's native FZF extension and FFF's native module load. The old FFF Nix build hook was replaced with the locked plugin's upstream downloader, which successfully installed the binary for fixed commit d84c0a1 (`0.10.7-nightly.d84c0a1`) without upgrading the plugin.
+
+LuaRocks support was enabled by default despite no configured plugin requiring a rockspec build; it is now disabled. Empty legacy package directories were removed only when empty, but health still reports a runtime package-directory warning and the existing large LSP log. Health exits successfully with zero errors. No LSP log content was inspected, rotated or deleted.
+
+Before staging Git release, the front-config helper was improved to preserve include position (or prepend new defaults), so existing local overrides retain precedence. Regression tests cover repeated migration, symlink materialization, state preservation and effective local-over-portable settings. Portable Git syntax is valid. The required next user rebuild is pending.

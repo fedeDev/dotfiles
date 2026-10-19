@@ -1385,7 +1385,10 @@ require("lazy").setup({
   },
   {
     "dmtrKovalenko/fff",
-    build = "nix run .#release",
+    build = function()
+      -- Use the pinned plugin's upstream installer instead of requiring Nix.
+      require("fff.download").download_or_build_binary()
+    end,
     lazy = false,
     opts = {
       layout = {
@@ -1447,6 +1450,8 @@ require("lazy").setup({
     },
   },
 }, {
+  -- All configured dependencies come from Git; none needs a LuaRocks build.
+  rocks = { enabled = false },
   checker = { enabled = true, notify = false },
   change_detection = { notify = false },
   ui = { border = "rounded" },
