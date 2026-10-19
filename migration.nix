@@ -1,5 +1,5 @@
 # Release one group at a time, then USER runs ./rebuild.sh.
-# Phase 3: groups 1-4 applied; Git prepared for the next user rebuild.
+# Phase 3: groups 1-5 applied; shell release waits for remaining prerequisites.
 {
   releasedTargets = [
     ".config/bat"

@@ -26,7 +26,7 @@ User confirmed successful Nix rebuild. Bat, btop, Tig, Diffnav and gh-dash confi
 
 ## Outstanding acceptance
 
-- Next user-run Nix rebuild and Git group cutover. First group is complete; gh-dash live interactive startup awaits its active package provider.
+- Final configuration-group prerequisites (token revocation/rotation and credential-provider decision), then one user-run shell rebuild. No shell ownership release is staged yet. First group is complete; gh-dash live interactive startup awaits its active package provider.
 - Subsequent group cutovers, including actual Ghostty/TCC checks, interactive applications, full Neovim health/plugin bootstrap, Git employer-signing behavior and shell keystroke checks in a normal terminal.
 - Confirm the existing four Herdr plugins remain wanted and work at recorded revisions.
 - External exposed-token revocation/rotation and credential-provider setup, then archive/remove legacy `.zshrc.local`.
@@ -65,3 +65,9 @@ The user confirmed the fourth successful rebuild. init.lua/lazy-lock.json are in
 LuaRocks support was enabled by default despite no configured plugin requiring a rockspec build; it is now disabled. Empty legacy package directories were removed only when empty, but health still reports a runtime package-directory warning and the existing large LSP log. Health exits successfully with zero errors. No LSP log content was inspected, rotated or deleted.
 
 Before staging Git release, the front-config helper was improved to preserve include position (or prepend new defaults), so existing local overrides retain precedence. Regression tests cover repeated migration, symlink materialization, state preservation and effective local-over-portable settings. Portable Git syntax is valid. The required next user rebuild is pending.
+
+## Live Git-group result
+
+After the user's fifth successful rebuild, the Git portable include and global ignore were applied as ordinary writable files. The migration helper replaced the known Home Manager include in place in the writable XDG front. All other front settings were preserved, and ~/.gitconfig remained byte-identical. Active config origins include the portable file and avoid Downloads/Nix paths. Git status/log/blame/global-ignore and Difftastic comparison checks pass. The managed group diff is empty. No employer signing/authentication tool was run; Ghostty and employer-tool verification remain user checks.
+
+Independent Antidote was installed at the committed revision without changing the active shell. A temporary rendered work shell passed helper/widget checks; non-interactive initialization was silent. The existing local shell file has not been archived, its secret value was not copied, and token revocation/rotation confirmation remains pending. One configuration-release rebuild remains, followed by separately evaluated package-removal batches.

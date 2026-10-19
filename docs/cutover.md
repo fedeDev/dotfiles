@@ -2,13 +2,13 @@
 
 ## Current checkpoint
 
-Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1–4 are applied and checked after their user rebuilds. Git (group 5) is prepared in `migration.nix` and awaits its own user rebuild. The agent applied groups 1–4 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
+Phases 0–2 are implemented, with the open decisions below. Source preparation and isolated validation are complete. Phase 3 groups 1–5 are applied and checked after their user rebuilds. The final configuration group, Zsh/Starship, awaits its remaining prerequisites; its ownership release is not staged yet. The agent applied groups 1–5 after the user ran the required Nix rebuild for each. No package cutover, macOS preference change, agent-run Nix rebuild, or Nix removal has occurred.
 
 The user must run Nix rebuilds. `MIGRATION_PLAN.md`, phase 3 step 3, explicitly says “ask the user to run the Nix rebuild—an agent must not run it.” Ubuntu runtime acceptance, graphical terminal checks, and external token rotation also require work outside this session.
 
 ## First group: completed
 
-`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, the applied interactive/Ghostty/Neovim groups, and the next prepared Git group. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
+`migration.nix` lists Bat, btop, Diffnav and gh-dash Home Manager targets, the applied interactive/Ghostty/Neovim/Git groups. Tig was already unmanaged. `home.nix` filters only these targets and disables Nix's Bat cache activation for this group. No package is removed. The `76a8950` baseline commit preserves the original Nix configuration.
 
 The following first-group sequence has completed. Do not repeat its rebuild while the next group is prepared without reviewing the current releasedTargets. Runbook commands from `~/dotfiles`:
 
@@ -23,13 +23,15 @@ The apply command refuses existing symlinks, including parent-directory symlinks
 
 Smoke-test `bat --list-themes`, `btop --version`, `tig --version`, `diffnav --help`, `gh-dash --version`; launch the interactive applications in Ghostty. Check `realpath` and `test ! -L` for each target. Ordinary `chezmoi apply` never installs/upgrades packages or changes preferences.
 
-## Next checkpoint: Git ready
+## Next checkpoint: final shell prerequisites
 
-Groups 1–4 are applied. Neovim's config and lazy-lock.json are ordinary writable files, and all 19 installed plugin revisions match the lockfile. Headless and interactive startup pass; Telescope's FZF extension and FFF's native module load. The FFF build hook now uses the pinned plugin's upstream downloader instead of Nix, and the binary for the same locked commit was downloaded successfully. No configured plugin needs a LuaRocks build, so unused LuaRocks integration is disabled. Health checks report no errors; warnings remain for a runtime package directory and the existing large LSP log. No log contents were read or deleted.
+Groups 1–5 are applied. Git's front config, portable include and ignore are ordinary writable files; active Git origins avoid Downloads and Nix paths. The helper replaced the old include in place, preserving all other XDG front values and the byte-identical primary `~/.gitconfig`. Status, log, blame, global ignore and Difftastic comparison checks pass. Employer signing-tool behavior and effective configuration from a real Ghostty window remain user checks; no signing tool or credentials were modified during testing.
 
-Ghostty's validator passes and no alternate config files override its ordinary config. Graphical Ghostty/Yazi preview checks remain user validation tasks. Interactive configs retain all four recorded Herdr plugins, writable Lazygit state and fetched Yazi packages. The original Hunk state loss documented below remains unrecovered.
+Neovim starts headlessly/interactively, and all 19 plugin revisions match the lockfile. Native FFF/FZF modules load. The FFF binary was downloaded for the same locked commit without Nix; unused LuaRocks integration is disabled. Health has no errors and retains package-directory/log-size warnings. Ghostty's validator passes. Real Ghostty/Yazi visual/TCC checks remain user validation tasks. The original Hunk state loss documented below remains unrecovered.
 
-The Git portable include passes syntax validation. Private snapshots preserve both existing global config fronts. The migration helper preserves machine-local values AND override order; regression tests verify that local overrides still win after replacing/adding the portable include. The next user action is `./rebuild.sh`, then the agent can run `./scripts/cutover apply git` and `./scripts/setup-git-front`. The helper changes only the managed include path in the writable XDG front; personal/employer identity, credentials and signing settings remain local. Validate effective origins and behavior from Ghostty and another terminal before proceeding to Zsh.
+Exactly **one configuration-release rebuild remains**, for Zsh/Starship. Do not run it yet: `.zshrc` has not been added to releasedTargets. Independent Antidote is installed at its committed revision, the rendered work helpers/widgets were checked, and non-interactive initialization is silent. Confirmation of external token revocation/rotation and the intended replacement credential-provider usage is still pending. The old local shell file is still active under the current Nix shell and has not been archived or removed. Complete those prerequisites, stage the shell release, then ask the user for the final configuration rebuild.
+
+Package replacement/ownership cleanup is a later phase and may require additional user rebuilds. Their count is not yet established; do not imply that the remaining shell rebuild completes the full migration or that Ubuntu acceptance/Nix retirement have passed.
 
 ## Remaining groups
 
