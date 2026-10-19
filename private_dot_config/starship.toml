@@ -32,7 +32,7 @@ symbol = " "
 [time]
 disabled = false
 format = "[$time]($style)"
-style = "subtext0"
+style = "dimmed overlay0"
 time_format = "%Y-%m-%d %H:%M"
 
 [git_branch]

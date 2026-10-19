@@ -17,7 +17,7 @@ symbol = " "
 [time]
 disabled = false
 format = "[$time]($style)"
-style = "#a6adc8"
+style = "dimmed #6c7086"
 time_format = "%Y-%m-%d %H:%M"
 
 [cmd_duration]
