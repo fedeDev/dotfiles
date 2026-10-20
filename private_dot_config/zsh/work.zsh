@@ -1,4 +1,15 @@
 
+# Default GitHub CLI to work; a checkout can select another host with
+# git config --local gh.host github.com. Explicit GH_HOST takes precedence.
+gh() {
+  local host=${GH_HOST:-}
+  if [[ -z $host ]]; then
+    host=$(command git config --get gh.host 2>/dev/null) || host=''
+    host=${host:-github.geo.apple.com}
+  fi
+  GH_HOST=$host command gh "$@"
+}
+
 # pwin launchers: p/p.gl (relassert), psan/psan.gl (asan), pdeb/pdeb.gl (debug).
 # Headless variants add -nowin -nopwgl; .gl variants leave the window/GL on.
 # All add -httpgpfs unless -nohttpgpfs is given.

@@ -39,6 +39,8 @@ git push -u origin migration/chezmoi
 
 The checkout's GitHub.com credential helper uses gh locally; do not run `gh auth setup-git` globally. No token is stored in this repository. If work is saved as a private bundle before authentication is available, restore it with `git clone PATH-TO-BUNDLE ~/dotfiles-restored`.
 
+On work machines, the interactive `gh` helper defaults to `github.geo.apple.com`. Run `git config --local gh.host github.com` in this personal checkout to select its personal host; repeat this after a fresh clone. An explicit `GH_HOST` overrides either default. The helper does not change stored credentials or global Git settings.
+
 ## Verification and remaining work
 
 ```sh
