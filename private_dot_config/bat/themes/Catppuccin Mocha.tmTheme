@@ -107,10 +107,10 @@
       <string>invalid</string>
       <key>settings</key>
       <dict>
+        <!-- Diff fragments can mark valid code as invalid. Keep the foreground
+             readable when delta replaces syntax backgrounds with diff colors. -->
         <key>foreground</key>
-        <string>#11111b</string>
-        <key>background</key>
-        <string>#f38ba8</string>
+        <string>#f5c2e7</string>
       </dict>
     </dict>
   </array>
