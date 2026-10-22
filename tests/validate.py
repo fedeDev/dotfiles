@@ -61,6 +61,13 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-validation-') as directory:
             for mount in ['/ci-gpfs', '/qs-gpfs', '/gpfs']:
                 shell = 'source "$HOME/.config/zsh/functions.zsh"; PWD=' + mount + '; _set_gpfs_shell_mode; [[ "$STARSHIP_CONFIG" == "$HOME/.config/starship-gpfs.toml" && "$aliases[ls]" == "command ls" ]]'
                 run(['zsh', '-dfc', shell], env=env)
+            # Mount aliases may chain relative/absolute links through symlinked parents.
+            (dest / 'ci-gpfs').rename(dest / 'shared-store')
+            (dest / 'shared-alias').symlink_to(dest / 'shared-store')
+            (dest / 'ci-gpfs').symlink_to('shared-alias')
+            (dest / 'ci-gpfs-unrelated').mkdir()
+            shell = 'source "$HOME/.config/zsh/functions.zsh"; for directory in "$HOME/shared-store" "$HOME/gpfs-link"; do cd "$directory"; [[ "$STARSHIP_CONFIG" == "$HOME/.config/starship-gpfs.toml" && "$aliases[ls]" == "command ls" ]] || exit 1; done; cd "$HOME/ci-gpfs-unrelated"; [[ -z "$STARSHIP_CONFIG" && "$aliases[ls]" == "eza --icons=auto" ]]'
+            run(['zsh', '-dfc', shell], env=env)
             if platform == 'linux':
                 shell = 'source "$HOME/.config/zsh/platform/linux.zsh"; [[ "$path[1]" == "$HOME/.local/bin" && "$path[2]" == "$HOME/bin" && "$path[3]" == "$HOME/.local/share/mise/shims" ]]'
                 run(['zsh', '-dfc', shell], env=env)

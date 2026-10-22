@@ -1,5 +1,24 @@
 # Validation record
 
+## Zsh startup profiling, 2026-10-22
+
+On this Mac, five login/interactive startup runs with the same terminal environment
+had a median of 472 ms before the GPFS hook change and 121 ms afterward. These
+measure initialization through `zsh -lic exit`, excluding prompt rendering.
+Zprof attributed about 300 ms to resolving every possible mount root with `:A`;
+individual root resolutions cost 50–70 ms. The revised hook matches known paths
+first and follows root symlinks without resolving the mounted directory itself.
+Repeated hook calls in the dotfiles checkout dropped to about 0.2 ms. Directory
+changes use the same hook and benefit too.
+
+The render suite passes on Mac for Darwin/Linux × work/personal, including mount
+aliases, relative/absolute symlink chains, symlinked home parents and restoration
+of normal mode outside shares. This is not a live Linux runtime measurement.
+Starship's separate prompt timing in this checkout showed about 30 ms for the
+worktree marker and 12 ms for Git status; completion initialization was about
+14 ms. Measurements are warm local samples, not a guarantee for remote filesystems
+or other repositories.
+
 Recorded on macOS arm64, 2026-10-19. This records completed checks, not full workstation acceptance.
 
 | Check | Result |

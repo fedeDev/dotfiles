@@ -39,19 +39,45 @@ gsl() {
 
 autoload -Uz add-zsh-hook
 _set_gpfs_shell_mode() {
-  local ci_root="$HOME/ci-gpfs" qs_root="$HOME/qs-gpfs"
-  local ci_system=/ci-gpfs qs_system=/qs-gpfs gpfs_root=/gpfs
-  case "${PWD:A}/" in
-    "${ci_root:A}/"*|"${qs_root:A}/"*|"${ci_system:A}/"*|"${qs_system:A}/"*|"${gpfs_root:A}/"*)
-      export STARSHIP_CONFIG="$HOME/.config/starship-gpfs.toml"
-      alias ls='command ls'
-      alias ll='command ls -la'
-      ;;
-    *)
-      unset STARSHIP_CONFIG
-      alias ls='eza --icons=auto'
-      alias ll='eza -lah --git --icons=auto'
-      ;;
-  esac
+  local -a roots link_target
+  roots=("$HOME/ci-gpfs" "$HOME/qs-gpfs" "$HOME/gpfs" /ci-gpfs /qs-gpfs /gpfs)
+  local root here="${PWD:a}/" gpfs=false
+  local -i hops
+  # Known mount paths need no filesystem access, even on a disconnected share.
+  for root in "${roots[@]}"; do
+    [[ $here == "$root/"* ]] && { gpfs=true; break; }
+  done
+  if [[ $gpfs == false ]]; then
+    here="${PWD:A}/"
+    # HOME itself can have a symlinked parent (for example /var on macOS).
+    local physical_home=${HOME:A}
+    roots+=("$physical_home/ci-gpfs" "$physical_home/qs-gpfs" "$physical_home/gpfs")
+    # realpath (:A) of every mount root costs hundreds of milliseconds on
+    # macOS SSHFS. Read symlink targets without walking the mounted filesystem.
+    zmodload -F zsh/stat b:zstat
+    for root in "${roots[@]}"; do
+      for (( hops=0; hops<16; hops++ )); do
+        [[ $here == "$root/"* ]] && { gpfs=true; break 2; }
+        [[ -L $root ]] || break
+        builtin zstat -L -A link_target +link "$root" 2>/dev/null || break
+        if [[ $link_target[1] == /* ]]; then
+          root=$link_target[1]
+        else
+          root="${root:h}/$link_target[1]"
+        fi
+        root=${root:a}
+        root="${root:h:A}/${root:t}"
+      done
+    done
+  fi
+  if [[ $gpfs == true ]]; then
+    export STARSHIP_CONFIG="$HOME/.config/starship-gpfs.toml"
+    alias ls='command ls'
+    alias ll='command ls -la'
+  else
+    unset STARSHIP_CONFIG
+    alias ls='eza --icons=auto'
+    alias ll='eza -lah --git --icons=auto'
+  fi
 }
 add-zsh-hook chpwd _set_gpfs_shell_mode
