@@ -1,8 +1,11 @@
 # Use one predictable checkout layout across Herdr and graphical editors.
-worktree-path = "~/{{ repo }}_worktrees/{{ branch | sanitize }}"
+worktree-path = "~/trees/{{ repo }}/{{ branch | sanitize }}"
 
 [projects."github.geo.apple.com/geo-flyover/sputnik"]
-worktree-path = "~/pwin_worktrees/{{ branch | sanitize }}"
+worktree-path = "~/trees/sptk/{{ branch | sanitize }}"
+
+[projects."github.geo.apple.com/geo-flyover/pytorch_models"]
+worktree-path = "~/trees/ml/{{ branch | sanitize }}"
 
 # Personal setup belongs in dotfiles, not the private/shared Sputnik repo.
 # post-start runs once per new checkout, in the background with output logged.
