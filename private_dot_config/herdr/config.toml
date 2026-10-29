@@ -1,4 +1,8 @@
 onboarding = false
+
+[session]
+resume_agents_on_restore = true
+
 [ui]
 agent_panel_sort = "spaces"
 status_indicators = "symbols"
