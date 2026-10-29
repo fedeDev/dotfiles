@@ -38,6 +38,7 @@ chezmoi apply                 # fresh/unmanaged home only; Nix hosts use docs/cu
 ya pkg install
 ./scripts/install-herdr-plugins   # only if those integrations are wanted
 ./scripts/setup-git-front
+./scripts/setup-claude-worktrees  # if using Claude Code; then restart Claude
 ./scripts/doctor
 uv run tests/validate.py
 ```

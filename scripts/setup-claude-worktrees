@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Merge owned worktree hooks into local Claude settings, keeping other values."""
+import json
+import os
+from pathlib import Path
+import shutil
+import tempfile
+
+home = Path.home()
+adapter = home / '.config/dev/claude-worktree.py'
+if not adapter.is_file():
+    raise SystemExit('Apply ~/.config/dev/claude-worktree.py with Chezmoi first.')
+directory = Path(os.environ.get('CLAUDE_CONFIG_DIR') or home / '.claude')
+settings = directory / 'settings.json'
+if settings.is_symlink():
+    raise SystemExit('Claude settings is a symlink; merge the worktree hooks at its owner instead.')
+data = json.loads(settings.read_text()) if settings.exists() else {}
+if data.get('disableAllHooks'):
+    raise SystemExit('Claude hooks are disabled in settings; resolve that before installing.')
+hooks = data.setdefault('hooks', {})
+for event, action in [('WorktreeCreate', 'create'), ('WorktreeRemove', 'remove')]:
+    command = f'python3 "$HOME/.config/dev/claude-worktree.py" {action}'
+    entry = {'hooks': [{'type': 'command', 'command': command, 'timeout': 600}]}
+    existing = hooks.get(event, [])
+    if existing and existing != [entry]:
+        raise SystemExit(f'{event} already has another handler; merge it explicitly instead.')
+    hooks[event] = [entry]
+updated = json.dumps(data, indent=2) + '\n'
+if settings.exists() and json.loads(settings.read_text()) == data:
+    print('Claude worktree hooks already installed.')
+    raise SystemExit(0)
+directory.mkdir(parents=True, mode=0o700, exist_ok=True)
+if settings.exists():
+    backup_root = home / '.local/state/dotfiles-migration'
+    backup_root.mkdir(parents=True, mode=0o700, exist_ok=True)
+    backup = Path(tempfile.mkdtemp(prefix='claude-settings-', dir=backup_root))
+    shutil.copyfile(settings, backup / 'settings.json')
+    (backup / 'settings.json').chmod(0o600)
+fd, temporary = tempfile.mkstemp(prefix='.settings-', dir=directory)
+try:
+    with os.fdopen(fd, 'w') as output:
+        output.write(updated)
+    os.replace(temporary, settings)
+finally:
+    if os.path.exists(temporary):
+        os.unlink(temporary)
+print('Claude worktree hooks installed. Restart Claude to load them.')

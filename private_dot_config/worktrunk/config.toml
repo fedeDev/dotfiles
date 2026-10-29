@@ -8,6 +8,6 @@ worktree-path = "~/trees/sptk/{{ branch | sanitize }}"
 worktree-path = "~/trees/ml/{{ branch | sanitize }}"
 
 # Personal setup belongs in dotfiles, not the private/shared Sputnik repo.
-# post-start runs once per new checkout, in the background with output logged.
-[projects."github.geo.apple.com/geo-flyover/sputnik".post-start]
+# pre-start finishes setup before an editor or agent enters the new checkout.
+[projects."github.geo.apple.com/geo-flyover/sputnik".pre-start]
 editor-cmake = "bash ~/.config/dev/setup-pwin-worktree.sh"

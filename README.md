@@ -18,12 +18,15 @@ chezmoi apply                    # only on a fresh home with no Nix ownership
 ya pkg install                   # fetch Yazi plugins/flavor from package.toml
 ./scripts/install-herdr-plugins   # optional explicit plugin installation at saved revisions
 ./scripts/setup-git-front         # retain writable machine-local Git front config
+./scripts/setup-claude-worktrees  # optional: route Claude isolation through Worktrunk
 ./scripts/doctor
 ```
 
 Use the migration branch until the cutover is complete and merged. Ubuntu 22.04 LTS is the intended Linux baseline; actual Ubuntu runtime validation is pending. Linux GUI users must install Ghostty and FiraCode Nerd Font according to their desktop setup. Homebrew must already exist on macOS; the employer installation stays independent of Nix. No package installer runs during an ordinary `chezmoi apply`.
 
 `packages/mise.toml` and `private_dot_config/mise/config.toml` intentionally match. Update both and run `python3 tests/validate.py`. Exact owners, exceptions, Python environments and credential-provider choices are in [docs/packages.md](docs/packages.md). `scripts/macos-defaults` is an explicit optional action; it prints changes, never touches the menu bar/Dock and does not restart Finder automatically.
+
+Worktree paths, Claude lifecycle hooks and per-project setup are documented in [docs/worktrees.md](docs/worktrees.md).
 
 ## Persisting changes to personal GitHub
 
